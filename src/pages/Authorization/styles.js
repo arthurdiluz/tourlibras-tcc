@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native'
 
-const mainColor = '#00BFFF'
-const secondaryColor = '#33658A'
-const white = '#FFF'
-
-export const footerHeight = 115
+const RED_COLOR = '#FF0000'
+export const MAIN_COLOR = '#00BFFF'
+export const SECONDARY_COLOR = 'rgba(51, 101, 138, 1)'
+export const WHITE_COLOR = 'rgba(255, 255, 255, 1)'
+export const FOOTER_HEIGHT = 115
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: mainColor
+        backgroundColor: MAIN_COLOR
     },
 
     header: {
@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         fontSize: 23,
         fontFamily: 'Poppins_400Regular',
-        color: white
+        color: WHITE_COLOR,
+        textAlign: 'center'
     },
 
     formContainer: {
@@ -37,11 +38,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderWidth: 2,
         borderRadius: 25,
-        borderColor: white,
+        borderColor: WHITE_COLOR,
         marginBottom: 7,
         fontSize: 17,
         fontFamily: 'Poppins_400Regular',
-        color: white
+        color: WHITE_COLOR
     },
 
     passwordInput: {
@@ -51,25 +52,51 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderWidth: 2,
         borderRadius: 25,
-        borderColor: white,
+        borderColor: WHITE_COLOR,
         marginBottom: 7,
         fontSize: 17,
         fontFamily: 'Poppins_400Regular',
-        color: white
+        color: WHITE_COLOR
     },
 
-    mainButton: {
+    errorContainer: {
+        width: '75%'
+    },
+
+    errorMessage: {
+        fontSize: 13,
+        color: RED_COLOR,
+        textAlign: 'center',
+        marginBottom: 7,
+        fontFamily: 'Poppins_400Regular'
+    },
+
+    signInButton: {
         width: '75%',
-        backgroundColor: white,
+        backgroundColor: WHITE_COLOR,
         alignItems: 'center',
         paddingVertical: 10,
         borderRadius: 25
     },
 
-    mainButtonText: {
+    signInButtonText: {
         fontSize: 17,
         fontFamily: 'Poppins_400Regular',
-        color: mainColor
+        color: MAIN_COLOR
+    },
+
+    signUpButton: {
+        width: '75%',
+        backgroundColor: SECONDARY_COLOR,
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderRadius: 25
+    },
+
+    signUpButtonText: {
+        fontSize: 17,
+        fontFamily: 'Poppins_400Regular',
+        color: WHITE_COLOR
     },
 
     footerContainer: {
@@ -83,19 +110,20 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         fontSize: 18,
         fontFamily: 'Poppins_400Regular',
-        color: white
+        color: WHITE_COLOR,
+        textAlign: 'center'
     },
 
-    secondaryButton: {
+    facebookButton: {
         width: '75%',
         paddingVertical: 10,
-        backgroundColor: secondaryColor,
+        backgroundColor: SECONDARY_COLOR,
         borderRadius: 25,
         alignItems: 'center'
     },
 
     buttonText: {
-        color: white,
+        color: WHITE_COLOR,
         fontSize: 15,
         fontFamily: 'Poppins_400Regular',
     }

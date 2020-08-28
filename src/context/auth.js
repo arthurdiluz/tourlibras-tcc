@@ -10,9 +10,27 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
 
-    async function signInWithFacebook() {
+    async function authWithFacebook() {
         setLoading(true)
-        AuthService.loginWithFacebook()
+        AuthService.authWithFacebook()
+    }
+
+    async function signInWithEmail(email, password) {
+        const error = await AuthService.loginWithEmail(email, password)
+
+        return error
+    }
+
+    async function signUpWithEmail(email, password) {
+        const error = await AuthService.signUpWithEmail(email, password)
+
+        return error
+    }
+
+    async function checkIfEmailExists(email) {
+        const error = await AuthService.checkIfEmailExists(email)
+
+        return error
     }
 
     async function signOut() {
@@ -28,7 +46,14 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            signed: !!user, user, signInWithFacebook, signOut, loading
+            signed: !!user,
+            user,
+            authWithFacebook,
+            signOut,
+            loading,
+            checkIfEmailExists,
+            signInWithEmail,
+            signUpWithEmail
         }}
         >
             {children}

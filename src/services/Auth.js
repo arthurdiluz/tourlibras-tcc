@@ -4,7 +4,7 @@ import { config } from '../config'
 import { Firebase } from '../integrations/firebase'
 
 export default class AuthService {
-    static async loginWithFacebook() {
+    static async authWithFacebook() {
         await Facebook.initializeAsync(config.facebook.appId)
         const { type, token } = await Facebook.logInWithReadPermissionsAsync(
             config.facebook.appId,
@@ -19,6 +19,30 @@ export default class AuthService {
             await Firebase
                 .auth()
                 .signInWithCredential(credential)
+        }
+    }
+
+    static async checkIfEmailExists(email) {
+        const response = await Firebase.auth().fetchSignInMethodsForEmail(email)
+
+        return response.includes('password')
+    }
+
+    static async loginWithEmail(email, password) {
+        try {
+            await Firebase.auth().signInWithEmailAndPassword(email, password)
+            return undefined
+        } catch (error) {
+            return error
+        }
+    }
+
+    static async signUpWithEmail(email, password) {
+        try {
+            await Firebase.auth().createUserWithEmailAndPassword(email, password)
+            return undefined
+        } catch (error) {
+            return error
         }
     }
 
