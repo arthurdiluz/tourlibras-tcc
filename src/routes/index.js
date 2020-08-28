@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
 
 import { useAuth } from '../context/auth'
 
@@ -25,7 +26,17 @@ function Routes() {
         )
     }
 
-    return signed ? <AppRoutes /> : <AuthRoutes />
+    return signed ? (
+        <>
+            <AppRoutes />
+            <StatusBar style='dark' />
+        </>
+    ) : (
+            <>
+                <AuthRoutes />
+                <StatusBar style='light' />
+            </>
+        )
 }
 
 export default Routes

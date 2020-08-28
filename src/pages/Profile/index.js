@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
+import { RectButton } from 'react-native-gesture-handler'
 
 import { useAuth } from '../../context/auth'
 
@@ -12,9 +13,9 @@ function Profile() {
 
     return (
         <View>
-            <TouchableOpacity onPress={handleSignOut}>
+            <RectButton onPress={handleSignOut} title="Sign Out">
                 <Text>Logout</Text>
-            </TouchableOpacity>
+            </RectButton>
         </View>
     )
 }

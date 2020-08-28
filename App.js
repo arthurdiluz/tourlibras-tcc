@@ -1,12 +1,21 @@
-// import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
+import { AppLoading } from 'expo'
+import { Poppins_400Regular, Poppins_700Bold, useFonts } from '@expo-google-fonts/poppins' /* eslint-disable-line camelcase */
 
 import { AuthProvider } from './src/context/auth'
 
 import Routes from './src/routes'
 
 export default function App() {
+    const [fontsLoaded] = useFonts({
+        Poppins_400Regular,
+        Poppins_700Bold
+    })
+
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <NavigationContainer>
