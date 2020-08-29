@@ -29,7 +29,8 @@ export default function Authorization() {
     const buttonAnim = useRef(new Animated.Value(0)).current
     const AnimatedButton = Animated.createAnimatedComponent(RectButton)
 
-    const iconAnim = useRef(new Animated.Value(ICON_SIZE)).current
+    const iconSizeAnim = useRef(new Animated.Value(ICON_SIZE)).current
+    const iconOpacityAnim = useRef(new Animated.Value(1)).current
     const AnimatedEvilIcons = Animated.createAnimatedComponent(EvilIcons)
 
     useEffect(() => {
@@ -58,8 +59,13 @@ export default function Authorization() {
             toValue: 0,
             useNativeDriver: false
         }).start()
-        Animated.timing(iconAnim, {
+        Animated.timing(iconSizeAnim, {
             duration: event.duration + 200,
+            toValue: 0,
+            useNativeDriver: false
+        }).start()
+        Animated.timing(iconOpacityAnim, {
+            duration: event.duration + 150,
             toValue: 0,
             useNativeDriver: false
         }).start()
@@ -71,9 +77,14 @@ export default function Authorization() {
             toValue: FOOTER_HEIGHT,
             useNativeDriver: false
         }).start()
-        Animated.timing(iconAnim, {
+        Animated.timing(iconSizeAnim, {
             duration: event.duration + 200,
             toValue: ICON_SIZE,
+            useNativeDriver: false
+        }).start()
+        Animated.timing(iconOpacityAnim, {
+            duration: event.duration + 150,
+            toValue: 1,
             useNativeDriver: false
         }).start()
     }
@@ -127,7 +138,7 @@ export default function Authorization() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <AnimatedEvilIcons name="user" style={{ fontSize: iconAnim }} color="white" />
+                <AnimatedEvilIcons name="user" style={{ fontSize: iconSizeAnim, opacity: iconOpacityAnim }} color="white" />
             </View>
             <View style={styles.formContainer}>
                 <Text style={styles.headerText}>
