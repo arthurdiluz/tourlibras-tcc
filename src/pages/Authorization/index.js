@@ -2,9 +2,10 @@ import React, {
     useEffect, useRef, useState, useCallback
 } from 'react'
 import {
-    View, Text, TextInput, Keyboard, Animated, SafeAreaView
+    View, Text, TextInput, Keyboard, Animated, SafeAreaView, TouchableOpacity
 } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
 import { EvilIcons } from '@expo/vector-icons'
 import { debounce } from 'lodash'
@@ -18,6 +19,7 @@ export default function Authorization() {
     const {
         authWithFacebook, checkIfEmailExists, signInWithEmail, signUpWithEmail
     } = useAuth()
+    const navigation = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [activateSignUpButton, setActivateSignUpButton] = useState(false)
@@ -105,6 +107,10 @@ export default function Authorization() {
         }
     }
 
+    async function handleForgotPassword() {
+        navigation.navigate('ForgotPassword')
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -166,6 +172,13 @@ export default function Authorization() {
                         { activateSignUpButton ? 'Criar conta' : 'Entrar'}
                     </Animated.Text>
                 </AnimatedButton>
+                <TouchableOpacity
+                    onPress={handleForgotPassword}
+                    activeOpacity={0.5}
+                    style={styles.forgotPasswordButton}
+                >
+                    <Text style={styles.forgotPasswordText}>Esqueci a minha senha</Text>
+                </TouchableOpacity>
             </View>
             <Animated.View style={[styles.footerContainer, { height: footerAnim }]}>
                 <Text style={styles.footerText}>

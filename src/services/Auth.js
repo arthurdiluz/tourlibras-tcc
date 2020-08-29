@@ -46,6 +46,15 @@ export default class AuthService {
         }
     }
 
+    static async passwordReset(email) {
+        try {
+            await Firebase.auth().sendPasswordResetEmail(email)
+            return undefined
+        } catch (error) {
+            return error
+        }
+    }
+
     static async signOut() {
         return Firebase.auth().signOut()
     }

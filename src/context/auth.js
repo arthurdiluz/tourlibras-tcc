@@ -33,6 +33,12 @@ export const AuthProvider = ({ children }) => {
         return error
     }
 
+    async function passwordReset(email) {
+        const error = await AuthService.passwordReset(email)
+
+        return error
+    }
+
     async function signOut() {
         AuthService.signOut()
     }
@@ -53,7 +59,8 @@ export const AuthProvider = ({ children }) => {
             loading,
             checkIfEmailExists,
             signInWithEmail,
-            signUpWithEmail
+            signUpWithEmail,
+            passwordReset
         }}
         >
             {children}

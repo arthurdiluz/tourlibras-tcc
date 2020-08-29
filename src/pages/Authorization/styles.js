@@ -99,6 +99,17 @@ const styles = StyleSheet.create({
         color: WHITE_COLOR
     },
 
+    forgotPasswordButton: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        marginTop: 7
+    },
+
+    forgotPasswordText: {
+        color: WHITE_COLOR,
+        fontFamily: 'Poppins_400Regular',
+    },
+
     footerContainer: {
         width: '100%',
         overflow: 'hidden',
