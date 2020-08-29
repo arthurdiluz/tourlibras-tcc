@@ -12,7 +12,7 @@ import { debounce } from 'lodash'
 import { useAuth } from '../../context/auth'
 
 import styles, {
-    FOOTER_HEIGHT, MAIN_COLOR, SECONDARY_COLOR, WHITE_COLOR
+    FOOTER_HEIGHT, MAIN_COLOR, SECONDARY_COLOR, WHITE_COLOR, ICON_SIZE
 } from './styles'
 
 export default function Authorization() {
@@ -28,6 +28,9 @@ export default function Authorization() {
     const footerAnim = useRef(new Animated.Value(FOOTER_HEIGHT)).current
     const buttonAnim = useRef(new Animated.Value(0)).current
     const AnimatedButton = Animated.createAnimatedComponent(RectButton)
+
+    const iconAnim = useRef(new Animated.Value(ICON_SIZE)).current
+    const AnimatedEvilIcons = Animated.createAnimatedComponent(EvilIcons)
 
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', keyboardDidShow)
@@ -55,12 +58,22 @@ export default function Authorization() {
             toValue: 0,
             useNativeDriver: false
         }).start()
+        Animated.timing(iconAnim, {
+            duration: event.duration + 200,
+            toValue: 0,
+            useNativeDriver: false
+        }).start()
     }
 
     const keyboardDidHide = (event) => {
         Animated.timing(footerAnim, {
             duration: event.duration,
             toValue: FOOTER_HEIGHT,
+            useNativeDriver: false
+        }).start()
+        Animated.timing(iconAnim, {
+            duration: event.duration + 200,
+            toValue: ICON_SIZE,
             useNativeDriver: false
         }).start()
     }
@@ -114,7 +127,7 @@ export default function Authorization() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <EvilIcons name="user" size={150} color="white" />
+                <AnimatedEvilIcons name="user" style={{ fontSize: iconAnim }} color="white" />
             </View>
             <View style={styles.formContainer}>
                 <Text style={styles.headerText}>

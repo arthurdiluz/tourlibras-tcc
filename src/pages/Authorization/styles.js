@@ -5,6 +5,7 @@ export const MAIN_COLOR = '#00BFFF'
 export const SECONDARY_COLOR = 'rgba(51, 101, 138, 1)'
 export const WHITE_COLOR = 'rgba(255, 255, 255, 1)'
 export const FOOTER_HEIGHT = 115
+export const ICON_SIZE = 150
 
 const styles = StyleSheet.create({
     container: {
