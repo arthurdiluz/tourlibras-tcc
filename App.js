@@ -1,7 +1,12 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { AppLoading } from 'expo'
-import { Poppins_400Regular, Poppins_700Bold, useFonts } from '@expo-google-fonts/poppins' /* eslint-disable-line camelcase */
+import {
+    Poppins_400Regular, /* eslint-disable-line camelcase */
+    Poppins_700Bold, /* eslint-disable-line camelcase */
+    Poppins_600SemiBold, /* eslint-disable-line camelcase */
+    useFonts
+} from '@expo-google-fonts/poppins'
 
 import { AuthProvider } from './src/context/auth'
 
@@ -10,6 +15,7 @@ import Routes from './src/routes'
 export default function App() {
     const [fontsLoaded] = useFonts({
         Poppins_400Regular,
+        Poppins_600SemiBold,
         Poppins_700Bold
     })
 

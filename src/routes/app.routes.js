@@ -1,14 +1,17 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Profile from '../pages/Profile'
+import HomeTabs from './homeTabs.routes'
 
 const AppStack = createStackNavigator()
 
 function AppRoutes() {
     return (
-        <AppStack.Navigator>
-            <AppStack.Screen name="Profile" component={Profile} />
+        <AppStack.Navigator headerMode="none">
+            <AppStack.Screen name="Home" component={HomeTabs} />
+            {/* Another person's profile page */}
+            {/* Configs page */}
+            {/* Lesson page */}
         </AppStack.Navigator>
     )
 }
