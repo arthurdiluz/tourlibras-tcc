@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: DIVISION_COLOR,
         flexDirection: 'row',
-        maxHeight: 100
+        height: 82
     },
 
     headerLeft: {

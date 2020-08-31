@@ -2,24 +2,31 @@ import React from 'react'
 import {
     View, Text, Image, ScrollView
 } from 'react-native'
-import { RectButton } from 'react-native-gesture-handler'
+import { BorderlessButton } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
-import { AntDesign, MaterialIcons } from '@expo/vector-icons'
-import { useAuth } from '../../context/auth'
+import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import Header from '../../components/Header'
 
 import styles from './styles'
 
 function Profile() {
-    const { signOut } = useAuth()
+    const navigation = useNavigation()
 
-    function handleSignOut() {
-        signOut()
+    function handleNavigationToOptionsPage() {
+        navigation.navigate('Options')
     }
 
     return (
         <View style={styles.container}>
-            <Header title="Perfil" />
+            <Header
+                title="Perfil"
+                headerRight={(
+                    <BorderlessButton onPress={handleNavigationToOptionsPage}>
+                        <FontAwesome name="gear" size={28} color="#00BFFF" />
+                    </BorderlessButton>
+                )}
+            />
 
             <ScrollView>
                 <View style={styles.profileInfo}>
@@ -99,10 +106,6 @@ function Profile() {
                     </View>
                 </View>
             </ScrollView>
-
-            {/* <RectButton onPress={handleSignOut} title="Sign Out">
-                <Text>Logout</Text>
-            </RectButton> */}
         </View>
     )
 }
