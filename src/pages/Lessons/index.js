@@ -35,7 +35,7 @@ function Lessons() {
                     <View style={styles.lessonView}>
                         <View>
                             <LessonButton
-                                size={125}
+                                size={100}
                                 avatarUrl="https://avatars2.githubusercontent.com/u/37125288?s=400&u=927021726c60d62b02e7d0db0e25ed3ea940e64a&v=4"
                                 progress={1}
                                 level={1}
@@ -45,7 +45,7 @@ function Lessons() {
                         </View>
                         <View>
                             <LessonButton
-                                size={125}
+                                size={100}
                                 avatarUrl="https://avatars2.githubusercontent.com/u/37125288?s=400&u=927021726c60d62b02e7d0db0e25ed3ea940e64a&v=4"
                                 progress={1}
                                 level={1}

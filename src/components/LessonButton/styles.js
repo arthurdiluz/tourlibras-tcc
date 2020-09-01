@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native'
 
-const WHITE_COLOR = '#FFF'
-
 const styles = StyleSheet.create({
     progressBarSvg: {
         transform: [{ rotateZ: '45deg' }]

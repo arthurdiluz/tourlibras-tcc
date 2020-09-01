@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native'
 
 const WHITE_COLOR = '#FFF'
-const LIGHT_GRAY_COLOR = '#828282'
 const DARK_GRAY_COLOR = '#444442'
 
 const styles = StyleSheet.create({
@@ -36,7 +35,8 @@ const styles = StyleSheet.create({
     // }
 
     lessonsContainer: {
-        paddingVertical: 10
+        paddingVertical: 10,
+        paddingHorizontal: 25
     },
 
     lessonView: {
