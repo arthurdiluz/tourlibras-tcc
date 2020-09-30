@@ -11,8 +11,9 @@ import { EvilIcons } from '@expo/vector-icons'
 import { debounce } from 'lodash'
 import { useAuth } from '../../context/auth'
 
+import { MAIN_COLOR, SECONDARY_COLOR, WHITE_COLOR } from '../../../styles.global'
 import styles, {
-    FOOTER_HEIGHT, MAIN_COLOR, SECONDARY_COLOR, WHITE_COLOR, ICON_SIZE
+    FOOTER_HEIGHT, ICON_SIZE
 } from './styles'
 
 export default function Authorization() {

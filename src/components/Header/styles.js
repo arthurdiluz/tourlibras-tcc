@@ -1,9 +1,7 @@
 import { StyleSheet } from 'react-native'
-
 import Constants from 'expo-constants'
 
-const DIVISION_COLOR = 'rgba(0, 0, 0, 0.1)'
-export const MAIN_COLOR = '#00BFFF'
+import { DIVISION_COLOR, MAIN_COLOR } from '../../../styles.global'
 
 const styles = StyleSheet.create({
     container: {

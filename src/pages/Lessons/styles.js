@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-const WHITE_COLOR = '#FFF'
-const DARK_GRAY_COLOR = '#444442'
+import { WHITE_COLOR, DARK_GRAY_COLOR } from '../../../styles.global'
 
 const styles = StyleSheet.create({
     container: {

@@ -6,6 +6,7 @@ import { useAuth } from '../context/auth'
 
 import AppRoutes from './app.routes'
 import AuthRoutes from './auth.routes'
+import DevRoutes from './dev.routes'
 
 const styles = StyleSheet.create({
     container: {
@@ -28,7 +29,7 @@ function Routes() {
 
     return signed ? (
         <>
-            <AppRoutes />
+            <DevRoutes />
             <StatusBar style='dark' />
         </>
     ) : (

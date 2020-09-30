@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
 
-const RED_COLOR = '#FF0000'
-export const MAIN_COLOR = '#00BFFF'
-export const SECONDARY_COLOR = 'rgba(51, 101, 138, 1)'
-export const WHITE_COLOR = 'rgba(255, 255, 255, 1)'
+import {
+    MAIN_COLOR, WHITE_COLOR, RED_COLOR, SECONDARY_COLOR
+} from '../../../styles.global'
+
 export const FOOTER_HEIGHT = 115
 export const ICON_SIZE = 150
 

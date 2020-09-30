@@ -1,11 +1,7 @@
 import { StyleSheet } from 'react-native'
 import Constants from 'expo-constants'
 
-const RED_COLOR = '#FF0000'
-export const MAIN_COLOR = '#00BFFF'
-export const WHITE_COLOR = 'rgba(255, 255, 255, 1)'
-export const BLACK_COLOR = 'rgba(0, 0, 0, 1)'
-export const GREEN_COLOR = 'rgba(30, 252, 30, 1)'
+import { MAIN_COLOR, WHITE_COLOR, RED_COLOR } from '../../../styles.global'
 
 const styles = StyleSheet.create({
     container: {

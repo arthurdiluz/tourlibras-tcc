@@ -15,6 +15,7 @@
         "no-use-before-define": "off",
         "react/jsx-filename-extension": "off",
         "react/prop-types": "off",
+        "react/no-array-index-key": "off",
         "comma-dangle": "off",
         "padded-blocks": "off",
         "arrow-body-style": "off",
@@ -26,6 +27,7 @@
         "react-native/no-raw-text": 2,
         "react-native/no-single-element-style-arrays": 2,
         "linebreak-style": "off",
+        "no-shadow": "off",
         "semi": [
             "error",
             "never"

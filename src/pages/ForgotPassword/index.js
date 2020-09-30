@@ -9,9 +9,10 @@ import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 
 import { useAuth } from '../../context/auth'
 
-import styles, {
+import {
     WHITE_COLOR, GREEN_COLOR, MAIN_COLOR, BLACK_COLOR
-} from './styles'
+} from '../../../styles.global'
+import styles from './styles'
 
 function ForgotPassword() {
     const navigation = useNavigation()
