@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput } from 'react-native'
 import { RectButton, ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
@@ -14,9 +14,10 @@ import styles from './styles'
 
 function EditLevel({ route: { params: { levelId } } }) {
     const {
-        levels, addNewQuestion, removeQuestion, changeQuestionField
+        levels, addNewQuestion, removeQuestion, changeQuestionField, changeLevelField
     } = useLectureRegister()
     const navigation = useNavigation()
+    const [experience, setExperience] = useState('')
 
     useEffect(() => {
         console.log(levels)
@@ -55,7 +56,19 @@ function EditLevel({ route: { params: { levelId } } }) {
                 )}
             />
             <ScrollView>
+                <View style={styles.levelContainer}>
+                    <Text style={styles.experienceText}>Experiência</Text>
+                        <TextInput
+                            style={styles.experienceInput}
+                            keyboardType="number-pad"
+                            placeholder="Digite a quantidade de XP ao completar"
+                            placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                            onChange={changeLevelField(levelId, 'experience')}
+                            value={levels[levelId].experience}
+                        />
+                </View>
                 <View style={styles.questionsContainer}>
+                        <Text style={styles.questionsContainerTitle}>Exercícios do nível {levelId + 1}</Text>
                     {levels[levelId].questions.map((question, questionId) => (
                         <View
                             key={questionId}

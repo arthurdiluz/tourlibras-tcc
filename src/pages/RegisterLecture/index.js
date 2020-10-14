@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 import { RectButton, ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { FirebaseDatabase } from '../../integrations/firebase'
 
 import { FontAwesome, Entypo } from '@expo/vector-icons'
 
@@ -17,14 +18,12 @@ import styles from './styles'
 
 function RegisterLesson() {
     const {
-        levels, addNewLevel, removeLevel, changeLevelName
+        levels, addNewLevel, removeLevel
     } = useLectureRegister()
     const navigation = useNavigation()
     const [name, setName] = useState('')
-    const [experience, setExperience] = useState('')
 
     useEffect(() => {
-        console.log(levels)
     }, [levels])
 
     function handleAddLevel() {
@@ -46,7 +45,14 @@ function RegisterLesson() {
     }
 
     function handleSave() {
-        console.log('SALVAR')
+        const lecture = { name, levels: levels }
+
+        console.log(lecture);
+
+        FirebaseDatabase.ref().child('lectures').push(lecture);
+        // console.log(lectureKey)
+
+        // FirebaseDatabase.ref().push('lectures');
     }
 
     return (
@@ -80,17 +86,6 @@ function RegisterLesson() {
                         autoCapitalize="sentences"
                         onChange={(event) => {
                             setName(event.nativeEvent.text)
-                        }}
-                    />
-
-                    <Text style={styles.experienceText}>Experiência</Text>
-                    <TextInput
-                        style={styles.experienceInput}
-                        keyboardType="number-pad"
-                        placeholder="Digite a quantidade de XP ao completar"
-                        placeholderTextColor="rgba(0, 0, 0, 0.4)"
-                        onChange={(event) => {
-                            setExperience(event.nativeEvent.text)
                         }}
                     />
                 </View>

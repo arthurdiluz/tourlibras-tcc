@@ -24,6 +24,22 @@ const styles = StyleSheet.create({
         transform: [{ translateY: 2 }]
     },
 
+    levelContainer: {
+        width: '100%',
+        padding: 20,
+        paddingBottom: 30,
+        borderBottomWidth: 2,
+        borderColor: DIVISION_COLOR
+    },
+
+    questionsContainerTitle: {
+        fontSize: 20,
+        fontFamily: 'Poppins_600SemiBold',
+        color: DARK_GRAY_COLOR,
+        marginLeft: 10,
+        marginTop: 10
+    },
+
     questionsContainer: {
         flex: 1,
         padding: 20,
@@ -67,6 +83,23 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_400Regular',
         color: DARK_GRAY_COLOR,
         marginLeft: 10
+    },
+
+    experienceText: {
+        fontSize: 20,
+        fontFamily: 'Poppins_600SemiBold',
+        color: DARK_GRAY_COLOR,
+        marginLeft: 10
+    },
+
+    experienceInput: {
+        borderWidth: 2,
+        borderBottomWidth: 4,
+        borderColor: DIVISION_COLOR,
+        borderRadius: 12,
+        paddingVertical: 8,
+        paddingHorizontal: 20,
+        marginTop: 10
     },
 
     levelButtonsContainer: {

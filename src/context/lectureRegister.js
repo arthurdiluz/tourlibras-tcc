@@ -6,12 +6,13 @@ const LectureRegisterContext = createContext({})
 
 export const LectureRegisterProvider = ({ children }) => {
     const [levels, setLevels] = useState([{
+        experience: 0,
         questions: [{ description: '', media: '', options: [{ text: '', media: '', isCorrect: false }] }]
     }])
 
     function addNewLevel() {
         setLevels((levels) => {
-            const newLevels = levels.concat([{ questions: [{ description: '', media: '', options: [{ text: '', media: '', isCorrect: false }] }] }])
+            const newLevels = levels.concat([{ experience: 0, questions: [{ description: '', media: '', options: [{ text: '', media: '', isCorrect: false }] }] }])
             return newLevels
         })
     }
@@ -20,10 +21,10 @@ export const LectureRegisterProvider = ({ children }) => {
         setLevels((levels) => levels.filter((currentLevel, currentLevelId) => levelId !== currentLevelId)) /* eslint-disable-line*/
     }
 
-    const changeLevelName = (levelId) => (event) => {
+    const changeLevelField = (levelId, fieldName) => (event) => {
         const newLevels = levels.map((level, currentLevelId) => {
             if (levelId !== currentLevelId) return level
-            const newLevel = { ...level, name: event.nativeEvent.text }
+            const newLevel = { ...level, [fieldName]: event.nativeEvent.text }
             return (newLevel)
         })
 
@@ -174,7 +175,7 @@ export const LectureRegisterProvider = ({ children }) => {
             levels,
             addNewLevel,
             removeLevel,
-            changeLevelName,
+            changeLevelField,
             addNewQuestion,
             removeQuestion,
             changeQuestionField,
