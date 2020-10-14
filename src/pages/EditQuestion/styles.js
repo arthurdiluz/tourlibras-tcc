@@ -62,6 +62,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     },
 
+    isCorrectCheckboxContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 15
+    },
+
+    isCorrectText: {
+        fontSize: 16,
+        fontFamily: 'Poppins_400Regular',
+        color: DARK_GRAY_COLOR,
+        marginLeft: 10,
+        marginRight: 10
+    },
+
     mediaText: {
         fontSize: 16,
         fontFamily: 'Poppins_400Regular',

@@ -47,8 +47,6 @@ function RegisterLesson() {
     function handleSave() {
         const lecture = { name, levels: levels }
 
-        console.log(lecture);
-
         FirebaseDatabase.ref().child('lectures').push(lecture);
         // console.log(lectureKey)
 

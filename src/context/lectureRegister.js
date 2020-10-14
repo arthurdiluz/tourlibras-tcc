@@ -139,6 +139,13 @@ export const LectureRegisterProvider = ({ children }) => {
     // }
 
     const changeOptionField = (levelId, questionId, optionId, fieldName) => (event) => {
+        let value = undefined
+        if(fieldName === 'isCorrect') {
+            value = event
+        } else {
+            value = event.nativeEvent.text
+        }
+
         const newLevels = levels.map((currentLevel, currentLevelId) => {
             if (levelId !== currentLevelId) return currentLevel
 
@@ -154,7 +161,7 @@ export const LectureRegisterProvider = ({ children }) => {
 
                             const newOption = {
                                 ...currentOption,
-                                [fieldName]: event.nativeEvent.text
+                                [fieldName]: value
                             }
                             return (newOption)
                         })

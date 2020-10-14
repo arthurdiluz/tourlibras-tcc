@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import {
     View, Text, ScrollView, TextInput
 } from 'react-native'
+import CheckBox from '@react-native-community/checkbox';
 import { RectButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
@@ -64,6 +65,14 @@ function EditQuestion({ route: { params: { levelId, questionId } } }) {
                                 onChange={changeOptionField(levelId, questionId, optionId, 'text')}
                                 value={levels[levelId].questions[questionId].options[optionId].text}
                             />
+                            <View style={styles.isCorrectCheckboxContainer}>
+                                <Text style={styles.isCorrectText}>É a alternativa correta?</Text>
+                                <CheckBox
+                                    disabled={false}
+                                    value={levels[levelId].questions[questionId].options[optionId].isCorrect}
+                                    onValueChange={changeOptionField(levelId, questionId, optionId, 'isCorrect')}
+                                />
+                            </View>
 
                             <RectButton
                                 style={styles.deleteButton}

@@ -64,11 +64,11 @@ function EditLevel({ route: { params: { levelId } } }) {
                             placeholder="Digite a quantidade de XP ao completar"
                             placeholderTextColor="rgba(0, 0, 0, 0.4)"
                             onChange={changeLevelField(levelId, 'experience')}
-                            value={levels[levelId].experience}
+                            value={levels[levelId].experience.toString()}
                         />
                 </View>
                 <View style={styles.questionsContainer}>
-                        <Text style={styles.questionsContainerTitle}>Exercícios do nível {levelId + 1}</Text>
+                        <Text style={styles.questionsContainerTitle}>Exercícios</Text>
                     {levels[levelId].questions.map((question, questionId) => (
                         <View
                             key={questionId}
