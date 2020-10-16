@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput } from 'react-native'
-import { RectButton, ScrollView } from 'react-native-gesture-handler'
+import { Image, Button, View, Text, TextInput } from 'react-native'
+import { BorderlessButton, RectButton, ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import * as ImagePicker from 'expo-image-picker'
+
 
 // https://goshakkk.name/array-form-inputs/
 
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { useLectureRegister } from '../../context/lectureRegister'
 import Header from '../../components/Header'
 
-import { WHITE_COLOR } from '../../../styles.global'
+import { DARK_GRAY_COLOR, DIVISION_COLOR, LIGHT_GRAY_COLOR, WHITE_COLOR } from '../../../styles.global'
 import styles from './styles'
 
 function EditLevel({ route: { params: { levelId } } }) {
@@ -17,7 +19,16 @@ function EditLevel({ route: { params: { levelId } } }) {
         levels, addNewQuestion, removeQuestion, changeQuestionField, changeLevelField
     } = useLectureRegister()
     const navigation = useNavigation()
-    const [experience, setExperience] = useState('')
+
+    useEffect(() => {
+        // (async () => {
+        //     console.log('tentando pegar permissão')
+        //     const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
+        //     if (status !== 'granted') {
+        //         alert('Sorry, we need camera roll permissions to make this work!')
+        //     }
+        // })()
+    }, [])
 
     useEffect(() => {
         console.log(levels)
@@ -42,6 +53,24 @@ function EditLevel({ route: { params: { levelId } } }) {
         navigation.goBack()
     }
 
+    async function pickImage(levelId, questionId, fieldName) {
+
+        const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
+        if (status !== 'granted') {
+            alert('Sinto muito, precisamos dessas permissões para esse recurso funcionar!')
+            return
+        }
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            quality: 1,
+        })
+    
+        if (!result.cancelled) {
+            changeQuestionField(levelId, questionId, fieldName, result.uri)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Header
@@ -63,7 +92,7 @@ function EditLevel({ route: { params: { levelId } } }) {
                             keyboardType="number-pad"
                             placeholder="Digite a quantidade de XP ao completar"
                             placeholderTextColor="rgba(0, 0, 0, 0.4)"
-                            onChange={changeLevelField(levelId, 'experience')}
+                            onChange={(event) => changeLevelField(levelId, 'experience', event.nativeEvent.text)}
                             value={levels[levelId].experience.toString()}
                         />
                 </View>
@@ -76,12 +105,21 @@ function EditLevel({ route: { params: { levelId } } }) {
                         >
                             <Text style={styles.questionTitle}>{`Exercício ${questionId + 1}`}</Text>
                             <Text style={styles.mediaText}>Mídia</Text>
+                            {question.media ? (
+                                <TouchableOpacity style={styles.pickedImageButton} onPress={() => pickImage(levelId, questionId, 'media')}>
+                                        <Image source={{ uri: question.media }} style={{ width: 200, height: 200 }} />
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity style={styles.imagePickerButton} onPress={() => pickImage(levelId, questionId, 'media')}>
+                                        <FontAwesome5 name="camera" size={24} color={LIGHT_GRAY_COLOR} />
+                                </TouchableOpacity>
+                            )}
                             <Text style={styles.descriptionText}>Enunciado</Text>
                             <TextInput
                                 style={styles.descriptionInput}
                                 placeholder="Digite o enunciado do exercício"
                                 placeholderTextColor="rgba(0, 0, 0, 0.4)"
-                                onChange={changeQuestionField(levelId, questionId, 'description')}
+                                onChange={(event) => changeQuestionField(levelId, questionId, 'description', event.nativeEvent.text)}
                                 value={levels[levelId].questions[questionId].description}
                             />
 

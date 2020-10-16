@@ -47,6 +47,27 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
 
+    imagePickerButton: {
+        alignSelf: 'center',
+        borderWidth: 2,
+        borderColor: DIVISION_COLOR,
+        borderRadius: 50,
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+
+    pickedImageButton: {
+        alignSelf: 'center',
+        borderWidth: 2,
+        borderColor: DIVISION_COLOR,
+        borderRadius: 100,
+        marginBottom: 10,
+        overflow: "hidden"
+    },
+
     textText: {
         fontSize: 16,
         fontFamily: 'Poppins_400Regular',

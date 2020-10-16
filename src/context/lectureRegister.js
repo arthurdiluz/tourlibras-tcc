@@ -21,10 +21,10 @@ export const LectureRegisterProvider = ({ children }) => {
         setLevels((levels) => levels.filter((currentLevel, currentLevelId) => levelId !== currentLevelId)) /* eslint-disable-line*/
     }
 
-    const changeLevelField = (levelId, fieldName) => (event) => {
+    function changeLevelField(levelId, fieldName, value) {
         const newLevels = levels.map((level, currentLevelId) => {
             if (levelId !== currentLevelId) return level
-            const newLevel = { ...level, [fieldName]: event.nativeEvent.text }
+            const newLevel = { ...level, [fieldName]: value }
             return (newLevel)
         })
 
@@ -58,22 +58,39 @@ export const LectureRegisterProvider = ({ children }) => {
         })
     }
 
-    const changeQuestionField = (levelId, questionId, fieldName) => (event) => {
+    function changeQuestionField(levelId, questionId, fieldName, value) {
         const newLevels = levels.map((currentLevel, currentLevelId) => {
             if (levelId !== currentLevelId) return currentLevel
-
+        
             const newQuestions = currentLevel.questions.map((question, currentQuestionId) => {
                 if (questionId !== currentQuestionId) return question
-                const newQuestion = { ...question, [fieldName]: event.nativeEvent.text }
+                const newQuestion = { ...question, [fieldName]: value }
                 return (newQuestion)
             })
-
+        
             const newLevel = { ...currentLevel, questions: newQuestions }
             return (newLevel)
         })
-
+        
         setLevels(newLevels)
     }
+
+    // const changeQuestionField = (levelId, questionId, fieldName) => (event) => {
+    //     const newLevels = levels.map((currentLevel, currentLevelId) => {
+    //         if (levelId !== currentLevelId) return currentLevel
+
+    //         const newQuestions = currentLevel.questions.map((question, currentQuestionId) => {
+    //             if (questionId !== currentQuestionId) return question
+    //             const newQuestion = { ...question, [fieldName]: event.nativeEvent.text }
+    //             return (newQuestion)
+    //         })
+
+    //         const newLevel = { ...currentLevel, questions: newQuestions }
+    //         return (newLevel)
+    //     })
+
+    //     setLevels(newLevels)
+    // }
 
     function addNewOption(levelId, questionId) {
         setLevels((levels) => {
@@ -138,14 +155,7 @@ export const LectureRegisterProvider = ({ children }) => {
     //     setLevels(newLevels)
     // }
 
-    const changeOptionField = (levelId, questionId, optionId, fieldName) => (event) => {
-        let value = undefined
-        if(fieldName === 'isCorrect') {
-            value = event
-        } else {
-            value = event.nativeEvent.text
-        }
-
+    function changeOptionField(levelId, questionId, optionId, fieldName, value) {
         const newLevels = levels.map((currentLevel, currentLevelId) => {
             if (levelId !== currentLevelId) return currentLevel
 

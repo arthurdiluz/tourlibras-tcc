@@ -4,12 +4,14 @@ import {
 } from 'react-native'
 import { RectButton, ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { FirebaseDatabase } from '../../integrations/firebase'
+import { Firebase, FirebaseDatabase } from '../../integrations/firebase'
 
 import { FontAwesome, Entypo } from '@expo/vector-icons'
 
 import { useLectureRegister } from '../../context/lectureRegister'
+import Database from '../../services/Database'
 
+import getFileExtension from '../../utils/getFileExtension'
 import Header from '../../components/Header'
 // import LessonForm from '../../components/LessonForm'
 
@@ -44,13 +46,51 @@ function RegisterLesson() {
         console.log('VOLTAR')
     }
 
-    function handleSave() {
+    async function handleSave() {
         const lecture = { name, levels: levels }
 
-        FirebaseDatabase.ref().child('lectures').push(lecture);
-        // console.log(lectureKey)
+        const lectureId = Database.insertLecture(lecture)
 
-        // FirebaseDatabase.ref().push('lectures');
+            try {
+
+                levels.forEach((level, levelId) => {
+                    level.questions.forEach((question, questionId) => {
+        
+                        if (question.media === "") {
+                            throw new Error('Image not found')
+                        }
+
+                        let imageId = `${levelId}-${questionId}`
+                        let fileExtension = getFileExtension(question.media);
+                        let fileName = `${imageId}.${fileExtension}`
+                        let databasePath = `lectures/${lectureId}/media/questions/${fileName}`
+                        
+                        Database.uploadImage(question.media, databasePath, (downloadUrl) => {
+                            Database.updateDbField(`lectures/${lectureId}/levels/${levelId}/questions/${questionId}`, 'media', downloadUrl)
+                        })
+        
+                        question.options.forEach((option, optionId) => {
+    
+                            if (option.media === "") {
+                                throw new Error('Image not found')
+                            }
+    
+                            imageId = `${levelId}-${questionId}-${optionId}`
+                            fileExtension = getFileExtension(option.media);
+                            fileName = `${imageId}.${fileExtension}`
+                            databasePath = `lectures/${lectureId}/media/options/${fileName}`
+
+                            Database.uploadImage(option.media, databasePath, (downloadUrl) => {
+                                Database.updateDbField(`lectures/${lectureId}/levels/${levelId}/questions/${questionId}/options/${optionId}`, 'media', downloadUrl)
+                            })
+                        })
+                    })          
+                })
+            } catch (error) {
+                console.log(error)
+                Database.revertChanges(lectureId)
+                return
+            }
     }
 
     return (

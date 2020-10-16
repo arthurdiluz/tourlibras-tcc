@@ -1,4 +1,5 @@
 import React from 'react'
+import { YellowBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import { AppLoading } from 'expo'
 import {
@@ -13,6 +14,8 @@ import { AuthProvider } from './src/context/auth'
 import Routes from './src/routes'
 
 export default function App() {
+    YellowBox.ignoreWarnings(['Setting a timer']);
+
     const [fontsLoaded] = useFonts({
         Poppins_400Regular,
         Poppins_600SemiBold,

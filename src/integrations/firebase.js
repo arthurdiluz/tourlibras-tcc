@@ -6,3 +6,4 @@ firebase.initializeApp(config.firebase)
 
 export const Firebase = firebase
 export const FirebaseDatabase = firebase.database()
+export const FirebaseStorage = firebase.storage()
