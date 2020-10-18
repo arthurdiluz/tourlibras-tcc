@@ -45,13 +45,4 @@ export default class DatabaseService {
         const lectureId = Firebase.database().ref().child('lectures').push(lecture).key
         return lectureId
     }
-
-    /**
-     * Register a subscription callback for changes of the currently authenticated user
-     *
-     * @param callback Called with the current authenticated user as first argument
-     */
-    // static subscribeAuthChange(callback) {
-    //     Firebase.auth().onAuthStateChanged(callback)
-    // }
 }

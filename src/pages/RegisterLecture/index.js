@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     View, Text, TextInput
 } from 'react-native'
 import { RectButton, ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { Firebase, FirebaseDatabase } from '../../integrations/firebase'
 
 import { FontAwesome, Entypo } from '@expo/vector-icons'
 
@@ -13,7 +12,6 @@ import Database from '../../services/Database'
 
 import getFileExtension from '../../utils/getFileExtension'
 import Header from '../../components/Header'
-// import LessonForm from '../../components/LessonForm'
 
 import { MAIN_COLOR, WHITE_COLOR } from '../../../styles.global'
 import styles from './styles'
@@ -24,9 +22,6 @@ function RegisterLesson() {
     } = useLectureRegister()
     const navigation = useNavigation()
     const [name, setName] = useState('')
-
-    useEffect(() => {
-    }, [levels])
 
     function handleAddLevel() {
         addNewLevel()
@@ -129,11 +124,6 @@ function RegisterLesson() {
                 </View>
                 <View style={styles.levelContainer}>
                     <Text style={styles.levelContainerTitle}>Níveis da aula</Text>
-                    {/* <FlatList
-                    data={levels}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.toString()}
-                /> */}
                     {levels.map((level, levelId) => (
                         <View key={levelId} style={styles.levelContent}>
                             <Text style={styles.levelText}>
@@ -141,11 +131,6 @@ function RegisterLesson() {
                                 {' '}
                                 {levelId + 1}
                             </Text>
-                            {/* <TextInput
-                                placeholder={`Level #${levelId + 1} name`}
-                                value={level.name}
-                                onChange={changeLevelname(levelId)}
-                            /> */}
                             <View style={styles.levelButtonsContainer}>
                                 <RectButton
                                     style={styles.editButton}

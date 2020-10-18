@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Image, Button, View, Text, TextInput } from 'react-native'
-import { BorderlessButton, RectButton, ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import React from 'react'
+import { Image, View, Text, TextInput } from 'react-native'
+import { RectButton, ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
-
-
-// https://goshakkk.name/array-form-inputs/
 
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { useLectureRegister } from '../../context/lectureRegister'
 import Header from '../../components/Header'
 
-import { DARK_GRAY_COLOR, DIVISION_COLOR, LIGHT_GRAY_COLOR, WHITE_COLOR } from '../../../styles.global'
+import { LIGHT_GRAY_COLOR, WHITE_COLOR } from '../../../styles.global'
 import styles from './styles'
 
 function EditLevel({ route: { params: { levelId } } }) {
@@ -19,20 +16,6 @@ function EditLevel({ route: { params: { levelId } } }) {
         levels, addNewQuestion, removeQuestion, changeQuestionField, changeLevelField
     } = useLectureRegister()
     const navigation = useNavigation()
-
-    useEffect(() => {
-        // (async () => {
-        //     console.log('tentando pegar permissão')
-        //     const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
-        //     if (status !== 'granted') {
-        //         alert('Sorry, we need camera roll permissions to make this work!')
-        //     }
-        // })()
-    }, [])
-
-    useEffect(() => {
-        console.log(levels)
-    }, [levels])
 
     function handleAddQuestion(levelId) {
         addNewQuestion(levelId)

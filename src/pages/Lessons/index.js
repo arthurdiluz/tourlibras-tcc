@@ -5,7 +5,6 @@ import { ScrollView } from 'react-native-gesture-handler'
 import Header from '../../components/Header'
 import LessonButton from '../../components/LessonButton'
 
-// import { AntDesign, MaterialIcons } from '@expo/vector-icons'
 import styles from './styles'
 
 function Lessons() {
