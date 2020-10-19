@@ -145,6 +145,14 @@ const styles = StyleSheet.create({
         borderColor: DIVISION_COLOR
     },
 
+    emptyBadgeTitle: {
+        fontSize: 16,
+        fontFamily: 'Poppins_700Bold',
+        color: LIGHT_GRAY_COLOR,
+        alignSelf: 'center',
+        padding: 15
+    },
+
     badgeTitle: {
         fontSize: 20,
         fontFamily: 'Poppins_700Bold',

@@ -25,11 +25,11 @@ function Options() {
         <View style={styles.container}>
             <Header
                 title="Opções"
-                headerLeft={(
-                    <BorderlessButton onPress={handleNavigateBack}>
-                        <Entypo name="cross" size={30} color="rgba(0, 0, 0, 0.3)" />
-                    </BorderlessButton>
-                )}
+                // headerLeft={(
+                //     <BorderlessButton onPress={handleNavigateBack}>
+                //         <Entypo name="cross" size={30} color="rgba(0, 0, 0, 0.3)" />
+                //     </BorderlessButton>
+                // )}
             />
             <ScrollView style={styles.optionsContainer}>
                 <View style={styles.signOutContainer}>

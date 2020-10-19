@@ -1,20 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     View, Text, Image, ScrollView
 } from 'react-native'
 import { BorderlessButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
-import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons'
-import Header from '../../components/Header'
+import { AntDesign, MaterialIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 
+import Header from '../../components/Header'
+import Database from '../../services/Database'
+
+import { LIGHT_GRAY_COLOR, MAIN_COLOR } from '../../../styles.global'
 import styles from './styles'
 
-function Profile() {
+function Profile({ route: { params: { userId } } }) {
     const navigation = useNavigation()
+    const [userDetails, setUserDetails] = useState({})
+    const [userBadges, setUserBadges] = useState({})
 
-    function handleNavigationToOptionsPage() {
-        navigation.navigate('Options')
+    useEffect(() => {
+        Database.getUserDetails(userId).then((response) => {
+            setUserDetails(response)
+        })
+        Database.getUserBadges(userId).then((response) => {
+            setUserBadges(response)
+        })
+    }, [])
+
+    useEffect(() => {
+        // console.log(userBadges)
+    }, [userBadges])
+
+    function formatDate(dateString) {
+        const date = new Date(dateString)
+
+        const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril',
+                        'Maio', 'Junho', 'Julho', 'Agosto',
+                        'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+
+        const day = date.getUTCDate()
+        const month = months[date.getUTCMonth()]
+        const year = date.getUTCFullYear()
+
+        const formattedDate = `${day} de ${month} de ${year}`
+        return formattedDate
+    }
+
+    function handleNavigationToEditProfile() {
+        navigation.navigate('EditProfile')
     }
 
     return (
@@ -22,8 +55,8 @@ function Profile() {
             <Header
                 title="Perfil"
                 headerRight={(
-                    <BorderlessButton onPress={handleNavigationToOptionsPage}>
-                        <FontAwesome name="gear" size={28} color="#00BFFF" />
+                    <BorderlessButton onPress={handleNavigationToEditProfile}>
+                        <FontAwesome5 name="edit" size={26} color={MAIN_COLOR} />
                     </BorderlessButton>
                 )}
             />
@@ -31,11 +64,15 @@ function Profile() {
             <ScrollView>
                 <View style={styles.profileInfo}>
                     <View style={styles.basicInfo}>
-                        <Text style={styles.name}>Gabriel Haruki Gomes Satô</Text>
-                        <Text style={styles.date}>Começou em Fevereiro de 2018</Text>
+                    <Text style={styles.name}>{userDetails ? userDetails.name : ''}</Text>
+                        <Text style={styles.date}>{`Entrou em ${formatDate(userDetails.signedUpAt)}`}</Text>
                     </View>
                     <View style={styles.profileImageContainer}>
-                        <Image style={styles.profileImage} source={{ uri: 'https://avatars2.githubusercontent.com/u/37125288?s=400&u=927021726c60d62b02e7d0db0e25ed3ea940e64a&v=4' }} />
+                        {userDetails.avatar ? (
+                                <Image style={styles.profileImage} source={{ uri: userDetails.avatar }} />
+                            ) : (
+                                <FontAwesome name="user-circle" size={100} color={LIGHT_GRAY_COLOR} />
+                        )}
                     </View>
                 </View>
 
@@ -45,14 +82,14 @@ function Profile() {
                         <View style={styles.experienceContainer}>
                             <AntDesign style={styles.experienceIcon} name="star" size={30} color="#FBD513" />
                             <View style={styles.experienceInfo}>
-                                <Text style={styles.experienceTitle}>7678</Text>
+                                <Text style={styles.experienceTitle}>{userDetails.experience}</Text>
                                 <Text style={styles.experienceDescription}>Experiência</Text>
                             </View>
                         </View>
                         <View style={styles.moneyContainer}>
                             <MaterialIcons name="attach-money" size={30} color="#00D200" />
                             <View style={styles.moneyInfo}>
-                                <Text style={styles.moneyTitle}>7678</Text>
+                                <Text style={styles.moneyTitle}>{userDetails.money}</Text>
                                 <Text style={styles.moneyDescription}>Dinheiro</Text>
                             </View>
                         </View>
@@ -62,47 +99,20 @@ function Profile() {
                 <View style={styles.badgesContainer}>
                     <Text style={styles.badgesText}>Medalhas</Text>
                     <View style={styles.badgesContent}>
-                        <View style={[styles.badgeContainer, styles.badgeBottomDivision]}>
-                            <View style={styles.badgeInfo}>
-                                <Text style={styles.badgeTitle}>Wildfire</Text>
-                                <Text style={styles.badgeDescription}>Reach a 30 day streak</Text>
+                        {userBadges ? (Object.keys(userBadges).map((badgeId, badgeIndex) => (
+                            <View key={badgeIndex} style={badgeIndex <= Object.length - 1 ? [styles.badgeContainer, styles.badgeBottomDivision] : styles.badgeContainer}>
+                                <View style={styles.badgeInfo}>
+                                    <Text style={styles.badgeTitle}>{userBadges[badgeId].title}</Text>
+                                    <Text style={styles.badgeDescription}>{userBadges[badgeId].text}</Text>
+                                </View>
                             </View>
-                        </View>
-
-                        <View style={[styles.badgeContainer, styles.badgeBottomDivision]}>
-                            <View style={styles.badgeInfo}>
-                                <Text style={styles.badgeTitle}>Wildfire</Text>
-                                <Text style={styles.badgeDescription}>Reach a 30 day streak</Text>
+                        ))) : (
+                            <View style={styles.badgeContainer}>
+                                <View style={styles.badgeInfo}>
+                                    <Text style={styles.emptyBadgeTitle}>Nenhuma medalha{'\n'} foi encontrada :(</Text>
+                                </View>
                             </View>
-                        </View>
-
-                        <View style={[styles.badgeContainer, styles.badgeBottomDivision]}>
-                            <View style={styles.badgeInfo}>
-                                <Text style={styles.badgeTitle}>Wildfire</Text>
-                                <Text style={styles.badgeDescription}>Reach a 30 day streak</Text>
-                            </View>
-                        </View>
-
-                        <View style={[styles.badgeContainer, styles.badgeBottomDivision]}>
-                            <View style={styles.badgeInfo}>
-                                <Text style={styles.badgeTitle}>Wildfire</Text>
-                                <Text style={styles.badgeDescription}>Reach a 30 day streak</Text>
-                            </View>
-                        </View>
-
-                        <View style={[styles.badgeContainer, styles.badgeBottomDivision]}>
-                            <View style={styles.badgeInfo}>
-                                <Text style={styles.badgeTitle}>Wildfire</Text>
-                                <Text style={styles.badgeDescription}>Reach a 30 day streak</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.badgeContainer}>
-                            <View style={styles.badgeInfo}>
-                                <Text style={styles.badgeTitle}>Wildfire</Text>
-                                <Text style={styles.badgeDescription}>Reach a 30 day streak</Text>
-                            </View>
-                        </View>
+                        )}
                     </View>
                 </View>
             </ScrollView>

@@ -1,6 +1,6 @@
 import { Firebase } from "../integrations/firebase"
 
-export default class DatabaseService {
+export default class Database {
     static async uploadImage(imageFile, databasePath, callback) {
         const storageRef = Firebase.storage().ref()
 
@@ -35,14 +35,44 @@ export default class DatabaseService {
         })
     }
 
-    static async revertChanges(lectureId) {
-        Firebase.database().ref().child(`lectures/${lectureId}`).remove()
-        console.log('deletada')
-        // Firebase storage image uploads cant be reverted because we dont have uploadTask references
+    static async createUserDetailsOnDb(user) {
+        Firebase.database().ref().child(`userDetails/${user.uid}`).set({
+            name: user.displayName || 'Usuário',
+            avatar: user.photoURL,
+            signedUpAt: new Date().toISOString(),
+            experience: 0,
+            money: 0
+        })
+    }
+
+    static async checkIfExistUserDetail(userId) {
+        const response = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
+
+        if(response.exists()) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    static async getUserDetails(userId) {
+        const userDetails = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
+        return userDetails.val()
+    }
+
+    static async getUserBadges(userId) {
+        const userBadges = await Firebase.database().ref(`earnedBadges/${userId}`).once('value', (snapshot) => (snapshot))
+        return userBadges.val()
     }
 
     static async insertLecture(lecture) {
         const lectureId = Firebase.database().ref().child('lectures').push(lecture).key
         return lectureId
+    }
+
+    static async cancelInsertLecture(lectureId) {
+        Firebase.database().ref().child(`lectures/${lectureId}`).remove()
+        console.log('deletada')
+        // Firebase storage image uploads cant be reverted because we dont have uploadTask references
     }
 }

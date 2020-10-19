@@ -3,6 +3,7 @@ import React, {
 } from 'react'
 
 import AuthService from '../services/Auth'
+import Database from '../services/Database'
 
 const AuthContext = createContext({})
 
@@ -12,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
     async function authWithFacebook() {
         setLoading(true)
-        AuthService.authWithFacebook()
+        await AuthService.authWithFacebook()
     }
 
     async function signInWithEmail(email, password) {
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
 
     async function signUpWithEmail(email, password) {
         const error = await AuthService.signUpWithEmail(email, password)
+        await Database.createUserDetailsOnDb(user.uid)
 
         return error
     }
@@ -44,9 +46,17 @@ export const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        AuthService.subscribeAuthChange((response) => {
+        AuthService.subscribeAuthChange(async (response) => {
             setUser(response)
             setLoading(false)
+
+            if(response) {
+                const res = await Database.checkIfExistUserDetail(response.uid)
+
+                if(!res) {
+                    await Database.createUserDetailsOnDb(response)
+                }
+            }
         })
     }, [])
 

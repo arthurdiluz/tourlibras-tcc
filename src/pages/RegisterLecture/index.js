@@ -83,7 +83,7 @@ function RegisterLesson() {
                 })
             } catch (error) {
                 console.log(error)
-                Database.revertChanges(lectureId)
+                Database.cancelInsertLecture(lectureId)
                 return
             }
     }
