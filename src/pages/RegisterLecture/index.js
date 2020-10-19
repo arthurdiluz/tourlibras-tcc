@@ -44,7 +44,7 @@ function RegisterLesson() {
     async function handleSave() {
         const lecture = { name, levels: levels }
 
-        const lectureId = Database.insertLecture(lecture)
+        const lectureId = await Database.insertLecture(lecture)
 
             try {
 
