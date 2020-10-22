@@ -1,6 +1,8 @@
 import { Firebase } from "../integrations/firebase"
 
 export default class Database {
+    static timestamp = Firebase.database.ServerValue.TIMESTAMP
+
     static async uploadImage(imageFile, databasePath, callback) {
         const storageRef = Firebase.storage().ref()
 
@@ -45,6 +47,10 @@ export default class Database {
         })
     }
 
+    static async storeUserProgressOnDb(user, postObject) {
+        Firebase.database().ref().child(`userProgress/${user.uid}`).push(postObject)
+    }
+
     static async checkIfExistUserDetail(userId) {
         const response = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
 
@@ -63,6 +69,11 @@ export default class Database {
     static async getUserBadges(userId) {
         const userBadges = await Firebase.database().ref(`earnedBadges/${userId}`).once('value', (snapshot) => (snapshot))
         return userBadges.val()
+    }
+
+    static async getLecturesList() {
+        const lecturesList = await Firebase.database().ref(`lectures`).once('value', (snapshot) => (snapshot))
+        return lecturesList.val()
     }
 
     static async insertLecture(lecture) {

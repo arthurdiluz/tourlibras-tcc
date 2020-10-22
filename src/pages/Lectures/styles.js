@@ -33,18 +33,18 @@ const styles = StyleSheet.create({
     //     marginLeft: 8
     // }
 
-    lessonsContainer: {
+    lecturesContainer: {
         paddingVertical: 10,
         paddingHorizontal: 25
     },
 
-    lessonView: {
+    lectureView: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         marginVertical: 12
     },
 
-    lessonText: {
+    lectureText: {
         fontSize: 18,
         fontFamily: 'Poppins_600SemiBold',
         color: DARK_GRAY_COLOR,

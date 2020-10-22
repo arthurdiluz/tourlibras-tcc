@@ -29,7 +29,7 @@ function Routes() {
 
     return signed ? (
         <>
-            <DevRoutes />
+            <AppRoutes />
             <StatusBar style='dark' />
         </>
     ) : (

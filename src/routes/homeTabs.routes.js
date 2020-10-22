@@ -2,7 +2,7 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import Profile from '../pages/Profile'
-import Lessons from '../pages/Lessons'
+import Lectures from '../pages/Lectures'
 import Options from '../pages/Options'
 
 import { useAuth } from '../context/auth'
@@ -15,7 +15,7 @@ function HomeTabs() {
     return (
         <AppTabs.Navigator>
             <AppTabs.Screen name="Profile" component={Profile} initialParams={{ userId: user.uid }} />
-            <AppTabs.Screen name="Lessons" component={Lessons} />
+            <AppTabs.Screen name="Lectures" component={Lectures} />
             <AppTabs.Screen name="Options" component={Options} />
         </AppTabs.Navigator>
     )

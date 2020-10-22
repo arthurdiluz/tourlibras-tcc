@@ -16,7 +16,7 @@ import Header from '../../components/Header'
 import { MAIN_COLOR, WHITE_COLOR } from '../../../styles.global'
 import styles from './styles'
 
-function RegisterLesson() {
+function RegisterLecture() {
     const {
         levels, addNewLevel, removeLevel
     } = useLectureRegister()
@@ -156,4 +156,4 @@ function RegisterLesson() {
     )
 }
 
-export default RegisterLesson
+export default RegisterLecture

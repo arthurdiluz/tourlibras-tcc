@@ -1,11 +1,12 @@
 import React from 'react'
 import { View, Image, Text } from 'react-native'
 import Svg, { Circle } from 'react-native-svg'
-
 import { RectButton } from 'react-native-gesture-handler'
+
+import { FontAwesome5 } from '@expo/vector-icons'; 
 import styles from './styles'
 
-function LessonButton({
+function LectureButton({
     size, mainStrokeColor = '#777', secondaryStrokeColor = '#CCC', strokeWidth = 8, progress = 0, avatarUrl, level = 1, levelBackgroundColor = '#FF0000', levelTextColor = '#FFF', onPress
 }) {
     const radius = (size - strokeWidth) / 2
@@ -35,14 +36,18 @@ function LessonButton({
                 strokeDashoffset={strokeDashOffset}
             />
             <RectButton onPress={onPress} style={styles.avatarContainer}>
-                <Image
-                    style={{
-                        height: size - strokeWidth * 4,
-                        width: size - strokeWidth * 4,
-                        borderRadius: size / 2
-                    }}
-                    source={{ uri: avatarUrl }}
-                />
+                {avatarUrl ? (
+                    <Image
+                        style={{
+                            height: size - strokeWidth * 4,
+                            width: size - strokeWidth * 4,
+                            borderRadius: size / 2
+                        }}
+                        source={{ uri: avatarUrl }}
+                    />
+                ) : (
+                    <FontAwesome5 name="book-reader" size={30} color={mainStrokeColor} />
+                )}
                 <View style={[
                     styles.levelContainer,
                     {
@@ -58,4 +63,4 @@ function LessonButton({
     )
 }
 
-export default LessonButton
+export default LectureButton

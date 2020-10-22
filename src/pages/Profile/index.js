@@ -65,7 +65,7 @@ function Profile({ route: { params: { userId } } }) {
                 <View style={styles.profileInfo}>
                     <View style={styles.basicInfo}>
                     <Text style={styles.name}>{userDetails ? userDetails.name : ''}</Text>
-                        <Text style={styles.date}>{`Entrou em ${formatDate(userDetails.signedUpAt)}`}</Text>
+                        <Text style={styles.date}>{userDetails ? `Entrou em ${formatDate(userDetails.signedUpAt)}` : ''}</Text>
                     </View>
                     <View style={styles.profileImageContainer}>
                         {userDetails.avatar ? (
