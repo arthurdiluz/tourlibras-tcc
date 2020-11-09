@@ -27,7 +27,7 @@ function Lectures() {
     return (
         <View style={styles.container}>
             <Header
-                title="Exercícios"
+                title="Aulas"
                 // headerLeft={(
                 //     <View style={styles.headerLeftContainer}>
                 //         <AntDesign name="star" size={28} color="#FBD513" />
