@@ -5,12 +5,16 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
+import { useAuth } from '../../context/auth'
+
 import styles from './styles'
 import Header from '../../components/Header'
+import Database from '../../services/Database'
 
-function LectureCompletion({ route: { params: { answers }}}) {
+function LectureCompletion({ route: { params: { answers, lectureId, levelId }}}) {
     const navigation = useNavigation()
     const [correctAnswersCount, setCorrectAnswersCount] = useState(0)
+    const { user } = useAuth()
 
     useEffect(() => {
         let correctAnswers = 0
@@ -20,6 +24,7 @@ function LectureCompletion({ route: { params: { answers }}}) {
             }
         })
         setCorrectAnswersCount(correctAnswers)
+        handleFirebaseExperienceProgressPost()
     }, [])
 
     useEffect(() => {
@@ -31,6 +36,10 @@ function LectureCompletion({ route: { params: { answers }}}) {
 
     function handleNavigationToLectures() {
         navigation.navigate('Lectures')
+    }
+
+    function handleFirebaseExperienceProgressPost() {
+        Database.storeExperienceProgressOnDb(user, lectureId, levelId)
     }
 
     return(

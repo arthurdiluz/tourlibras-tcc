@@ -51,6 +51,15 @@ export default class Database {
         Firebase.database().ref().child(`userProgress/${user.uid}`).push(postObject)
     }
 
+    static async storeExperienceProgressOnDb(user, lectureId, levelId) {
+        const currentExperience = await Firebase.database().ref(`userDetails/${user.uid}/experience`).once('value', (snapshot) => (snapshot))
+        const gainedExperience = await Firebase.database().ref(`lectures/${lectureId}/levels/${levelId}/experience`).once('value', (snapshot) => (snapshot))
+
+        const newExperience = Number(currentExperience.val()) + Number(gainedExperience.val())
+
+        Firebase.database().ref().child(`userDetails/${user.uid}/experience`).set(newExperience)
+    }
+
     static async checkIfExistUserDetail(userId) {
         const response = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
 

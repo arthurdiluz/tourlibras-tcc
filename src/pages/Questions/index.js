@@ -61,7 +61,7 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
     }
 
     function handleNavigationToLectureCompletionPage() {
-        navigation.navigate('LectureCompletion', { answers })
+        navigation.navigate('LectureCompletion', { answers, lectureId, levelId })
     }
 
     function handleFirebaseUserProgressPost() {
