@@ -45,18 +45,28 @@ export const AuthProvider = ({ children }) => {
         AuthService.signOut()
     }
 
+    async function checkIfUserAlreadyExists(user) {
+        const response = await Database.checkIfUserAlreadyExists(user.uid)
+        return response
+    }
+    
+    async function initializeUserInfos(user) {
+        await Database.createUserDetailsOnDb(user)
+        await Database.createUserProgressOnDb(user)
+    }
+    
     useEffect(() => {
         AuthService.subscribeAuthChange(async (response) => {
-            setUser(response)
-            setLoading(false)
-
             if(response) {
-                const res = await Database.checkIfExistUserDetail(response.uid)
-
+                const res = await checkIfUserAlreadyExists(response)
+    
                 if(!res) {
-                    await Database.createUserDetailsOnDb(response)
+                    await initializeUserInfos(response)
                 }
             }
+
+            setUser(response)
+            setLoading(false)
         })
     }, [])
 

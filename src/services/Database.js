@@ -47,8 +47,27 @@ export default class Database {
         })
     }
 
-    static async storeUserProgressOnDb(user, postObject) {
-        Firebase.database().ref().child(`userProgress/${user.uid}`).push(postObject)
+    static async createUserProgressOnDb(user) {
+        const lecturesSnapshot = await Firebase.database().ref(`lectures`).once('value', (snapshot) => (snapshot))
+
+        const lecturesId = Object.keys(lecturesSnapshot.val())
+        const userProgress = {}
+
+        lecturesId.forEach((lectureId) => {
+            userProgress[lectureId] = {
+                unlocked: false,
+                completed: false,
+                currentLevel: 0
+            }
+        })
+
+        userProgress[lecturesId[0]].unlocked = true
+
+        Firebase.database().ref().child(`userProgress/${user.uid}`).set(userProgress)
+    }
+
+    static async storeUserQuestionHistoryOnDb(user, postObject) {
+        Firebase.database().ref().child(`userQuestionHistory/${user.uid}`).push(postObject)
     }
 
     static async storeExperienceProgressOnDb(user, lectureId, levelId) {
@@ -60,7 +79,33 @@ export default class Database {
         Firebase.database().ref().child(`userDetails/${user.uid}/experience`).set(newExperience)
     }
 
-    static async checkIfExistUserDetail(userId) {
+    static async storeUserProgressOnDb(user, lectureId, levelId) {
+        const lectures = await Firebase.database().ref(`lectures`).once('value', (snapshot) => (snapshot))
+        const currentLectureLevelsCount = lectures.val()[lectureId]['levels'].length
+        const lecturesCount = Object.keys(lectures.val()).length
+
+        if(currentLectureLevelsCount == levelId + 1) {
+            await Firebase.database().ref(`userProgress/${user.uid}/${lectureId}/completed`).set(true)
+            // unlocks next lecture
+            const lecturesArray = Object.entries(lectures.val())
+            const currentLectureIndex = lecturesArray.findIndex((element) => element[0] == lectureId)
+
+            if(currentLectureIndex < lecturesCount - 1) {
+                const nextLevelIndex = currentLectureIndex + 1
+                const nextLevelId = lecturesArray[nextLevelIndex][0]
+
+                await Firebase.database().ref(`userProgress/${user.uid}/${nextLevelId}/unlocked`).set(true)
+            }
+        } else {
+            // unlocks next level
+            const currentLevel = await Firebase.database().ref(`userProgress/${user.uid}/${lectureId}/currentLevel`).once('value', (snapshot) => (snapshot))
+            const newLevel = currentLevel.val() + 1
+
+            await Firebase.database().ref(`userProgress/${user.uid}/${lectureId}/currentLevel`).set(newLevel)
+        }
+    }
+
+    static async checkIfUserAlreadyExists(userId) {
         const response = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
 
         if(response.exists()) {
@@ -73,6 +118,17 @@ export default class Database {
     static async getUserDetails(userId) {
         const userDetails = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
         return userDetails.val()
+    }
+
+    static async getUserQuestionHistory(userId) {
+        const userQuestionHistory = await Firebase.database().ref(`userQuestionHistory/${userId}`).once('value', (snapshot) => (snapshot))
+        return userQuestionHistory.val()
+    }
+
+    static async getUserProgress(userId, callback) {
+        Firebase.database().ref(`userProgress/${userId}`).on('value', (snapshot) => {
+            callback(snapshot.val())
+        })
     }
 
     static async getUserBadges(userId) {

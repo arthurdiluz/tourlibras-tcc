@@ -30,7 +30,7 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
 
     useEffect(() => {
         if(levelFinished) {
-            handleFirebaseUserProgressPost()
+            handleFirebaseUserQuestionHistoryPost()
             handleNavigationToLectureCompletionPage()
         }
     }, [levelFinished])
@@ -64,7 +64,7 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
         navigation.navigate('LectureCompletion', { answers, lectureId, levelId })
     }
 
-    function handleFirebaseUserProgressPost() {
+    function handleFirebaseUserQuestionHistoryPost() {
         for(let i = 0; i < answers.length; i++) {
             const questionId = i
 
@@ -78,7 +78,7 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
                 timestamp: new Date().toISOString()
             }
 
-            Database.storeUserProgressOnDb(user, postObject)
+            Database.storeUserQuestionHistoryOnDb(user, postObject)
         }
     }
 

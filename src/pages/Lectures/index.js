@@ -7,14 +7,35 @@ import LectureButton from '../../components/LectureButton'
 
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native'
+import { useAuth } from '../../context/auth'
 
 function Lectures() {
     const navigation = useNavigation()
+    const [loading, setLoading] = useState(true)
     const [lecturesList, setLecturesList] = useState({})
+    const { user } = useAuth()
 
     useEffect(() => {
         Database.getLecturesList().then((response) => {
             setLecturesList(response)
+        })
+        
+        Database.getUserProgress(user.uid, (response) => {
+            const lecturesId = Object.keys(response)
+
+            setLecturesList(lecturesList => {
+                const newLecturesList = Object.assign({}, lecturesList)
+                    
+                lecturesId.forEach((lectureId) => {
+                    const currentLevel = response[lectureId].currentLevel
+                    newLecturesList[lectureId].currentLevel = currentLevel
+                    newLecturesList[lectureId].unlocked = response[lectureId].unlocked
+                    newLecturesList[lectureId].progress = calculateLectureProgress(currentLevel, 0, lecturesList[lectureId].levels.length, 0, 1)
+                    newLecturesList[lectureId].completed = response[lectureId].completed
+                })
+                return newLecturesList
+            })
+            setLoading(false)
         })
     }, [])
     
@@ -22,6 +43,13 @@ function Lectures() {
         const level = lecturesList[lectureId].levels[levelId]
 
         navigation.navigate('Questions', { level, lectureId, levelId })
+    }
+
+    function calculateLectureProgress(currentLevel, inputMin, inputMax, outputMin, outputMax) {
+        // If all levels are completed this formula doesn't work
+        const progress = (currentLevel - inputMin) * (outputMax - outputMin) / (inputMax - inputMin) + outputMin
+        console.log(progress)
+        return progress
     }
 
     return (
@@ -48,22 +76,24 @@ function Lectures() {
             <ScrollView>
                 <View style={styles.lecturesContainer}>
                     <View style={styles.lectureView}>
-                        {lecturesList ? Object.keys(lecturesList).map((lectureId, lectureIndex) => (
+                        {loading ? (
+                            <View>
+                                <Text>Não há nenhuma aula cadastrada! :(</Text>
+                            </View>
+                        ) : Object.keys(lecturesList).map((lectureId, lectureIndex) => (
                             <View key={lectureIndex}>
                                 <LectureButton
                                     size={100}
                                     avatarUrl={lecturesList[lectureId].icon}
-                                    progress={1}
-                                    level={0 + 1}
-                                    onPress={() => handleNavigationToQuestions(lectureId, 0)}
+                                    progress={lecturesList[lectureId].progress}
+                                    level={lecturesList[lectureId].currentLevel + 1}
+                                    onPress={() => handleNavigationToQuestions(lectureId, lecturesList[lectureId].currentLevel)}
+                                    unlocked={lecturesList[lectureId].unlocked}
+                                    completed={lecturesList[lectureId].completed}
                                 />
-                                <Text style={styles.lectureText}>{lecturesList[lectureId].name}</Text>
+                                <Text style={styles.lectureText}>{lecturesList[lectureId].unlocked ? lecturesList[lectureId].name : 'Bloqueado'}</Text>
                             </View>
-                        )) : (
-                            <View>
-                                <Text>Não há nenhuma aula cadastrada! :(</Text>
-                            </View>
-                        )}
+                        ))}
                     </View>
                 </View>
             </ScrollView>

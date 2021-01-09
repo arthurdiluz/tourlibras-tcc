@@ -25,6 +25,12 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
         })
         setCorrectAnswersCount(correctAnswers)
         handleFirebaseExperienceProgressPost()
+
+        const correctAnswerPercentage = correctAnswers / answers.length
+
+        if(correctAnswerPercentage >= 0.7) {
+            handleFirebaseUserProgressPost()
+        }
     }, [])
 
     useEffect(() => {
@@ -40,6 +46,10 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
 
     function handleFirebaseExperienceProgressPost() {
         Database.storeExperienceProgressOnDb(user, lectureId, levelId)
+    }
+
+    function handleFirebaseUserProgressPost() {
+        Database.storeUserProgressOnDb(user, lectureId, levelId)
     }
 
     return(
