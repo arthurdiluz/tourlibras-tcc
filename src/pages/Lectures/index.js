@@ -48,7 +48,6 @@ function Lectures() {
     function calculateLectureProgress(currentLevel, inputMin, inputMax, outputMin, outputMax) {
         // If all levels are completed this formula doesn't work
         const progress = (currentLevel - inputMin) * (outputMax - outputMin) / (inputMax - inputMin) + outputMin
-        console.log(progress)
         return progress
     }
 

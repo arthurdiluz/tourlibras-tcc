@@ -5,16 +5,18 @@ import {
 import { BorderlessButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
-import { AntDesign, MaterialIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
+import { AntDesign, MaterialIcons, FontAwesome, FontAwesome5, Feather } from '@expo/vector-icons'
 
 import Header from '../../components/Header'
 import Database from '../../services/Database'
+import { useAuth } from '../../context/auth'
 
 import { LIGHT_GRAY_COLOR, MAIN_COLOR } from '../../../styles.global'
 import styles from './styles'
 
 function Profile({ route: { params: { userId } } }) {
     const navigation = useNavigation()
+    const { user: authenticatedUser } = useAuth()
     const [userDetails, setUserDetails] = useState({})
     const [userBadges, setUserBadges] = useState({})
 
@@ -26,10 +28,6 @@ function Profile({ route: { params: { userId } } }) {
             setUserBadges(response)
         })
     }, [])
-
-    useEffect(() => {
-        // console.log(userBadges)
-    }, [userBadges])
 
     function formatDate(dateString) {
         const date = new Date(dateString)
@@ -50,11 +48,28 @@ function Profile({ route: { params: { userId } } }) {
         navigation.navigate('EditProfile')
     }
 
+    function handleGoBack() {
+        navigation.goBack()
+    }
+
+    function getFirstName() {
+        if(userDetails.name == undefined) {
+            return "Usuário"
+        } else {
+            return userDetails.name.split(" ")[0]
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Header
-                title="Perfil"
-                headerRight={(
+                title={authenticatedUser.uid == userId ? 'Perfil' : `Perfil de ${getFirstName()}`}
+                headerLeft={authenticatedUser.uid !== userId && (
+                    <BorderlessButton onPress={handleGoBack}>
+                        <Feather name="arrow-left" size={26} color={MAIN_COLOR} />
+                    </BorderlessButton>
+                )}
+                headerRight={authenticatedUser.uid == userId && (
                     <BorderlessButton onPress={handleNavigationToEditProfile}>
                         <FontAwesome5 name="edit" size={26} color={MAIN_COLOR} />
                     </BorderlessButton>

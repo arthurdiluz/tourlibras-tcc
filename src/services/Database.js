@@ -141,6 +141,25 @@ export default class Database {
         return lecturesList.val()
     }
 
+    static async getLeaderboard(filter) {
+        const leaderboard = []
+        await Firebase.database().ref(`userDetails`).orderByChild(filter).limitToLast(10).once('value', (snapshot) => {
+            snapshot.forEach((child) => {
+                const user = {
+                    key: child.ref.key,
+                    info: child.val()
+                }
+                leaderboard.push(user)
+            })
+        })
+        
+        leaderboard.sort((a, b) => {
+            return b['info'][filter] - a['info'][filter]
+        })
+
+        return leaderboard
+    }
+
     static async insertLecture(lecture) {
         const lectureId = Firebase.database().ref().child('lectures').push(lecture).key
         return lectureId

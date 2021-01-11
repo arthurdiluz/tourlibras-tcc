@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
 
     async function signUpWithEmail(email, password) {
         const error = await AuthService.signUpWithEmail(email, password)
-        await Database.createUserDetailsOnDb(user.uid)
 
         return error
     }

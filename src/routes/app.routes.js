@@ -5,6 +5,7 @@ import HomeTabs from './homeTabs.routes'
 import EditProfile from '../pages/EditProfile'
 import Questions from '../pages/Questions'
 import LectureCompletion from '../pages/LectureCompletion'
+import Profile from '../pages/Profile'
 
 const AppStack = createStackNavigator()
 
@@ -16,7 +17,7 @@ function AppRoutes() {
             <AppStack.Screen name="EditProfile" component={EditProfile} />
             <AppStack.Screen name="Questions" component={Questions} />
             <AppStack.Screen name="LectureCompletion" component={LectureCompletion} />
-            {/* Another person's profile page */}
+            <AppStack.Screen name="ViewUserProfile" component={Profile} />
         </AppStack.Navigator>
     )
 }
