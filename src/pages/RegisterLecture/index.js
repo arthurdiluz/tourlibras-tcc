@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import {
     View, Text, TextInput
 } from 'react-native'
-import { RectButton, ScrollView } from 'react-native-gesture-handler'
+import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
-import { FontAwesome, Entypo } from '@expo/vector-icons'
+import { FontAwesome, Feather } from '@expo/vector-icons'
 
 import { useLectureRegister } from '../../context/lectureRegister'
 import Database from '../../services/Database'
+import { useAuth } from '../../context/auth'
 
 import getFileExtension from '../../utils/getFileExtension'
 import Header from '../../components/Header'
@@ -38,7 +39,7 @@ function RegisterLecture() {
     }
 
     function handleGoBack() {
-        console.log('VOLTAR')
+        navigation.goBack()
     }
 
     async function handleSave() {
@@ -81,6 +82,9 @@ function RegisterLecture() {
                         })
                     })          
                 })
+
+                handleGoBack()
+
             } catch (error) {
                 console.log(error)
                 Database.cancelInsertLecture(lectureId)
@@ -92,12 +96,9 @@ function RegisterLecture() {
         <View style={styles.container}>
             <Header
                 headerLeft={(
-                    <RectButton
-                        onPress={handleGoBack}
-                        style={styles.cancelButton}
-                    >
-                        <Entypo name="cross" size={30} color={MAIN_COLOR} />
-                    </RectButton>
+                    <BorderlessButton onPress={handleGoBack}>
+                        <Feather name="arrow-left" size={26} color={MAIN_COLOR} />
+                    </BorderlessButton>
                 )}
                 title="Cadastrar aula"
                 headerRight={(

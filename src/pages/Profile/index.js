@@ -22,14 +22,16 @@ function Profile({ route: { params: { userId } } }) {
 
     const componentIsMounted = useRef(true)
     useEffect(() => {
-        if(componentIsMounted) {
-            Database.getUserDetails(userId, (response) => {
+        Database.getUserDetails(userId, (response) => {
+            if(componentIsMounted.current) {
                 setUserDetails(response)
-            })
-            Database.getUserBadges(userId).then((response) => {
+            }
+        })
+        Database.getUserBadges(userId).then((response) => {
+            if(componentIsMounted.current) {
                 setUserBadges(response)
-            })
-        }
+            }
+        })
         return () => {
             componentIsMounted.current = false
         }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
@@ -7,6 +7,7 @@ import { useAuth } from '../context/auth'
 import AppRoutes from './app.routes'
 import AuthRoutes from './auth.routes'
 import DevRoutes from './dev.routes'
+import Database from '../services/Database'
 
 const styles = StyleSheet.create({
     container: {
@@ -17,7 +18,16 @@ const styles = StyleSheet.create({
 })
 
 function Routes() {
-    const { signed, loading } = useAuth()
+    const { signed, loading, user } = useAuth()
+    const [userDetails, setUserDetails] = useState({})
+
+    useEffect(() => {
+        if(signed == true) {
+            Database.getUserDetailsOnce(user.uid).then(response => {
+                setUserDetails(response)
+            })
+        }
+    }, [signed])
 
     if (loading) {
         return (
@@ -29,7 +39,13 @@ function Routes() {
 
     return signed ? (
         <>
-            <AppRoutes />
+            {
+                userDetails.admin == true ? (
+                    <DevRoutes />
+                ) : (
+                    <AppRoutes />
+                )
+            }
             <StatusBar style='dark' />
         </>
     ) : (
