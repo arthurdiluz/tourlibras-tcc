@@ -77,6 +77,7 @@ function Leaderboard() {
                                 style={[
                                     styles.anotherUserButtonDefault,
                                     userPosition !== 0 && styles.anotherUserButtonWithTopBorder,
+                                    userPosition == leaderboard.length - 1 && styles.lastUserButton,
                                     user.key == authenticatedUser.uid && styles.authenticatedUserContainer
                                 ]}
                             >

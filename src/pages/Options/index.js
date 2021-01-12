@@ -32,7 +32,7 @@ function Options() {
                 // )}
             />
             <ScrollView style={styles.optionsContainer}>
-                <View style={styles.signOutContainer}>
+                <View>
                     <RectButton style={styles.signOutButton} onPress={handleSignOut} title="Sign Out">
                         <Text style={styles.signOutText}>Logout</Text>
                     </RectButton>

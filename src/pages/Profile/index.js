@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     View, Text, Image, ScrollView
 } from 'react-native'
@@ -20,13 +20,19 @@ function Profile({ route: { params: { userId } } }) {
     const [userDetails, setUserDetails] = useState({})
     const [userBadges, setUserBadges] = useState({})
 
+    const componentIsMounted = useRef(true)
     useEffect(() => {
-        Database.getUserDetails(userId).then((response) => {
-            setUserDetails(response)
-        })
-        Database.getUserBadges(userId).then((response) => {
-            setUserBadges(response)
-        })
+        if(componentIsMounted) {
+            Database.getUserDetails(userId, (response) => {
+                setUserDetails(response)
+            })
+            Database.getUserBadges(userId).then((response) => {
+                setUserBadges(response)
+            })
+        }
+        return () => {
+            componentIsMounted.current = false
+        }
     }, [])
 
     function formatDate(dateString) {

@@ -12,14 +12,11 @@ const styles = StyleSheet.create({
         padding: 20
     },
 
-    signOutContainer: {
-        borderRadius: 12,
-        backgroundColor: RED_COLOR
-    },
-
     signOutButton: {
         padding: 7,
-        alignItems: 'center'
+        borderRadius: 12,
+        alignItems: 'center',
+        backgroundColor: RED_COLOR
     },
 
     signOutText: {

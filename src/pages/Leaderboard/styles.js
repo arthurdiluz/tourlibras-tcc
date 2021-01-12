@@ -56,6 +56,11 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(0, 0, 0, 0.05)'
     },
 
+    lastUserButton: {
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10
+    },
+
     authenticatedUserContainer: {
         backgroundColor: MAIN_COLOR,
         borderRadius: 0,

@@ -36,6 +36,14 @@ export default class Database {
             }
         })
     }
+    
+    static async updateProfileName(user, newName) {
+        Firebase.database().ref().child(`userDetails/${user.uid}/name`).set(newName)
+    }
+
+    static async updateProfilePicture(user, newPhotoURL) {
+        Firebase.database().ref().child(`userDetails/${user.uid}/avatar`).set(newPhotoURL)
+    }
 
     static async createUserDetailsOnDb(user) {
         Firebase.database().ref().child(`userDetails/${user.uid}`).set({
@@ -115,7 +123,11 @@ export default class Database {
         }
     }
 
-    static async getUserDetails(userId) {
+    static async getUserDetails(userId, callback) {
+        Firebase.database().ref(`userDetails/${userId}`).on('value', (snapshot) => callback(snapshot.val()))
+    }
+
+    static async getUserDetailsOnce(userId) {
         const userDetails = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
         return userDetails.val()
     }
