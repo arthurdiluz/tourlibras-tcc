@@ -34,7 +34,7 @@ function EditQuestion({ route: { params: { levelId, questionId } } }) {
 
     async function pickImage(levelId, questionId, optionId, fieldName) {
 
-        const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
         if (status !== 'granted') {
             alert('Sinto muito, precisamos dessas permissões para esse recurso funcionar!')
             return
