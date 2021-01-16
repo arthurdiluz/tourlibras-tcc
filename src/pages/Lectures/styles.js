@@ -1,11 +1,19 @@
 import { StyleSheet } from 'react-native'
 
-import { WHITE_COLOR, DARK_GRAY_COLOR } from '../../../styles.global'
+import { WHITE_COLOR, DARK_GRAY_COLOR, LIGHT_GRAY_COLOR } from '../../../styles.global'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: WHITE_COLOR
+    },
+
+    emptyLecturesText: {
+        fontSize: 16,
+        fontFamily: 'Poppins_700Bold',
+        color: LIGHT_GRAY_COLOR,
+        textAlign: 'center',
+        padding: 15
     },
 
     // headerLeftContainer: {

@@ -75,9 +75,9 @@ function Lectures() {
             <ScrollView>
                 <View style={styles.lecturesContainer}>
                     <View style={styles.lectureView}>
-                        {loading ? (
+                        {!loading ? (
                             <View>
-                                <Text>Não há nenhuma aula cadastrada! :(</Text>
+                                <Text style={styles.emptyLecturesText}>Não há nenhuma aula cadastrada! :(</Text>
                             </View>
                         ) : Object.keys(lecturesList).map((lectureId, lectureIndex) => (
                             <View key={lectureIndex}>
