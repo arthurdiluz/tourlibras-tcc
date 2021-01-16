@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-import { DIVISION_COLOR, MAIN_COLOR, LIGHT_GRAY_COLOR } from '../../../styles.global'
+import { DIVISION_COLOR, MAIN_COLOR, LIGHT_GRAY_COLOR, DARK_GRAY_COLOR } from '../../../styles.global'
 
 const styles = StyleSheet.create({
     container: {
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     },
 
     defaultButtonText: {
-        fontFamily: 'Poppins_400Regular'
+        fontFamily: 'Poppins_400Regular',
+        color: DARK_GRAY_COLOR
     },
 
     selectedButtonText: {
