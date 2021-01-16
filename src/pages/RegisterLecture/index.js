@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     View, Text, TextInput
 } from 'react-native'
 import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { Picker } from '@react-native-picker/picker';
 
 import { FontAwesome, Feather } from '@expo/vector-icons'
 
@@ -23,6 +24,33 @@ function RegisterLecture() {
     } = useLectureRegister()
     const navigation = useNavigation()
     const [name, setName] = useState('')
+    const [badgesList, setBadgesList] = useState([{
+        id: undefined,
+        title: "Nenhuma"
+    }])
+    const [selectedBadgeId, setSelectedBadgeId] = useState(undefined)
+
+    const componentIsMounted = useRef(true)
+    useEffect(() => {
+        Database.getBadgesList().then((response) => {
+            if(componentIsMounted.current){
+                
+                const auxBadgesList = [...badgesList]
+                Object.keys(response).forEach((badgeId, badgeIndex) => {
+                    auxBadgesList.push({
+                        id: badgeId,
+                        title: response[badgeId].title
+                    })
+                })
+
+                setBadgesList(auxBadgesList)
+            }
+        })
+
+        return () => {
+            componentIsMounted.current = false
+        }
+    }, [])
 
     function handleAddLevel() {
         addNewLevel()
@@ -43,7 +71,7 @@ function RegisterLecture() {
     }
 
     async function handleSave() {
-        const lecture = { name, levels: levels }
+        const lecture = { name, badge: selectedBadgeId, levels: levels }
 
         const lectureId = await Database.insertLecture(lecture)
 
@@ -122,6 +150,26 @@ function RegisterLecture() {
                             setName(event.nativeEvent.text)
                         }}
                     />
+
+                    <Text style={styles.badgePickerText}>Medalha ao completar a aula</Text>
+                    <View style={styles.badgePickerContainer}>
+                        <Picker
+                            selectedValue={selectedBadgeId}
+                            onValueChange={(itemValue) => {
+                                setSelectedBadgeId(itemValue)
+                            }}
+                            prompt="Medalha ao completar a aula"
+                            mode="dropdown"
+                        >
+                            {badgesList.map((badge, badgeIndex) => (
+                                <Picker.Item
+                                    key={badgeIndex}
+                                    label={badge.title}
+                                    value={badge.id}
+                                />
+                            ))}
+                        </Picker>
+                    </View>
                 </View>
                 <View style={styles.levelContainer}>
                     <Text style={styles.levelContainerTitle}>Níveis da aula</Text>

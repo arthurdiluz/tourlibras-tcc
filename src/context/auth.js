@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }) => {
     async function initializeUserInfos(user) {
         await Database.createUserDetailsOnDb(user)
         await Database.createUserProgressOnDb(user)
+        await Database.createUserBadgesOnDb(user)
     }
     
     useEffect(() => {

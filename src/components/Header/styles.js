@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 22,
         fontFamily: 'Poppins_600SemiBold',
         color: MAIN_COLOR,
         textAlignVertical: 'center',

@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 
 import styles from './styles'
 
-function Header({ title, headerLeft, headerRight, headerCenter }) {
+function Header({ title, titleSize = 22, headerLeft, headerRight, headerCenter }) {
     return (
         <View style={styles.container}>
             <View style={styles.headerLeft}>
@@ -11,7 +11,7 @@ function Header({ title, headerLeft, headerRight, headerCenter }) {
             </View>
 
             {(title && !headerCenter) && (
-                <Text style={styles.title}>
+                <Text style={[styles.title, { fontSize: titleSize }]}>
                     {title}
                 </Text>
             )}

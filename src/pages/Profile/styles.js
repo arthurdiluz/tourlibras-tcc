@@ -137,7 +137,63 @@ const styles = StyleSheet.create({
     },
 
     badgeContainer: {
-        padding: 7
+        padding: 7,
+        flexDirection: 'row'
+    },
+
+    badgeIconContainer: {
+        backgroundColor: '#FAFA00',
+        borderColor: '#E5E500',
+        borderBottomWidth: 6,
+        borderRightWidth: 6,
+        borderRadius: 15,
+        borderBottomLeftRadius: 7,
+        paddingHorizontal: 5,
+        paddingVertical: 10
+    },
+
+    badgeQuantityIconContainer: {
+        position: 'absolute',
+        paddingHorizontal: 4,
+        paddingVertical: 2,
+        borderRadius: 20,
+        right: 0,
+        bottom: -7
+    },
+
+    badgeQuantityIconText: {
+        fontSize: 14,
+        fontFamily: 'Poppins_400Regular',
+        color: '#A0A000'
+    },
+
+    badgeImage: {
+        width: 66,
+        height: 77,
+        borderRadius: 15,
+        borderBottomLeftRadius: 7
+    },
+
+    badgeQuantityImageContainer: {
+        position: 'absolute',
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        paddingHorizontal: 4,
+        paddingVertical: 2,
+        borderRadius: 50,
+        right: 0,
+        bottom: 0
+    },
+
+    badgeQuantityImageText: {
+        fontSize: 14,
+        fontFamily: 'Poppins_400Regular',
+        color: '#FFF'
+    },
+
+    badgeInfo: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 
     badgeBottomDivision: {

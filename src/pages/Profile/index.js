@@ -5,26 +5,33 @@ import {
 import { BorderlessButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
-import { AntDesign, MaterialIcons, FontAwesome, FontAwesome5, Feather } from '@expo/vector-icons'
+import { AntDesign, MaterialIcons, FontAwesome, FontAwesome5, Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import Header from '../../components/Header'
 import Database from '../../services/Database'
 import { useAuth } from '../../context/auth'
 
-import { LIGHT_GRAY_COLOR, MAIN_COLOR } from '../../../styles.global'
+import { LIGHT_GRAY_COLOR, MAIN_COLOR, RED_COLOR } from '../../../styles.global'
 import styles from './styles'
 
 function Profile({ route: { params: { userId } } }) {
     const navigation = useNavigation()
     const { user: authenticatedUser } = useAuth()
     const [userDetails, setUserDetails] = useState({})
-    const [userBadges, setUserBadges] = useState({})
+    const [badgesList, setBadgesList] = useState({}) // List of available badges
+    const [userBadges, setUserBadges] = useState({}) // Information about all available badges related to a respective user (eg, if it's already been achieved by that user)
+    const [badgesToBeShown, setBadgesToBeShown] = useState([]) // Which badges to be shown on the screen
 
     const componentIsMounted = useRef(true)
     useEffect(() => {
         Database.getUserDetails(userId, (response) => {
             if(componentIsMounted.current) {
                 setUserDetails(response)
+            }
+        })
+        Database.getBadgesList().then((response) => {
+            if(componentIsMounted.current) {
+                setBadgesList(response)
             }
         })
         Database.getUserBadges(userId).then((response) => {
@@ -36,6 +43,32 @@ function Profile({ route: { params: { userId } } }) {
             componentIsMounted.current = false
         }
     }, [])
+
+    useEffect(() => {
+        try {
+            
+            if(Object.keys(badgesList).length !== 0 && Object.keys(userBadges).length !== 0) {
+                const badgesId = Object.keys(badgesList)
+    
+                const badgesAuxList = []
+    
+                badgesId.forEach((badgeId) => {
+                    if(userBadges[badgeId]['achieved']) {
+                        badgesAuxList.push({
+                            ...badgesList[badgeId],
+                            quantity: userBadges[badgeId]['quantity']
+                        })
+                    }
+                })
+    
+                if(componentIsMounted.current) {
+                    setBadgesToBeShown(badgesAuxList)
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }, [badgesList, userBadges])
 
     function formatDate(dateString) {
         const date = new Date(dateString)
@@ -122,14 +155,39 @@ function Profile({ route: { params: { userId } } }) {
                 <View style={styles.badgesContainer}>
                     <Text style={styles.badgesText}>Medalhas</Text>
                     <View style={styles.badgesContent}>
-                        {userBadges ? (Object.keys(userBadges).map((badgeId, badgeIndex) => (
-                            <View key={badgeIndex} style={badgeIndex <= Object.length - 1 ? [styles.badgeContainer, styles.badgeBottomDivision] : styles.badgeContainer}>
+                        {badgesToBeShown.length !== 0 ? badgesToBeShown.map((badge, badgeIndex) => (
+                            <View key={badgeIndex} style={badgeIndex < badgesToBeShown.length - 1 ? [styles.badgeContainer, styles.badgeBottomDivision] : styles.badgeContainer}>
+                                {
+                                    badge['media'] === "" ? (
+                                        <View style={styles.badgeIconContainer}>
+                                            <MaterialCommunityIcons name="trophy-award" size={50} color="#A0A000" />
+                                            {
+                                                badge['cumulative'] === true && (
+                                                    <View style={styles.badgeQuantityIconContainer}>
+                                                        <Text style={styles.badgeQuantityIconText}>{`x${badge['quantity']}`}</Text>
+                                                    </View>
+                                                )
+                                            }
+                                        </View>
+                                    ) : (
+                                        <View>
+                                            <Image source={{ uri: badge['media'] }} style={styles.badgeImage} />
+                                            {
+                                                badge['cumulative'] === true && (
+                                                    <View style={styles.badgeQuantityImageContainer}>
+                                                        <Text style={styles.badgeQuantityImageText}>{`x${badge['quantity']}`}</Text>
+                                                    </View>
+                                                )
+                                            }
+                                        </View>
+                                    )
+                                }
                                 <View style={styles.badgeInfo}>
-                                    <Text style={styles.badgeTitle}>{userBadges[badgeId].title}</Text>
-                                    <Text style={styles.badgeDescription}>{userBadges[badgeId].text}</Text>
+                                    <Text style={styles.badgeTitle}>{badge.title}</Text>
+                                    <Text style={styles.badgeDescription}>{badge.text}</Text>
                                 </View>
                             </View>
-                        ))) : (
+                        )) : (
                             <View style={styles.badgeContainer}>
                                 <View style={styles.badgeInfo}>
                                     <Text style={styles.emptyBadgeTitle}>Nenhuma medalha{'\n'} foi encontrada :(</Text>

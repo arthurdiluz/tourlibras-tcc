@@ -7,6 +7,7 @@ import DevLanding from '../pages/DevLanding'
 import RegisterLecture from '../pages/RegisterLecture'
 import EditLevel from '../pages/EditLevel'
 import EditQuestion from '../pages/EditQuestion'
+import RegisterBadge from '../pages/RegisterBadge'
 
 const DevStack = createStackNavigator()
 
@@ -18,6 +19,7 @@ function DevRoutes() {
                 <DevStack.Screen name="RegisterLecture" component={RegisterLecture} />
                 <DevStack.Screen name="EditLevel" component={EditLevel} />
                 <DevStack.Screen name="EditQuestion" component={EditQuestion} />
+                <DevStack.Screen name="RegisterBadge" component={RegisterBadge} />
             </DevStack.Navigator>
         </LectureRegisterProvider>
     )

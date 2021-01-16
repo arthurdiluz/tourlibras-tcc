@@ -29,7 +29,6 @@ export default class Database {
     }
 
     static async updateDbField(path, field, value) {
-
         Firebase.database().ref(path).once('value', (snapshot) => {
             if(snapshot.exists()) {
                 Firebase.database().ref().child(path).update({ [field]: value })
@@ -74,6 +73,22 @@ export default class Database {
         Firebase.database().ref().child(`userProgress/${user.uid}`).set(userProgress)
     }
 
+    static async createUserBadgesOnDb(user) {
+        const badgesSnapshot = await Firebase.database().ref(`badges`).once('value', (snapshot) => (snapshot))
+
+        const badgesId = Object.keys(badgesSnapshot.val())
+        const userBadges = {}
+
+        badgesId.forEach((badgeId) => {
+            userBadges[badgeId] = {
+                achieved: false,
+                quantity: 0
+            }
+        })
+
+        Firebase.database().ref().child(`userBadges/${user.uid}`).set(userBadges)
+    }
+
     static async storeUserQuestionHistoryOnDb(user, postObject) {
         Firebase.database().ref().child(`userQuestionHistory/${user.uid}`).push(postObject)
     }
@@ -92,6 +107,7 @@ export default class Database {
         const currentLectureLevelsCount = lectures.val()[lectureId]['levels'].length
         const lecturesCount = Object.keys(lectures.val()).length
 
+        // Checks if its the last level
         if(currentLectureLevelsCount == levelId + 1) {
             await Firebase.database().ref(`userProgress/${user.uid}/${lectureId}/completed`).set(true)
             // unlocks next lecture
@@ -110,6 +126,24 @@ export default class Database {
             const newLevel = currentLevel.val() + 1
 
             await Firebase.database().ref(`userProgress/${user.uid}/${lectureId}/currentLevel`).set(newLevel)
+        }
+    }
+
+    static async unlocksLectureBadge(user, lectureId) {
+        const badgeIdSnapshot = await Firebase.database().ref(`lectures/${lectureId}/badge`).once('value', (snapshot) => (snapshot))
+        const badgeId = badgeIdSnapshot.val()
+
+        this.updateDbField(`userBadges/${user.uid}/${badgeId}`, 'achieved', true)
+    }
+
+    static async checkIfItsTheLastLevel(lectureId, levelId) {
+        const lectures = await Firebase.database().ref(`lectures`).once('value', (snapshot) => (snapshot))
+        const currentLectureLevelsCount = lectures.val()[lectureId]['levels'].length
+
+        if(currentLectureLevelsCount == levelId + 1) {
+            return true
+        } else {
+            return false
         }
     }
 
@@ -144,8 +178,13 @@ export default class Database {
     }
 
     static async getUserBadges(userId) {
-        const userBadges = await Firebase.database().ref(`earnedBadges/${userId}`).once('value', (snapshot) => (snapshot))
+        const userBadges = await Firebase.database().ref(`userBadges/${userId}`).once('value', (snapshot) => (snapshot))
         return userBadges.val()
+    }
+
+    static async getBadgesList() {
+        const badgesList = await Firebase.database().ref(`badges`).once('value', (snapshot) => (snapshot))
+        return badgesList.val()
     }
 
     static async getLecturesList() {
@@ -177,8 +216,19 @@ export default class Database {
         return lectureId
     }
 
+    static async insertBage(badge) {
+        const badgeId = Firebase.database().ref().child('badges').push(badge).key
+        return badgeId
+    }
+
     static async cancelInsertLecture(lectureId) {
         Firebase.database().ref().child(`lectures/${lectureId}`).remove()
+        console.log('deletada')
+        // Firebase storage image uploads cant be reverted because we dont have uploadTask references
+    }
+
+    static async cancelInsertBadge(badgeId) {
+        Firebase.database().ref().child(`badges/${badgeId}`).remove()
         console.log('deletada')
         // Firebase storage image uploads cant be reverted because we dont have uploadTask references
     }

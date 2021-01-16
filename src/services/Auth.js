@@ -5,10 +5,9 @@ import { Firebase } from '../integrations/firebase'
 
 export default class AuthService {
     static async authWithFacebook() {
-        await Facebook.initializeAsync(config.facebook.appId)
+        await Facebook.initializeAsync({ appId: config.facebook.appId })
         const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-            config.facebook.appId,
-            { permissions: ['public_profile'] },
+            { permissions: ['public_profile'] }
         )
 
         if (type === 'success' && token) {

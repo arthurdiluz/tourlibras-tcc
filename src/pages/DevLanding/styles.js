@@ -33,6 +33,21 @@ const styles = StyleSheet.create({
         color: DARK_GRAY_COLOR
     },
 
+    registerBadgeButton: {
+        width: '100%',
+        backgroundColor: WHITE_COLOR,
+        borderRadius: 12,
+        padding: 7,
+        marginBottom: 10,
+        alignItems: 'center'
+    },
+
+    registerBadgeButtonText: {
+        fontSize: 18,
+        fontFamily: 'Poppins_600SemiBold',
+        color: DARK_GRAY_COLOR
+    },
+
     logoutButton: {
         width: '100%',
         backgroundColor: RED_COLOR,

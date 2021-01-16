@@ -15,6 +15,10 @@ function DevLanding() {
         navigation.navigate('RegisterLecture')
     }
 
+    function handleGoToRegisterBadge() {
+        navigation.navigate('RegisterBadge')
+    }
+
     function handleLogout() {
         signOut()
     }
@@ -28,6 +32,13 @@ function DevLanding() {
                 rippleColor="rgba(0, 0, 0, 0.2)"
             >
                 <Text style={styles.registerLectureButtonText}>Cadastrar aula</Text>
+            </RectButton>
+            <RectButton
+                onPress={handleGoToRegisterBadge}
+                style={styles.registerBadgeButton}
+                rippleColor="rgba(0, 0, 0, 0.2)"
+            >
+                <Text style={styles.registerBadgeButtonText}>Cadastrar medalha</Text>
             </RectButton>
             <RectButton
                 onPress={handleLogout}

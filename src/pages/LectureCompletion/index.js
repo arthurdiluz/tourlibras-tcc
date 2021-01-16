@@ -30,7 +30,10 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
 
         if(correctAnswerPercentage >= 0.7) {
             handleFirebaseUserProgressPost()
+
+            handleLectureCompletionBadgeUnlock()
         }
+
     }, [])
 
     useEffect(() => {
@@ -50,6 +53,14 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
 
     function handleFirebaseUserProgressPost() {
         Database.storeUserProgressOnDb(user, lectureId, levelId)
+    }
+
+    async function handleLectureCompletionBadgeUnlock(){
+        const lectureHasBeenFinished = await Database.checkIfItsTheLastLevel(lectureId, levelId)
+        
+        if(lectureHasBeenFinished) {
+            await Database.unlocksLectureBadge(user, lectureId)
+        }
     }
 
     return(

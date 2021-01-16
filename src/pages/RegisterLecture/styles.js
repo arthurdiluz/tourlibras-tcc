@@ -61,6 +61,23 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
 
+    badgePickerText: {
+        fontSize: 20,
+        fontFamily: 'Poppins_600SemiBold',
+        color: DARK_GRAY_COLOR,
+        marginLeft: 10
+    },
+
+    badgePickerContainer: {
+        marginTop: 10,
+        marginBottom: 20,
+        borderWidth: 2,
+        borderBottomWidth: 4,
+        borderColor: DIVISION_COLOR,
+        borderRadius: 12,
+        paddingLeft: 10
+    },
+
     levelContainer: {
         width: '100%',
         padding: 20
