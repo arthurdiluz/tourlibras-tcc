@@ -19,6 +19,10 @@ function DevLanding() {
         navigation.navigate('RegisterBadge')
     }
 
+    function handleGoToEditLecture() {
+        navigation.navigate('EditLecturesList')
+    }
+
     function handleLogout() {
         signOut()
     }
@@ -28,17 +32,24 @@ function DevLanding() {
             <Text style={styles.pageTitle}>Painel do Administrador</Text>
             <RectButton
                 onPress={handleGoToRegisterLecture}
-                style={styles.registerLectureButton}
+                style={styles.defaultButton}
                 rippleColor="rgba(0, 0, 0, 0.2)"
             >
-                <Text style={styles.registerLectureButtonText}>Cadastrar aula</Text>
+                <Text style={styles.defaultButtonText}>Cadastrar aula</Text>
             </RectButton>
             <RectButton
                 onPress={handleGoToRegisterBadge}
-                style={styles.registerBadgeButton}
+                style={styles.defaultButton}
                 rippleColor="rgba(0, 0, 0, 0.2)"
             >
-                <Text style={styles.registerBadgeButtonText}>Cadastrar medalha</Text>
+                <Text style={styles.defaultButtonText}>Cadastrar medalha</Text>
+            </RectButton>
+            <RectButton
+                onPress={handleGoToEditLecture}
+                style={styles.defaultButton}
+                rippleColor="rgba(0, 0, 0, 0.2)"
+            >
+                <Text style={styles.defaultButtonText}>Editar aula</Text>
             </RectButton>
             <RectButton
                 onPress={handleLogout}

@@ -198,7 +198,8 @@ export const LectureRegisterProvider = ({ children }) => {
             changeQuestionField,
             addNewOption,
             removeOption,
-            changeOptionField
+            changeOptionField,
+            setLevels
         }}
         >
             {children}

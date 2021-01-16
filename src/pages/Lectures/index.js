@@ -75,7 +75,7 @@ function Lectures() {
             <ScrollView>
                 <View style={styles.lecturesContainer}>
                     <View style={styles.lectureView}>
-                        {!loading ? (
+                        {loading ? (
                             <View>
                                 <Text style={styles.emptyLecturesText}>Não há nenhuma aula cadastrada! :(</Text>
                             </View>

@@ -32,7 +32,7 @@ function RegisterBadge() {
     }, [])
 
     async function handleSave() {
-        const badgeId = await Database.insertBage({
+        const badgeId = await Database.insertBadge({
             media,
             title,
             text,

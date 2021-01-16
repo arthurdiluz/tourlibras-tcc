@@ -21,7 +21,8 @@ function LectureButton({
     levelTextColor = '#FFF',
     onPress,
     unlocked = true,
-    completed = false
+    completed = false,
+    hideLevelContainer = false
 }) {
     const enabled = unlocked && !completed
 
@@ -100,6 +101,9 @@ function LectureButton({
                     unlocked ? {
                         backgroundColor: levelBackgroundColor
                     } : {
+                        opacity: 0
+                    },
+                    hideLevelContainer && { 
                         opacity: 0
                     }
                 ]}

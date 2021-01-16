@@ -8,6 +8,8 @@ import RegisterLecture from '../pages/RegisterLecture'
 import EditLevel from '../pages/EditLevel'
 import EditQuestion from '../pages/EditQuestion'
 import RegisterBadge from '../pages/RegisterBadge'
+import EditLecturesList from '../pages/EditLecturesList'
+import EditLecture from '../pages/EditLecture'
 
 const DevStack = createStackNavigator()
 
@@ -20,6 +22,8 @@ function DevRoutes() {
                 <DevStack.Screen name="EditLevel" component={EditLevel} />
                 <DevStack.Screen name="EditQuestion" component={EditQuestion} />
                 <DevStack.Screen name="RegisterBadge" component={RegisterBadge} />
+                <DevStack.Screen name="EditLecturesList" component={EditLecturesList} />
+                <DevStack.Screen name="EditLecture" component={EditLecture} />
             </DevStack.Navigator>
         </LectureRegisterProvider>
     )

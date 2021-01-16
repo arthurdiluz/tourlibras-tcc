@@ -192,6 +192,13 @@ export default class Database {
         return lecturesList.val()
     }
 
+    static async getLecture(lectureId) {
+        const lectureSnapshot = await Firebase.database().ref(`lectures/${lectureId}`).once('value', (snapshot) => (snapshot))
+        console.log('lectureId: ', lectureId)
+        console.log('lectureSnapshot: ', lectureSnapshot)
+        return lectureSnapshot.val()
+    }
+
     static async getLeaderboard(filter) {
         const leaderboard = []
         await Firebase.database().ref(`userDetails`).orderByChild(filter).limitToLast(10).once('value', (snapshot) => {
@@ -216,9 +223,13 @@ export default class Database {
         return lectureId
     }
 
-    static async insertBage(badge) {
+    static async insertBadge(badge) {
         const badgeId = Firebase.database().ref().child('badges').push(badge).key
         return badgeId
+    }
+
+    static async editLecture(lectureId, newLecture) {
+        Firebase.database().ref(`lectures/${lectureId}`).set(newLecture)
     }
 
     static async cancelInsertLecture(lectureId) {
