@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform, SafeAreaView, StatusBar, Keyboard } from 'react-native'
 import { BorderlessButton, RectButton, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
@@ -13,7 +13,7 @@ import styles from './styles'
 import { MAIN_COLOR, LIGHT_GRAY_COLOR } from '../../../styles.global'
 import Database from '../../services/Database';
 
-function RegisterBadge() {
+function EditBadge({ route: { params: { badgeId }}}) {
     const navigation = useNavigation()
     const [media, setMedia] = useState("")
     const [title, setTitle] = useState("")
@@ -21,18 +21,29 @@ function RegisterBadge() {
     const [cumulative, setCumulative] = useState(false)
     const [isKeyboardUp, setIsKeyboardUp] = useState(false)
 
+    const componentIsMounted = useRef(true)
     useEffect(() => {
         const didShowListener = Keyboard.addListener('keyboardDidShow', () => setIsKeyboardUp(true))
         const didHideListener = Keyboard.addListener('keyboardDidHide', () => setIsKeyboardUp(false))
 
+        Database.getBadge(badgeId).then((response) => {
+            if(componentIsMounted.current) {
+                setMedia(response.media)
+                setTitle(response.title)
+                setText(response.text)
+                setCumulative(response.cumulative)
+            }
+        })
+
         return () => {
             didShowListener.remove()
             didHideListener.remove()
+            componentIsMounted.current = false
         }
     }, [])
 
     async function handleSave() {
-        const badgeId = await Database.insertBadge({
+        await Database.editBadge(badgeId, {
             media,
             title,
             text,
@@ -89,7 +100,7 @@ function RegisterBadge() {
                         <Feather name="arrow-left" size={26} color={MAIN_COLOR} />
                     </BorderlessButton>
                 )}
-                title="Cadastrar medalha"
+                title="Editar medalha"
                 titleSize={18}
                 headerRight={(
                     <RectButton
@@ -127,6 +138,7 @@ function RegisterBadge() {
                         placeholder="Digite o título da medalha"
                         placeholderTextColor="rgba(0, 0, 0, 0.4)"
                         autoCapitalize="sentences"
+                        value={title}
                         onChange={(event) => {
                             setTitle(event.nativeEvent.text)
                         }}
@@ -137,6 +149,7 @@ function RegisterBadge() {
                         placeholder="Digite a descrição da medalha"
                         placeholderTextColor="rgba(0, 0, 0, 0.4)"
                         autoCapitalize="sentences"
+                        value={text}
                         onChange={(event) => {
                             setText(event.nativeEvent.text)
                         }}
@@ -154,4 +167,4 @@ function RegisterBadge() {
     )
 }
 
-export default RegisterBadge
+export default EditBadge

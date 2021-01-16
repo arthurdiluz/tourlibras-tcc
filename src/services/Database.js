@@ -194,9 +194,12 @@ export default class Database {
 
     static async getLecture(lectureId) {
         const lectureSnapshot = await Firebase.database().ref(`lectures/${lectureId}`).once('value', (snapshot) => (snapshot))
-        console.log('lectureId: ', lectureId)
-        console.log('lectureSnapshot: ', lectureSnapshot)
         return lectureSnapshot.val()
+    }
+
+    static async getBadge(badgeId) {
+        const badgeSnapshot = await Firebase.database().ref(`badges/${badgeId}`).once('value', (snapshot) => (snapshot))
+        return badgeSnapshot.val()
     }
 
     static async getLeaderboard(filter) {
@@ -230,6 +233,10 @@ export default class Database {
 
     static async editLecture(lectureId, newLecture) {
         Firebase.database().ref(`lectures/${lectureId}`).set(newLecture)
+    }
+
+    static async editBadge(badgeId, newBadge) {
+        Firebase.database().ref(`badges/${badgeId}`).set(newBadge)
     }
 
     static async cancelInsertLecture(lectureId) {

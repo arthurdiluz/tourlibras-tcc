@@ -23,6 +23,10 @@ function DevLanding() {
         navigation.navigate('EditLecturesList')
     }
 
+    function handleGoToEditBadge() {
+        navigation.navigate('EditBadgesList')
+    }
+
     function handleLogout() {
         signOut()
     }
@@ -50,6 +54,13 @@ function DevLanding() {
                 rippleColor="rgba(0, 0, 0, 0.2)"
             >
                 <Text style={styles.defaultButtonText}>Editar aula</Text>
+            </RectButton>
+            <RectButton
+                onPress={handleGoToEditBadge}
+                style={styles.defaultButton}
+                rippleColor="rgba(0, 0, 0, 0.2)"
+            >
+                <Text style={styles.defaultButtonText}>Editar medalha</Text>
             </RectButton>
             <RectButton
                 onPress={handleLogout}

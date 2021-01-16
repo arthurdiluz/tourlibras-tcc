@@ -10,6 +10,8 @@ import EditQuestion from '../pages/EditQuestion'
 import RegisterBadge from '../pages/RegisterBadge'
 import EditLecturesList from '../pages/EditLecturesList'
 import EditLecture from '../pages/EditLecture'
+import EditBadgesList from '../pages/EditBadgesList'
+import EditBadge from '../pages/EditBadge'
 
 const DevStack = createStackNavigator()
 
@@ -24,6 +26,8 @@ function DevRoutes() {
                 <DevStack.Screen name="RegisterBadge" component={RegisterBadge} />
                 <DevStack.Screen name="EditLecturesList" component={EditLecturesList} />
                 <DevStack.Screen name="EditLecture" component={EditLecture} />
+                <DevStack.Screen name="EditBadgesList" component={EditBadgesList} />
+                <DevStack.Screen name="EditBadge" component={EditBadge} />
             </DevStack.Navigator>
         </LectureRegisterProvider>
     )

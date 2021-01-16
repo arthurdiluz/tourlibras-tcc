@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { BorderlessButton } from 'react-native-gesture-handler'
@@ -16,11 +16,17 @@ function EditLecturesList() {
     const [loading, setLoading] = useState(true)
     const [lecturesList, setLecturesList] = useState({})
 
+    const componentIsMounted = useRef(true)
     useEffect(() => {
         Database.getLecturesList().then((response) => {
-            setLecturesList(response)
-            setLoading(false)
+            if(componentIsMounted.current) {
+                setLecturesList(response)
+                setLoading(false)
+            }
         })
+        return () => {
+            componentIsMounted.current = false
+        }
     }, [])
 
     function handleNavigationToEditLecture(lectureId) {

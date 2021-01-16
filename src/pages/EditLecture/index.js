@@ -122,14 +122,15 @@ function EditLecture({ route: { params: { lectureId }}}) {
                     })          
                 })
 
-                handleGoBack()
-
+                
             } catch (error) {
                 console.log(error)
                 Database.cancelInsertLecture(lectureId)
                 return
             }
-    }
+            
+            handleGoBack()
+        }
 
     async function pickImage() {
 

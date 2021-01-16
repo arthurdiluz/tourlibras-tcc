@@ -75,49 +75,50 @@ function RegisterLecture() {
 
         const lectureId = await Database.insertLecture(lecture)
 
-            try {
+        try {
 
-                levels.forEach((level, levelId) => {
-                    level.questions.forEach((question, questionId) => {
-        
-                        if (question.media === "") {
+            levels.forEach((level, levelId) => {
+                level.questions.forEach((question, questionId) => {
+    
+                    if (question.media === "") {
+                        throw new Error('Image not found')
+                    }
+
+                    let imageId = `${levelId}-${questionId}`
+                    let fileExtension = getFileExtension(question.media);
+                    let fileName = `${imageId}.${fileExtension}`
+                    let databasePath = `lectures/${lectureId}/media/questions/${fileName}`
+                    
+                    Database.uploadImage(question.media, databasePath, (downloadUrl) => {
+                        Database.updateDbField(`lectures/${lectureId}/levels/${levelId}/questions/${questionId}`, 'media', downloadUrl)
+                    })
+    
+                    question.options.forEach((option, optionId) => {
+
+                        if (option.media === "") {
                             throw new Error('Image not found')
                         }
 
-                        let imageId = `${levelId}-${questionId}`
-                        let fileExtension = getFileExtension(question.media);
-                        let fileName = `${imageId}.${fileExtension}`
-                        let databasePath = `lectures/${lectureId}/media/questions/${fileName}`
-                        
-                        Database.uploadImage(question.media, databasePath, (downloadUrl) => {
-                            Database.updateDbField(`lectures/${lectureId}/levels/${levelId}/questions/${questionId}`, 'media', downloadUrl)
+                        imageId = `${levelId}-${questionId}-${optionId}`
+                        fileExtension = getFileExtension(option.media);
+                        fileName = `${imageId}.${fileExtension}`
+                        databasePath = `lectures/${lectureId}/media/options/${fileName}`
+
+                        Database.uploadImage(option.media, databasePath, (downloadUrl) => {
+                            Database.updateDbField(`lectures/${lectureId}/levels/${levelId}/questions/${questionId}/options/${optionId}`, 'media', downloadUrl)
                         })
+                    })
+                })          
+            })
+
+            
+        } catch (error) {
+            console.log(error)
+            Database.cancelInsertLecture(lectureId)
+            return
+        }
         
-                        question.options.forEach((option, optionId) => {
-    
-                            if (option.media === "") {
-                                throw new Error('Image not found')
-                            }
-    
-                            imageId = `${levelId}-${questionId}-${optionId}`
-                            fileExtension = getFileExtension(option.media);
-                            fileName = `${imageId}.${fileExtension}`
-                            databasePath = `lectures/${lectureId}/media/options/${fileName}`
-
-                            Database.uploadImage(option.media, databasePath, (downloadUrl) => {
-                                Database.updateDbField(`lectures/${lectureId}/levels/${levelId}/questions/${questionId}/options/${optionId}`, 'media', downloadUrl)
-                            })
-                        })
-                    })          
-                })
-
-                handleGoBack()
-
-            } catch (error) {
-                console.log(error)
-                Database.cancelInsertLecture(lectureId)
-                return
-            }
+        handleGoBack()
     }
 
     return (
