@@ -34,7 +34,7 @@ function Profile({ route: { params: { userId } } }) {
                 setBadgesList(response)
             }
         })
-        Database.getUserBadges(userId).then((response) => {
+        Database.getUserBadges(userId, (response) => {
             if(componentIsMounted.current) {
                 setUserBadges(response)
             }
@@ -51,7 +51,8 @@ function Profile({ route: { params: { userId } } }) {
                 const badgesId = Object.keys(badgesList)
     
                 const badgesAuxList = []
-    
+
+                
                 badgesId.forEach((badgeId) => {
                     if(userBadges[badgeId]['achieved']) {
                         badgesAuxList.push({

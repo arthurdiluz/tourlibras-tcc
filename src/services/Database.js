@@ -177,9 +177,8 @@ export default class Database {
         })
     }
 
-    static async getUserBadges(userId) {
-        const userBadges = await Firebase.database().ref(`userBadges/${userId}`).once('value', (snapshot) => (snapshot))
-        return userBadges.val()
+    static async getUserBadges(userId, callback) {
+        Firebase.database().ref(`userBadges/${userId}`).on('value', (snapshot) => callback(snapshot.val()))
     }
 
     static async getBadgesList() {
