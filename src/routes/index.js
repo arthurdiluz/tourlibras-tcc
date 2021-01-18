@@ -46,7 +46,7 @@ function Routes() {
                     <AppRoutes />
                 )
             }
-            <StatusBar style='dark' />
+            <StatusBar style='auto' />
         </>
     ) : (
             <>

@@ -28,10 +28,10 @@ function Lectures() {
                     
                 lecturesId.forEach((lectureId) => {
                     const currentLevel = response[lectureId].currentLevel
-                    newLecturesList[lectureId].currentLevel = currentLevel
-                    newLecturesList[lectureId].unlocked = response[lectureId].unlocked
-                    newLecturesList[lectureId].progress = calculateLectureProgress(currentLevel, 0, lecturesList[lectureId].levels.length, 0, 1)
-                    newLecturesList[lectureId].completed = response[lectureId].completed
+                    newLecturesList[lectureId]['currentLevel'] = currentLevel
+                    newLecturesList[lectureId]['unlocked'] = response[lectureId].unlocked
+                    newLecturesList[lectureId]['progress'] = calculateLectureProgress(currentLevel, 0, lecturesList[lectureId].levels.length, 0, 1)
+                    newLecturesList[lectureId]['completed'] = response[lectureId].completed
                 })
                 return newLecturesList
             })
