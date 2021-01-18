@@ -43,6 +43,50 @@ const styles = StyleSheet.create({
         borderColor: DIVISION_COLOR
     },
 
+    imagePickerContainer: {
+        marginBottom: 20
+    },
+
+    imagePickerLabel: {
+        fontSize: 20,
+        fontFamily: 'Poppins_600SemiBold',
+        color: DARK_GRAY_COLOR,
+        textAlign: 'center',
+        marginBottom: 10
+    },
+
+    touchableContainer: {
+        width: 100,
+        height: 100,
+        alignSelf: 'center'
+    },
+
+    imagePickerButton: {
+        alignSelf: 'center',
+        borderWidth: 2,
+        borderColor: DIVISION_COLOR,
+        borderRadius: 50,
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+
+    pickedImageButton: {
+        alignSelf: 'center',
+        borderWidth: 2,
+        borderColor: DIVISION_COLOR,
+        borderRadius: 100,
+        marginBottom: 10,
+        overflow: "hidden"
+    },
+
+    selectedImage: {
+        width: 100,
+        height: 100
+    },
+
     nameText: {
         fontSize: 20,
         fontFamily: 'Poppins_600SemiBold',

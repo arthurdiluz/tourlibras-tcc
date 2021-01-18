@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
-    View, Text, TextInput
+    View, Text, TextInput, Image
 } from 'react-native'
-import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-handler'
+import { RectButton, ScrollView, BorderlessButton, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { Picker } from '@react-native-picker/picker';
 
-import { FontAwesome, Feather } from '@expo/vector-icons'
+import { FontAwesome, Feather, FontAwesome5 } from '@expo/vector-icons'
 
 import { useLectureRegister } from '../../context/lectureRegister'
 import Database from '../../services/Database'
@@ -15,7 +15,7 @@ import { useAuth } from '../../context/auth'
 import getFileExtension from '../../utils/getFileExtension'
 import Header from '../../components/Header'
 
-import { MAIN_COLOR, WHITE_COLOR } from '../../../styles.global'
+import { MAIN_COLOR, WHITE_COLOR, LIGHT_GRAY_COLOR } from '../../../styles.global'
 import styles from './styles'
 
 function RegisterLecture() {
@@ -23,6 +23,7 @@ function RegisterLecture() {
         levels, addNewLevel, removeLevel
     } = useLectureRegister()
     const navigation = useNavigation()
+    const [media, setMedia] = useState('')
     const [name, setName] = useState('')
     const [badgesList, setBadgesList] = useState([{
         id: undefined,
@@ -71,7 +72,7 @@ function RegisterLecture() {
     }
 
     async function handleSave() {
-        const lecture = { name, badge: selectedBadgeId, levels: levels }
+        const lecture = { icon: media, name, badge: selectedBadgeId, levels: levels }
 
         const lectureId = await Database.insertLecture(lecture)
 
@@ -121,6 +122,26 @@ function RegisterLecture() {
         handleGoBack()
     }
 
+    async function pickImage() {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+        if (status !== 'granted') {
+            alert('Sinto muito, precisamos dessas permissões para esse recurso funcionar!')
+            return
+        }
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1,
+            allowsEditing: true,
+            allowsMultipleSelection: false,
+            aspect: [4, 4]
+        })
+    
+        if (!result.cancelled) {
+            setMedia(result.uri)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Header
@@ -141,6 +162,22 @@ function RegisterLecture() {
             />
             <ScrollView style={styles.scrollView}>
                 <View style={styles.lectureContainer}>
+                    <View style={styles.imagePickerContainer}>
+                        <Text style={styles.imagePickerLabel}>Mídia</Text>
+                        {media ? (
+                            <View style={styles.touchableContainer}>
+                                <TouchableOpacity style={styles.pickedImageButton} onPress={() => pickImage()}>
+                                        <Image source={{ uri: media }} style={styles.selectedImage} />
+                                </TouchableOpacity>
+                            </View>
+                            ) : (
+                            <View style={styles.touchableContainer}>
+                                <TouchableOpacity style={styles.imagePickerButton} onPress={() => pickImage()}>
+                                        <FontAwesome5 name="camera" size={24} color={LIGHT_GRAY_COLOR} />
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                    </View>
                     <Text style={styles.nameText}>Tema/Categoria</Text>
                     <TextInput
                         style={styles.nameInput}
