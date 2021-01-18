@@ -1,34 +1,31 @@
 import React, {
-    useEffect, useRef, useState, useCallback
+    useEffect, useRef, useState
 } from 'react'
 import {
-    View, Text, TextInput, Keyboard, Animated, SafeAreaView, TouchableOpacity
+    View, Text, TextInput, Keyboard, Animated, SafeAreaView
 } from 'react-native'
-import { RectButton } from 'react-native-gesture-handler'
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
-import { EvilIcons } from '@expo/vector-icons'
-import { debounce } from 'lodash'
+import { EvilIcons, Feather } from '@expo/vector-icons'
 import { useAuth } from '../../context/auth'
 
-import { MAIN_COLOR, SECONDARY_COLOR, WHITE_COLOR } from '../../../styles.global'
 import styles, {
     FOOTER_HEIGHT, ICON_SIZE
 } from './styles'
+import { WHITE_COLOR } from '../../../styles.global'
 
-export default function Authorization() {
+export default function Signup() {
     const {
-        authWithFacebook, checkIfEmailExists, signInWithEmail, signUpWithEmail
+        authWithFacebook, signUpWithEmail
     } = useAuth()
     const navigation = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [activateSignUpButton, setActivateSignUpButton] = useState(false)
     const [errorMessage, setErrorMessage] = useState(undefined)
+    const [loading, setLoading] = useState(false)
 
     const footerAnim = useRef(new Animated.Value(FOOTER_HEIGHT)).current
-    const buttonAnim = useRef(new Animated.Value(0)).current
-    const AnimatedButton = Animated.createAnimatedComponent(RectButton)
 
     const iconSizeAnim = useRef(new Animated.Value(ICON_SIZE)).current
     const iconOpacityAnim = useRef(new Animated.Value(1)).current
@@ -43,16 +40,6 @@ export default function Authorization() {
             Keyboard.removeListener('keyboardDidHide', keyboardDidHide)
         }
     }, []) /* eslint-disable-line react-hooks/exhaustive-deps */
-
-    const delayedEmailQuery = useCallback(debounce(checkIfEmailExistsOnDatabase, 1000), [email]) /* eslint-disable-line */
-    useEffect(() => {
-
-        if (email !== '') {
-            delayedEmailQuery()
-        }
-
-        return delayedEmailQuery.cancel
-    }, [email, delayedEmailQuery])
 
     const keyboardDidShow = (event) => {
         Animated.timing(footerAnim, {
@@ -90,62 +77,39 @@ export default function Authorization() {
         }).start()
     }
 
-    async function checkIfEmailExistsOnDatabase() {
-        let response
-        try {
-            response = await checkIfEmailExists(email)
-        } catch (error) {
-            setErrorMessage(error.toString(error))
-            return
-        }
-
-        if (response === false) {
-            Animated.timing(buttonAnim, {
-                duration: 200,
-                toValue: 1,
-                useNativeDriver: false
-            }).start()
-            setActivateSignUpButton(true)
-        } else {
-            Animated.timing(buttonAnim, {
-                duration: 200,
-                toValue: 0,
-                useNativeDriver: false
-            }).start()
-            setActivateSignUpButton(false)
-        }
-    }
-
-    async function handleEmailSignIn() {
-        const error = await signInWithEmail(email, password)
-
-        if (error) {
-            setErrorMessage(error.toString(error))
-        }
-    }
-
     async function handleEmailSignUp() {
+        navigation.addListener('beforeRemove', (e) => {
+            //Prevents user from returning to Login page while trying to sign up
+            e.preventDefault()
+        })
+        setLoading(true)
+
         const error = await signUpWithEmail(email, password)
 
         if (error) {
             setErrorMessage(error.toString(error))
+            navigation.removeListener('beforeRemove')
+            setLoading(false)
         }
     }
 
-    async function handleForgotPassword() {
-        navigation.navigate('ForgotPassword')
+    function handleGoBack() {
+        navigation.goBack()
     }
 
     return (
         <SafeAreaView style={styles.container}>
+            <BorderlessButton style={{ position: 'absolute', left: 20, top: 50 }} onPress={handleGoBack}>
+                <Feather name="arrow-left" size={35} color={WHITE_COLOR} />
+            </BorderlessButton>
             <View style={styles.header}>
                 <AnimatedEvilIcons name="user" style={{ fontSize: iconSizeAnim, opacity: iconOpacityAnim }} color="white" />
             </View>
             <View style={styles.formContainer}>
                 <Text style={styles.headerText}>
-                    Cadastre-se ou entre
+                    Crie uma conta com
                     {'\n'}
-                    com a sua conta
+                    seu email e senha
                 </Text>
                 <TextInput
                     style={styles.emailInput}
@@ -162,7 +126,7 @@ export default function Authorization() {
                 <TextInput
                     style={styles.passwordInput}
                     autoCompleteType="password"
-                    placeholder="Digite sua senha"
+                    placeholder="Digite uma senha"
                     placeholderTextColor="#FFF"
                     secureTextEntry
                     onChange={(event) => {
@@ -175,35 +139,13 @@ export default function Authorization() {
                         {errorMessage}
                     </Text>
                 </View>
-                <AnimatedButton
-                    onPress={activateSignUpButton ? handleEmailSignUp : handleEmailSignIn}
-                    style={[
-                        styles.signInButton,
-                        {
-                            backgroundColor: buttonAnim.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [WHITE_COLOR, SECONDARY_COLOR]
-                            })
-                        }
-                    ]}
+                <RectButton
+                    enabled={!loading}
+                    onPress={handleEmailSignUp}
+                    style={styles.signUpButton}
                 >
-                    <Animated.Text style={[styles.signInButtonText, {
-                        color: buttonAnim.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [MAIN_COLOR, WHITE_COLOR]
-                        })
-                    }]}
-                    >
-                        { activateSignUpButton ? 'Criar conta' : 'Entrar'}
-                    </Animated.Text>
-                </AnimatedButton>
-                <TouchableOpacity
-                    onPress={handleForgotPassword}
-                    activeOpacity={0.5}
-                    style={styles.forgotPasswordButton}
-                >
-                    <Text style={styles.forgotPasswordText}>Esqueci a minha senha</Text>
-                </TouchableOpacity>
+                    <Text style={styles.signUpButtonText}>Cadastrar-se</Text>
+                </RectButton>
             </View>
             <Animated.View style={[styles.footerContainer, { height: footerAnim }]}>
                 <Text style={styles.footerText}>
@@ -211,7 +153,7 @@ export default function Authorization() {
                     {'\n'}
                     conectar-se com seu Facebook
                 </Text>
-                <RectButton onPress={authWithFacebook} style={styles.facebookButton}>
+                <RectButton enabled={!loading} onPress={authWithFacebook} style={styles.facebookButton}>
                     <Text style={styles.buttonText}>Conectar-se com o Facebook</Text>
                 </RectButton>
             </Animated.View>

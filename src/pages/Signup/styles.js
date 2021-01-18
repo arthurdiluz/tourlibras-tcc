@@ -72,20 +72,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_400Regular'
     },
 
-    signInButton: {
-        width: '75%',
-        backgroundColor: WHITE_COLOR,
-        alignItems: 'center',
-        paddingVertical: 10,
-        borderRadius: 25
-    },
-
-    signInButtonText: {
-        fontSize: 17,
-        fontFamily: 'Poppins_400Regular',
-        color: MAIN_COLOR
-    },
-
     signUpButton: {
         width: '75%',
         backgroundColor: SECONDARY_COLOR,
@@ -98,17 +84,6 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontFamily: 'Poppins_400Regular',
         color: WHITE_COLOR
-    },
-
-    forgotPasswordButton: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        marginTop: 7
-    },
-
-    forgotPasswordText: {
-        color: WHITE_COLOR,
-        fontFamily: 'Poppins_400Regular',
     },
 
     footerContainer: {
