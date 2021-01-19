@@ -4,42 +4,15 @@ import { WHITE_COLOR, DARK_GRAY_COLOR, LIGHT_GRAY_COLOR } from '../../../styles.
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: WHITE_COLOR
+        flex: 1
     },
 
     emptyLecturesText: {
         fontSize: 16,
         fontFamily: 'Poppins_700Bold',
-        color: LIGHT_GRAY_COLOR,
         textAlign: 'center',
         padding: 15
     },
-
-    // headerLeftContainer: {
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    //     width: '100%',
-    //     justifyContent: 'flex-start'
-    // },
-
-    // headerRightContainer: {
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    //     width: '100%',
-    //     justifyContent: 'flex-end'
-    // },
-
-    // headerIconsText: {
-    //     fontSize: 20,
-    //     fontFamily: 'Poppins_600SemiBold',
-    //     color: '#00D200',
-    //     transform: [{ translateY: 2 }]
-    // },
-
-    // headerLeftIconText: {
-    //     marginLeft: 8
-    // }
 
     lecturesContainer: {
         paddingVertical: 10,
@@ -55,7 +28,6 @@ const styles = StyleSheet.create({
     lectureText: {
         fontSize: 18,
         fontFamily: 'Poppins_600SemiBold',
-        color: DARK_GRAY_COLOR,
         textAlign: 'center',
         marginTop: 8
     }

@@ -10,9 +10,11 @@ import Header from '../../components/Header'
 import { MAIN_COLOR } from '../../../styles.global'
 import styles from './styles'
 import Database from '../../services/Database'
+import { useTheme } from '../../context/theme'
 
 function Questions({ route: { params: { level, lectureId, levelId }}}) {
     const navigation = useNavigation()
+    const { theme } = useTheme()
     const { user } = useAuth()
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [answers, setAnswers] = useState([])
@@ -83,30 +85,61 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Header
                 headerLeft={(
-                    <BorderlessButton onPress={handleGoBack}>
-                        <Feather name="arrow-left" size={26} color={MAIN_COLOR} />
+                    <BorderlessButton rippleColor={theme.colors.borderlessButtonRipple} onPress={handleGoBack}>
+                        <Feather name="arrow-left" size={26} color={theme.colors.main} />
                     </BorderlessButton>
                 )}
                 headerRight={(
-                    <Text style={styles.questionsCounter}>{`${currentQuestion + 1}/${level.questions.length}`}</Text>
+                    <Text
+                        style={[styles.questionsCounter, { color: theme.colors.lightText }]}
+                    >
+                        {`${currentQuestion + 1}/${level.questions.length}`}
+                    </Text>
                 )}
                 headerCenter={(
                     <View style={styles.questionsAnswers}>
                         {answers.map((answer, answerIndex) => {
                             if (answer === true) {
                                 return(
-                                    <View key={answerIndex} style={styles.correctAnswer} />
+                                    <View
+                                        key={answerIndex}
+                                        style={[
+                                            styles.correctAnswer,
+                                            {
+                                                borderColor: theme.colors.answerIndicatorBorder,
+                                                backgroundColor: theme.colors.correctAnswerIndicatorBackground
+                                            }
+                                        ]}
+                                    />
                                 )
                             } else if (answer === false) {
                                 return(
-                                    <View key={answerIndex} style={styles.incorrectAnswer} />
+                                    <View
+                                        key={answerIndex}
+                                        style={[
+                                            styles.incorrectAnswer,
+                                            {
+                                                borderColor: theme.colors.answerIndicatorBorder,
+                                                backgroundColor: theme.colors.incorrectAnswerIndicatorBackground
+                                            }
+                                        ]}
+                                    />
                                 )
                             } else {
                                 return (
-                                    <View key={answerIndex} style={styles.undefinedAnswer} />
+                                    <View
+                                        key={answerIndex}
+                                        style={[
+                                            styles.undefinedAnswer,
+                                            {
+                                                borderColor: theme.colors.answerIndicatorBorder,
+                                                backgroundColor: theme.colors.undefinedAnswerIndicatorBackground
+                                            }
+                                        ]}
+                                    />
                                 )
                             }
                         })}
@@ -116,9 +149,9 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
 
             <ScrollView>
                     <View style={styles.questionContainer}>
-                        <Text style={styles.questionDescription}>{level.questions[currentQuestion].description}</Text>
+                        <Text style={[styles.questionDescription, { color: theme.colors.strongText }]}>{level.questions[currentQuestion].description}</Text>
                         <Image
-                            style={styles.questionMedia}
+                            style={[styles.questionMedia, { borderColor: theme.colors.questionMediaBorder }]}
                             source={{ uri: level.questions[currentQuestion].media }}
                         />
                     </View>
@@ -126,7 +159,7 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
                         {level.questions[currentQuestion].options.map((option, optionIndex) => (
                             <TouchableOpacity
                                 key={optionIndex}
-                                style={styles.optionButton}
+                                style={[styles.optionButton, { borderColor: theme.colors.division }]}
                                 activeOpacity={0.6}
                                 onPress={() => handleButtonPress(optionIndex)}
                             >
@@ -136,7 +169,7 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
                                         source={{ uri: option.media }}
                                     />
                                 )}
-                                <Text style={styles.optionDescription}>{option.text}</Text>
+                                <Text style={[styles.optionDescription, { color: theme.colors.lightText }]}>{option.text}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>

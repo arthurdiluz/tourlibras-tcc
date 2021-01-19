@@ -12,13 +12,15 @@ const AppStack = createStackNavigator()
 function AppRoutes() {
 
     return (
-        <AppStack.Navigator headerMode="none">
-            <AppStack.Screen name="Home" component={HomeTabs} />
-            <AppStack.Screen name="EditProfile" component={EditProfile} />
-            <AppStack.Screen name="Questions" component={Questions} />
-            <AppStack.Screen name="LectureCompletion" component={LectureCompletion} />
-            <AppStack.Screen name="ViewUserProfile" component={Profile} />
-        </AppStack.Navigator>
+        <>
+            <AppStack.Navigator headerMode="none">
+                <AppStack.Screen name="Home" component={HomeTabs} />
+                <AppStack.Screen name="EditProfile" component={EditProfile} />
+                <AppStack.Screen name="Questions" component={Questions} />
+                <AppStack.Screen name="LectureCompletion" component={LectureCompletion} />
+                <AppStack.Screen name="ViewUserProfile" component={Profile} />
+            </AppStack.Navigator>
+        </>
     )
 }
 

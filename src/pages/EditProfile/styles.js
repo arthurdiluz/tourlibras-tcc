@@ -4,8 +4,7 @@ import { MAIN_COLOR, WHITE_COLOR, DIVISION_COLOR, DARK_GRAY_COLOR } from '../../
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: WHITE_COLOR
+        flex: 1
     },
 
     contentContainer: {
@@ -24,8 +23,7 @@ const styles = StyleSheet.create({
         height: 200,
         alignSelf: 'center',
         borderRadius: 100,
-        borderWidth: 2,
-        borderColor: DIVISION_COLOR
+        borderWidth: 2
     },
 
     profileImage: {
@@ -35,7 +33,6 @@ const styles = StyleSheet.create({
     },
 
     cameraIconContainer: {
-        backgroundColor: MAIN_COLOR,
         height: 40,
         width: 40,
         position: 'absolute',
@@ -50,14 +47,12 @@ const styles = StyleSheet.create({
     textInputLabel: {
         fontSize: 20,
         fontFamily: 'Poppins_600SemiBold',
-        color: DARK_GRAY_COLOR,
         marginLeft: 10
     },
 
     textInput: {
         borderWidth: 2,
         borderBottomWidth: 4,
-        borderColor: DIVISION_COLOR,
         borderRadius: 12,
         paddingVertical: 8,
         paddingHorizontal: 20,
@@ -67,7 +62,6 @@ const styles = StyleSheet.create({
 
     saveButton: {
         width: '100%',
-        backgroundColor: MAIN_COLOR,
         borderRadius: 12,
         padding: 7,
         bottom: 20,
@@ -76,8 +70,7 @@ const styles = StyleSheet.create({
 
     saveButtonText: {
         fontSize: 18,
-        fontFamily: 'Poppins_600SemiBold',
-        color: WHITE_COLOR
+        fontFamily: 'Poppins_600SemiBold'
     }
 })
 

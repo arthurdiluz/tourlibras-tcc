@@ -6,6 +6,7 @@ import { RectButton } from 'react-native-gesture-handler'
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons'; 
 import styles from './styles'
 import { DARK_GRAY_COLOR } from '../../../styles.global';
+import { useTheme } from '../../context/theme';
 
 function LectureButton({
     size,
@@ -24,13 +25,11 @@ function LectureButton({
     completed = false,
     hideLevelContainer = false
 }) {
+    const { theme } = useTheme()
     const enabled = unlocked && !completed
 
     if (completed) {
-        mainStrokeColor = completedStrokeColor
         progress = 1
-        levelBackgroundColor = completedStrokeColor
-        levelTextColor = DARK_GRAY_COLOR
     }
     const radius = (size - strokeWidth) / 2
     const circunference = 2 * radius * Math.PI
@@ -41,16 +40,24 @@ function LectureButton({
     return (
         <Svg style={styles.progressBarSvg} width={size} height={size}>
             <Circle
-                stroke={unlocked ? secondaryStrokeColor : disabledStrokeColor}
+                stroke={unlocked ? (
+                    completed ? theme.colors.lectureButtonCompletedStroke : theme.colors.lectureButtonSecondaryStroke
+                ) : (
+                    theme.colors.lectureButtonDisabledStroke
+                )}
                 strokeWidth={strokeWidth}
-                fill="#FFF"
+                fill={theme.colors.background}
                 cy="50%"
                 cx="50%"
                 r={(size - strokeWidth) / 2}
                 strokeDasharray={`${circunference} ${circunference}`}
             />
             <Circle
-                stroke={unlocked ? mainStrokeColor : disabledStrokeColor}
+                stroke={unlocked ? (
+                    completed ? theme.colors.lectureButtonCompletedStroke : theme.colors.lectureButtonMainStroke
+                ) : (
+                    theme.colors.lectureButtonDisabledStroke
+                )}
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 cy="50%"
@@ -59,7 +66,7 @@ function LectureButton({
                 strokeDasharray={`${circunference} ${circunference}`}
                 strokeDashoffset={strokeDashOffset}
             />
-            <RectButton onPress={onPress} style={styles.avatarContainer} enabled={enabled}>  
+            <RectButton rippleColor={theme.colors.lectureButtonRipple} onPress={onPress} style={styles.avatarContainer} enabled={enabled}>  
                 {avatarUrl ? (
                     <>
                         <Image
@@ -73,24 +80,27 @@ function LectureButton({
                             source={{ uri: avatarUrl }}
                         />
                         <Image
-                            style={completed ? {
-                                height: size - strokeWidth * 4,
-                                width: size - strokeWidth * 4,
-                                borderRadius: size / 2,
-                                position: 'absolute',
-                                tintColor: completedStrokeColor,
-                                opacity: 0.6
-                            } : {
-                                display: 'none'
-                            }}
+                            style={[
+                                completed ? {
+                                    height: size - strokeWidth * 4,
+                                    width: size - strokeWidth * 4,
+                                    borderRadius: size / 2,
+                                    position: 'absolute',
+                                    tintColor: theme.colors.lectureButtonCompletedStroke,
+                                    opacity: 0.6
+                                } : {
+                                    display: 'none'
+                                },
+                                !unlocked && { opacity: 0 }
+                            ]}
                             source={{ uri: avatarUrl }}
                         />
-                        <FontAwesome name="lock" size={30} color={disabledStrokeColor} style={unlocked && { display: 'none' }} />
+                        <FontAwesome name="lock" size={30} color={theme.colors.lectureButtonDisabledStroke} style={unlocked && { display: 'none' }} />
                     </>
                 ) : (
                     <>
-                        <FontAwesome5 name="book-reader" size={30} color={mainStrokeColor} style={!unlocked && { display: 'none' }} />
-                        <FontAwesome name="lock" size={30} color={disabledStrokeColor} style={unlocked && { display: 'none' }} />
+                        <FontAwesome5 name="book-reader" size={30} color={completed ? theme.colors.lectureButtonCompletedStroke : theme.colors.lectureButtonMainStroke} style={!unlocked && { display: 'none' }} />
+                        <FontAwesome name="lock" size={30} color={theme.colors.lectureButtonDisabledStroke} style={unlocked && { display: 'none' }} />
                     </>
                 )}
                 <View style={[
@@ -99,16 +109,19 @@ function LectureButton({
                         transform: [{ translateX: size / 3 }, { translateY: size / 3 }],
                     },
                     unlocked ? {
-                        backgroundColor: levelBackgroundColor
+                        backgroundColor: theme.colors.lectureButtonLevelBackground
                     } : {
                         opacity: 0
                     },
                     hideLevelContainer && { 
                         opacity: 0
+                    },
+                    completed && {
+                        backgroundColor: theme.colors.lectureButtonCompletedStroke
                     }
                 ]}
                 >
-                    <Text style={[styles.levelText, { color: levelTextColor }]}>{unlocked ? level : null}</Text>
+                    <Text style={[styles.levelText, { color: theme.colors.lectureButtonLevelText }, completed && { color: theme.colors.lectureButtonCompletedLevelText }]}>{unlocked ? level : null}</Text>
                 </View>
             </RectButton>
         </Svg>

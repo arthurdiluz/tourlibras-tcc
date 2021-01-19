@@ -11,8 +11,7 @@ const styles = StyleSheet.create({
         padding: 7,
         borderWidth: 2,
         borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderColor: DIVISION_COLOR
+        borderRightWidth: 1
     },
 
     firstButton: {
@@ -28,8 +27,6 @@ const styles = StyleSheet.create({
     },
 
     selectedButton: {
-        backgroundColor: MAIN_COLOR,
-        borderColor: LIGHT_GRAY_COLOR,
         borderLeftWidth: 0,
         borderRightWidth: 0,
         borderTopWidth: 0,
@@ -37,12 +34,10 @@ const styles = StyleSheet.create({
     },
 
     defaultButtonText: {
-        fontFamily: 'Poppins_400Regular',
-        color: DARK_GRAY_COLOR
+        fontFamily: 'Poppins_400Regular'
     },
 
     selectedButtonText: {
-        color: 'white',
         fontSize: 14,
         transform: [{translateY: 2}]
     }

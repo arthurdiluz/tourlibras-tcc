@@ -4,14 +4,12 @@ import { WHITE_COLOR, DIVISION_COLOR, LIGHT_GRAY_COLOR, DARK_GRAY_COLOR, MAIN_CO
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: WHITE_COLOR
+        flex: 1
     },
 
     leaderboardContainer: {
         flex: 1,
         borderWidth: 2,
-        borderColor: DIVISION_COLOR,
         borderRadius: 12,
         margin: 20
     },
@@ -20,13 +18,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: 2,
-        borderColor: DIVISION_COLOR,
         padding: 7
     },
 
     filtersTitle: {
-        fontFamily: 'Poppins_700Bold',
-        color: LIGHT_GRAY_COLOR
+        fontFamily: 'Poppins_700Bold'
     },
 
     filterButtonsContainer: {
@@ -40,7 +36,6 @@ const styles = StyleSheet.create({
     emptyLeaderboardText: {
         padding: 10,
         fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR,
         fontSize: 14,
         textAlign: 'center'
     },
@@ -52,8 +47,7 @@ const styles = StyleSheet.create({
     },
 
     anotherUserButtonWithTopBorder: {
-        borderTopWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.05)'
+        borderTopWidth: 1
     },
 
     lastUserButton: {
@@ -62,7 +56,6 @@ const styles = StyleSheet.create({
     },
 
     authenticatedUserContainer: {
-        backgroundColor: MAIN_COLOR,
         borderRadius: 0,
         borderTopWidth: 0
     },
@@ -77,12 +70,7 @@ const styles = StyleSheet.create({
     userPositionText: {
         alignSelf: 'center',
         fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR,
         fontSize: 14
-    },
-    
-    authenticatedUserPositionText: {
-        color: WHITE_COLOR
     },
 
     userInfoContainer: {
@@ -105,23 +93,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginLeft: 15,
         fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR,
         fontSize: 14
-    },
-
-    authenticatedUserNameText: {
-        color: WHITE_COLOR
     },
 
     userFilterValueText: {
         alignSelf: 'center',
         fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR,
         fontSize: 14
-    },
-
-    authenticatedUserFilterValueText: {
-        color: WHITE_COLOR
     }
 })
 

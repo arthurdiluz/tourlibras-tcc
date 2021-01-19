@@ -6,6 +6,7 @@ import * as ImagePicker from 'expo-image-picker'
 
 import Header from '../../components/Header'
 import { useAuth } from '../../context/auth';
+import { useTheme } from '../../context/theme';
 import Database from '../../services/Database';
 
 import { Feather, FontAwesome } from '@expo/vector-icons'; 
@@ -15,6 +16,7 @@ import styles from './styles'
 
 function EditProfile() {
     const navigation = useNavigation()
+    const { theme } = useTheme()
     const { user } = useAuth()
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState('')
@@ -25,6 +27,10 @@ function EditProfile() {
             setAvatar(response.avatar)
         })
     }, [])
+
+    useEffect(() => {
+        console.log(avatar)
+    }, [avatar])
 
     function handleGoBack() {
         navigation.goBack()
@@ -62,36 +68,36 @@ function EditProfile() {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Header title="Editar perfil" headerLeft={(
-                <BorderlessButton onPress={handleGoBack}>
-                    <Feather name="arrow-left" size={26} color={MAIN_COLOR} />
+                <BorderlessButton rippleColor={theme.colors.borderlessButtonRipple} onPress={handleGoBack}>
+                    <Feather name="arrow-left" size={26} color={theme.colors.main} />
                 </BorderlessButton>
             )}/>
             <View style={styles.contentContainer}>
                 <View style={styles.editProfileContainer}>
-                    <View style={styles.imagePickerContainer}>
-                        <TouchableOpacity  activeOpacity={0.5} onPress={pickImage}>
+                    <View style={[styles.imagePickerContainer, { borderColor: theme.colors.division }]}>
+                        <TouchableOpacity activeOpacity={0.5} onPress={pickImage}>
                             {
-                                avatar == '' ? (
-                                    <FontAwesome name="user-circle" size={200} color={LIGHT_GRAY_COLOR} />
+                                avatar === '' ? (
+                                    <FontAwesome name="user-circle" size={196} color={theme.colors.lightDefaultProfileIcon} />
                                     ) : (
                                     <Image source={{ uri: avatar }} style={styles.profileImage} />
                                 )
                             }
-                            <View style={styles.cameraIconContainer}>
-                                <Feather name="camera" size={25} color="white" />
+                            <View style={[styles.cameraIconContainer, { backgroundColor: theme.colors.main }]}>
+                                <Feather name="camera" size={25} color={theme.colors.white} />
                             </View>
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text style={styles.textInputLabel}>
+                        <Text style={[styles.textInputLabel, { color: theme.colors.strongText }]}>
                             Digite seu nome
                         </Text>
                         <TextInput
-                            style={styles.textInput}
+                            style={[styles.textInput, { borderColor: theme.colors.division, backgroundColor: theme.colors.textInputBackground }]}
                             placeholder="Digite o seu nome"
-                            placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                            placeholderTextColor={theme.colors.textInputPlaceholder}
                             onChange={(event) => setName(event.nativeEvent.text)}
                             value={name}
                         />
@@ -100,10 +106,10 @@ function EditProfile() {
                 <View>
                     <RectButton
                         onPress={handleSave}
-                        style={styles.saveButton}
-                        rippleColor="rgba(0, 0, 0, 0.2)"
+                        style={[styles.saveButton, { backgroundColor: theme.colors.primaryButtonBackground }]}
+                        rippleColor={theme.colors.primaryButtonRipple}
                     >
-                        <Text style={styles.saveButtonText}>Salvar</Text>
+                        <Text style={[styles.saveButtonText, { color: theme.colors.primaryButtonText }]}>Salvar</Text>
                     </RectButton>
                 </View>
             </View>

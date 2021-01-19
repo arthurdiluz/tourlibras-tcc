@@ -10,6 +10,7 @@ import {
 } from '@expo-google-fonts/poppins'
 
 import { AuthProvider } from './src/context/auth'
+import { ThemeProvider } from './src/context/theme'
 
 import Routes from './src/routes'
 
@@ -29,7 +30,9 @@ export default function App() {
     return (
         <NavigationContainer>
             <AuthProvider>
-                <Routes />
+                <ThemeProvider>
+                    <Routes />
+                </ThemeProvider>
             </AuthProvider>
         </NavigationContainer>
     )

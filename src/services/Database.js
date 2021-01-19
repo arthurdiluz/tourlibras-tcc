@@ -47,7 +47,7 @@ export default class Database {
     static async createUserDetailsOnDb(user) {
         Firebase.database().ref().child(`userDetails/${user.uid}`).set({
             name: user.displayName || 'Usuário',
-            avatar: user.photoURL,
+            avatar: user.photoURL || '',
             signedUpAt: new Date().toISOString(),
             experience: 0,
             money: 0

@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: Constants.statusBarHeight + 5,
         borderBottomWidth: 2,
-        borderColor: DIVISION_COLOR,
         flexDirection: 'row',
         height: 82
     },
@@ -22,7 +21,6 @@ const styles = StyleSheet.create({
 
     title: {
         fontFamily: 'Poppins_600SemiBold',
-        color: MAIN_COLOR,
         textAlignVertical: 'center',
         transform: [{ translateY: 2 }]
     },

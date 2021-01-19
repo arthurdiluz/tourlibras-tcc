@@ -6,16 +6,14 @@ import {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: WHITE_COLOR
+        flex: 1
     },
 
     profileInfo: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
-        borderBottomWidth: 2,
-        borderColor: DIVISION_COLOR
+        borderBottomWidth: 2
     },
 
     basicInfo: {
@@ -26,14 +24,12 @@ const styles = StyleSheet.create({
 
     name: {
         fontSize: 22,
-        fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR,
+        fontFamily: 'Poppins_700Bold'
     },
 
     date: {
         fontSize: 14,
-        fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR,
+        fontFamily: 'Poppins_400Regular'
     },
 
     profileImageContainer: {
@@ -52,8 +48,7 @@ const styles = StyleSheet.create({
 
     statisticsText: {
         fontSize: 21,
-        fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR
+        fontFamily: 'Poppins_700Bold'
     },
 
     statisticsContent: {
@@ -66,7 +61,6 @@ const styles = StyleSheet.create({
         flex: 1,
         marginRight: 10,
         borderWidth: 2,
-        borderColor: DIVISION_COLOR,
         borderRadius: 12,
         flexDirection: 'row',
         padding: 7
@@ -76,7 +70,6 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 10,
         borderWidth: 2,
-        borderColor: DIVISION_COLOR,
         borderRadius: 12,
         flexDirection: 'row',
         padding: 7
@@ -96,26 +89,22 @@ const styles = StyleSheet.create({
 
     experienceTitle: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR
+        fontFamily: 'Poppins_700Bold'
     },
 
     moneyTitle: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR
+        fontFamily: 'Poppins_700Bold'
     },
 
     experienceDescription: {
         fontSize: 14,
-        fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR
+        fontFamily: 'Poppins_400Regular'
     },
 
     moneyDescription: {
         fontSize: 14,
-        fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR,
+        fontFamily: 'Poppins_400Regular'
     },
 
     badgesContainer: {
@@ -125,14 +114,12 @@ const styles = StyleSheet.create({
 
     badgesText: {
         fontSize: 21,
-        fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR
+        fontFamily: 'Poppins_700Bold'
     },
 
     badgesContent: {
         marginTop: 10,
         borderWidth: 2,
-        borderColor: DIVISION_COLOR,
         borderRadius: 12
     },
 
@@ -142,8 +129,6 @@ const styles = StyleSheet.create({
     },
 
     badgeIconContainer: {
-        backgroundColor: '#FAFA00',
-        borderColor: '#E5E500',
         borderBottomWidth: 6,
         borderRightWidth: 6,
         borderRadius: 15,
@@ -163,8 +148,7 @@ const styles = StyleSheet.create({
 
     badgeQuantityIconText: {
         fontSize: 14,
-        fontFamily: 'Poppins_400Regular',
-        color: '#A0A000'
+        fontFamily: 'Poppins_400Regular'
     },
 
     badgeImage: {
@@ -176,7 +160,6 @@ const styles = StyleSheet.create({
 
     badgeQuantityImageContainer: {
         position: 'absolute',
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
         paddingHorizontal: 4,
         paddingVertical: 2,
         borderRadius: 50,
@@ -186,8 +169,7 @@ const styles = StyleSheet.create({
 
     badgeQuantityImageText: {
         fontSize: 14,
-        fontFamily: 'Poppins_400Regular',
-        color: '#FFF'
+        fontFamily: 'Poppins_400Regular'
     },
 
     badgeInfo: {
@@ -197,28 +179,24 @@ const styles = StyleSheet.create({
     },
 
     badgeBottomDivision: {
-        borderBottomWidth: 2,
-        borderColor: DIVISION_COLOR
+        borderBottomWidth: 2
     },
 
     emptyBadgeTitle: {
         fontSize: 16,
         fontFamily: 'Poppins_700Bold',
-        color: LIGHT_GRAY_COLOR,
         alignSelf: 'center',
         padding: 15
     },
 
     badgeTitle: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR
+        fontFamily: 'Poppins_700Bold'
     },
 
     badgeDescription: {
         fontSize: 14,
-        fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR
+        fontFamily: 'Poppins_400Regular'
     }
 })
 

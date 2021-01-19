@@ -4,8 +4,7 @@ import { WHITE_COLOR, RED_COLOR } from '../../../styles.global'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: WHITE_COLOR
+        flex: 1
     },
 
     optionsContainer: {
@@ -15,14 +14,12 @@ const styles = StyleSheet.create({
     signOutButton: {
         padding: 7,
         borderRadius: 12,
-        alignItems: 'center',
-        backgroundColor: RED_COLOR
+        alignItems: 'center'
     },
 
     signOutText: {
         fontSize: 18,
-        fontFamily: 'Poppins_600SemiBold',
-        color: WHITE_COLOR
+        fontFamily: 'Poppins_600SemiBold'
     }
 })
 

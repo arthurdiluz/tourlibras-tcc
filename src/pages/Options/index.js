@@ -5,36 +5,28 @@ import { useNavigation } from '@react-navigation/native'
 
 import { Entypo } from '@expo/vector-icons'
 import { useAuth } from '../../context/auth'
+import { useTheme } from '../../context/theme'
 
 import styles from './styles'
 import Header from '../../components/Header'
 
 function Options() {
     const { signOut } = useAuth()
-    const navigation = useNavigation()
-
-    function handleNavigateBack() {
-        navigation.goBack()
-    }
+    const { theme } = useTheme()
 
     function handleSignOut() {
         signOut()
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Header
                 title="Opções"
-                // headerLeft={(
-                //     <BorderlessButton onPress={handleNavigateBack}>
-                //         <Entypo name="cross" size={30} color="rgba(0, 0, 0, 0.3)" />
-                //     </BorderlessButton>
-                // )}
             />
             <ScrollView style={styles.optionsContainer}>
                 <View>
-                    <RectButton style={styles.signOutButton} onPress={handleSignOut} title="Sign Out">
-                        <Text style={styles.signOutText}>Logout</Text>
+                    <RectButton rippleColor={theme.colors.signOutButtonRipple} style={[styles.signOutButton, { backgroundColor: theme.colors.signOutButtonBackground }]} onPress={handleSignOut} title="Sign Out">
+                        <Text style={[styles.signOutText, { color: theme.colors.signOutButtonText }]}>Logout</Text>
                     </RectButton>
                 </View>
             </ScrollView>

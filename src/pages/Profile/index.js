@@ -10,12 +10,14 @@ import { AntDesign, MaterialIcons, FontAwesome, FontAwesome5, Feather, MaterialC
 import Header from '../../components/Header'
 import Database from '../../services/Database'
 import { useAuth } from '../../context/auth'
+import { useTheme } from '../../context/theme'
 
 import { LIGHT_GRAY_COLOR, MAIN_COLOR, RED_COLOR } from '../../../styles.global'
 import styles from './styles'
 
 function Profile({ route: { params: { userId } } }) {
     const navigation = useNavigation()
+    const { theme } = useTheme()
     const { user: authenticatedUser } = useAuth()
     const [userDetails, setUserDetails] = useState({})
     const [badgesList, setBadgesList] = useState({}) // List of available badges
@@ -103,69 +105,77 @@ function Profile({ route: { params: { userId } } }) {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Header
                 title={authenticatedUser.uid == userId ? 'Perfil' : `Perfil de ${getFirstName()}`}
                 headerLeft={authenticatedUser.uid !== userId && (
-                    <BorderlessButton onPress={handleGoBack}>
-                        <Feather name="arrow-left" size={26} color={MAIN_COLOR} />
+                    <BorderlessButton rippleColor={theme.colors.borderlessButtonRipple} onPress={handleGoBack}>
+                        <Feather name="arrow-left" size={26} color={theme.colors.main} />
                     </BorderlessButton>
                 )}
                 headerRight={authenticatedUser.uid == userId && (
-                    <BorderlessButton onPress={handleNavigationToEditProfile}>
-                        <FontAwesome5 name="edit" size={26} color={MAIN_COLOR} />
+                    <BorderlessButton rippleColor={theme.colors.borderlessButtonRipple} onPress={handleNavigationToEditProfile}>
+                        <FontAwesome5 name="edit" size={26} color={theme.colors.main} />
                     </BorderlessButton>
                 )}
             />
 
             <ScrollView>
-                <View style={styles.profileInfo}>
+                <View style={[styles.profileInfo, { borderColor: theme.colors.division }]}>
                     <View style={styles.basicInfo}>
-                    <Text style={styles.name}>{userDetails ? userDetails.name : ''}</Text>
-                        <Text style={styles.date}>{userDetails ? `Entrou em ${formatDate(userDetails.signedUpAt)}` : ''}</Text>
+                    <Text style={[styles.name, { color: theme.colors.strongText }]}>{userDetails ? userDetails.name : ''}</Text>
+                        <Text style={[styles.date, { color: theme.colors.lightText }]}>{userDetails ? `Entrou em ${formatDate(userDetails.signedUpAt)}` : ''}</Text>
                     </View>
                     <View style={styles.profileImageContainer}>
                         {userDetails.avatar ? (
                                 <Image style={styles.profileImage} source={{ uri: userDetails.avatar }} />
                             ) : (
-                                <FontAwesome name="user-circle" size={100} color={LIGHT_GRAY_COLOR} />
+                                <FontAwesome name="user-circle" size={100} color={theme.colors.lightDefaultProfileIcon} />
                         )}
                     </View>
                 </View>
 
                 <View style={styles.statisticsContainer}>
-                    <Text style={styles.statisticsText}>Estatísticas</Text>
+                    <Text style={[styles.statisticsText, { color: theme.colors.strongText }]}>Estatísticas</Text>
                     <View style={styles.statisticsContent}>
-                        <View style={styles.experienceContainer}>
-                            <AntDesign style={styles.experienceIcon} name="star" size={30} color="#FBD513" />
+                        <View style={[styles.experienceContainer, { borderColor: theme.colors.division }]}>
+                            <AntDesign style={styles.experienceIcon} name="star" size={30} color={theme.colors.profileExperienceIcon} />
                             <View style={styles.experienceInfo}>
-                                <Text style={styles.experienceTitle}>{userDetails.experience}</Text>
-                                <Text style={styles.experienceDescription}>Experiência</Text>
+                                <Text style={[styles.experienceTitle, { color: theme.colors.strongText }]}>{userDetails.experience}</Text>
+                                <Text style={[styles.experienceDescription, { color: theme.colors.lightText }]}>Experiência</Text>
                             </View>
                         </View>
-                        <View style={styles.moneyContainer}>
-                            <MaterialIcons name="attach-money" size={30} color="#00D200" />
+                        <View style={[styles.moneyContainer, { borderColor: theme.colors.division }]}>
+                            <MaterialIcons name="attach-money" size={30} color={theme.colors.profileMoneyIcon} />
                             <View style={styles.moneyInfo}>
-                                <Text style={styles.moneyTitle}>{userDetails.money}</Text>
-                                <Text style={styles.moneyDescription}>Dinheiro</Text>
+                                <Text style={[styles.moneyTitle, { color: theme.colors.strongText }]}>{userDetails.money}</Text>
+                                <Text style={[styles.moneyDescription, { color: theme.colors.lightText }]}>Dinheiro</Text>
                             </View>
                         </View>
                     </View>
                 </View>
 
                 <View style={styles.badgesContainer}>
-                    <Text style={styles.badgesText}>Medalhas</Text>
-                    <View style={styles.badgesContent}>
+                    <Text style={[styles.badgesText, { color: theme.colors.strongText }]}>Medalhas</Text>
+                    <View style={[styles.badgesContent, { borderColor: theme.colors.division }]}>
                         {badgesToBeShown.length !== 0 ? badgesToBeShown.map((badge, badgeIndex) => (
-                            <View key={badgeIndex} style={badgeIndex < badgesToBeShown.length - 1 ? [styles.badgeContainer, styles.badgeBottomDivision] : styles.badgeContainer}>
+                            <View key={badgeIndex} style={badgeIndex < badgesToBeShown.length - 1 ? [styles.badgeContainer, styles.badgeBottomDivision, { borderColor: theme.colors.division }] : styles.badgeContainer}>
                                 {
                                     badge['media'] === "" ? (
-                                        <View style={styles.badgeIconContainer}>
-                                            <MaterialCommunityIcons name="trophy-award" size={50} color="#A0A000" />
+                                        <View
+                                            style={[
+                                                styles.badgeIconContainer,
+                                                {
+                                                    backgroundColor: theme.colors.defaultBadgeBackground,
+                                                    borderColor: theme.colors.defaultBadgeBorder
+                                                }
+                                            ]}
+                                        >
+                                            <MaterialCommunityIcons name="trophy-award" size={50} color={theme.colors.defaultBadgeIcon} />
                                             {
                                                 badge['cumulative'] === true && (
                                                     <View style={styles.badgeQuantityIconContainer}>
-                                                        <Text style={styles.badgeQuantityIconText}>{`x${badge['quantity']}`}</Text>
+                                                        <Text style={[styles.badgeQuantityIconText, { color: theme.colors.defaultBadgeIcon }]}>{`x${badge['quantity']}`}</Text>
                                                     </View>
                                                 )
                                             }
@@ -175,8 +185,8 @@ function Profile({ route: { params: { userId } } }) {
                                             <Image source={{ uri: badge['media'] }} style={styles.badgeImage} />
                                             {
                                                 badge['cumulative'] === true && (
-                                                    <View style={styles.badgeQuantityImageContainer}>
-                                                        <Text style={styles.badgeQuantityImageText}>{`x${badge['quantity']}`}</Text>
+                                                    <View style={[styles.badgeQuantityImageContainer, { backgroundColor: theme.colors.imageBadgeQuantityBackground }]}>
+                                                        <Text style={[styles.badgeQuantityImageText, { color: theme.colors.imageBadgeQuantityText }]}>{`x${badge['quantity']}`}</Text>
                                                     </View>
                                                 )
                                             }
@@ -184,14 +194,14 @@ function Profile({ route: { params: { userId } } }) {
                                     )
                                 }
                                 <View style={styles.badgeInfo}>
-                                    <Text style={styles.badgeTitle}>{badge.title}</Text>
-                                    <Text style={styles.badgeDescription}>{badge.text}</Text>
+                                    <Text style={[styles.badgeTitle, { color: theme.colors.strongText }]}>{badge.title}</Text>
+                                    <Text style={[styles.badgeDescription, { color: theme.colors.lightText }]}>{badge.text}</Text>
                                 </View>
                             </View>
                         )) : (
                             <View style={styles.badgeContainer}>
                                 <View style={styles.badgeInfo}>
-                                    <Text style={styles.emptyBadgeTitle}>Nenhuma medalha{'\n'} foi encontrada :(</Text>
+                                    <Text style={[styles.emptyBadgeTitle, { color: theme.colors.lightText }]}>Nenhuma medalha{'\n'} foi encontrada :(</Text>
                                 </View>
                             </View>
                         )}

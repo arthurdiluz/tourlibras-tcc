@@ -6,15 +6,17 @@ import MultipleOptionsButton from '../../components/MultipleOptionsButton'
 
 import styles from './styles'
 import { FontAwesome } from '@expo/vector-icons'
-import { LIGHT_GRAY_COLOR, MAIN_COLOR, WHITE_COLOR } from '../../../styles.global'
+import { LIGHT_GRAY_COLOR, MAIN_COLOR, RED_COLOR, WHITE_COLOR } from '../../../styles.global'
 
 import Header from '../../components/Header'
 import Database from '../../services/Database'
 
 import { useAuth } from '../../context/auth'
+import { useTheme } from '../../context/theme'
 
 function Leaderboard() {
     const navigation = useNavigation()
+    const { theme } = useTheme()
     const [availableFilters, setAvailableFilters] = useState([{
         filter: 'experience',
         description: 'Experiência',
@@ -46,14 +48,14 @@ function Leaderboard() {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Header
                 title="Placar"
             />
             <ScrollView>
-                <View style={styles.leaderboardContainer}>
-                    <View style={styles.filtersContainer}>
-                        <Text style={styles.filtersTitle}>Filtrar por:</Text>
+                <View style={[styles.leaderboardContainer, { borderColor: theme.colors.division }]}>
+                    <View style={[styles.filtersContainer, { borderColor: theme.colors.division }]}>
+                        <Text style={[styles.filtersTitle, { color: theme.colors.lightText }]}>Filtrar por:</Text>
                         <View style={styles.filterButtonsContainer}>
                             <MultipleOptionsButton
                                 options={getFiltersDescription()}
@@ -63,7 +65,7 @@ function Leaderboard() {
                     </View>
                     <View>
                         {leaderboard.length == 0 && (
-                            <Text style={styles.emptyLeaderboardText}>Não foi encontrado nenhum usuário no placar :(</Text>
+                            <Text style={[styles.emptyLeaderboardText, { color: theme.colors.lightText }]}>Não foi encontrado nenhum usuário no placar :(</Text>
                         )}
                         {leaderboard.map((user, userPosition) => (
                             <TouchableOpacity
@@ -76,16 +78,21 @@ function Leaderboard() {
                                 }}
                                 style={[
                                     styles.anotherUserButtonDefault,
-                                    userPosition !== 0 && styles.anotherUserButtonWithTopBorder,
+                                    userPosition !== 0 && [styles.anotherUserButtonWithTopBorder, { borderColor: theme.colors.secondaryDivision }],
                                     userPosition == leaderboard.length - 1 && styles.lastUserButton,
-                                    user.key == authenticatedUser.uid && styles.authenticatedUserContainer
+                                    user.key == authenticatedUser.uid && [styles.authenticatedUserContainer, { backgroundColor: theme.colors.main }]
                                 ]}
                             >
                                 <View style={styles.userPositionContainer}>
                                     <Text
                                         style={[
                                             styles.userPositionText,
-                                            user.key == authenticatedUser.uid && styles.authenticatedUserPositionText
+                                            {
+                                                color: theme.colors.strongText
+                                            },
+                                            user.key == authenticatedUser.uid && {
+                                                color:theme.colors.white
+                                            }
                                         ]}
                                     >
                                         {userPosition + 1}
@@ -96,11 +103,36 @@ function Leaderboard() {
                                         {user.info.avatar ? (
                                             <Image source={{ uri: user.info.avatar }} style={styles.userAvatar} />
                                         ) : (
-                                            <FontAwesome name="user-circle" size={50} color={user.key == authenticatedUser.uid ? WHITE_COLOR : LIGHT_GRAY_COLOR} />
+                                            <FontAwesome
+                                                name="user-circle"
+                                                size={50}
+                                                color={user.key == authenticatedUser.uid ? (
+                                                    theme.colors.strongDefaultProfileIcon
+                                                ) : (
+                                                    theme.colors.lightDefaultProfileIcon
+                                                )} />
                                         )}
-                                        <Text style={[styles.userNameText, user.key == authenticatedUser.uid && styles.authenticatedUserNameText]}>{user.info.name}</Text>
+                                        <Text
+                                            style={[
+                                                styles.userNameText,
+                                                { color: theme.colors.lightText },
+                                                user.key == authenticatedUser.uid && {
+                                                    color: theme.colors.white
+                                                }
+                                            ]}
+                                        >{user.info.name}</Text>
                                     </View>
-                                    <Text style={[styles.userFilterValueText, user.key == authenticatedUser.uid && styles.authenticatedUserFilterValueText]}>
+                                    <Text
+                                        style={[
+                                            styles.userFilterValueText,
+                                            {
+                                                color: theme.colors.strongText
+                                            },
+                                            user.key == authenticatedUser.uid && {
+                                                color: theme.colors.white
+                                            }
+                                        ]}
+                                    >
                                         {`${user.info[availableFilters[selectedFilterIndex].filter]} ${availableFilters[selectedFilterIndex].symbol}`}
                                     </Text>
                                 </View>

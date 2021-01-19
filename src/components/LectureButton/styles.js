@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
         width: '100%',
         transform: [{ rotateZ: '-45deg' }],
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 15
     },
 
     levelContainer: {

@@ -4,8 +4,7 @@ import { WHITE_COLOR, DARK_GRAY_COLOR, DIVISION_COLOR, LIGHT_GRAY_COLOR, GREEN_C
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: WHITE_COLOR
+        flex: 1
     },
 
     questionsAnswers: {
@@ -19,8 +18,6 @@ const styles = StyleSheet.create({
         width: 15,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: SECONDARY_DIVISION_COLOR,
-        backgroundColor: GREEN_COLOR,
         marginHorizontal: 2
     },
 
@@ -29,8 +26,6 @@ const styles = StyleSheet.create({
         width: 15,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: SECONDARY_DIVISION_COLOR,
-        backgroundColor: RED_COLOR,
         marginHorizontal: 2
     },
 
@@ -39,15 +34,12 @@ const styles = StyleSheet.create({
         width: 15,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: SECONDARY_DIVISION_COLOR,
-        backgroundColor: DIVISION_COLOR,
         marginHorizontal: 2
     },
 
     questionsCounter: {
         fontSize: 15,
-        fontFamily: 'Poppins_700Bold',
-        color: LIGHT_GRAY_COLOR,
+        fontFamily: 'Poppins_700Bold'
     },
 
     questionContainer: {
@@ -61,14 +53,12 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 25,
         borderWidth: 2,
-        borderColor: DARK_GRAY_COLOR,
         marginBottom: 10
     },
 
     questionDescription: {
         fontSize: 21,
         fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR,
         marginBottom: 12,
         textAlign: 'center'
     },
@@ -88,7 +78,6 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 25,
         borderWidth: 2,
-        borderColor: DIVISION_COLOR,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 4
@@ -103,7 +92,6 @@ const styles = StyleSheet.create({
     optionDescription: {
         fontSize: 16,
         fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR,
         marginTop: 10,
         textAlign: 'center'
     }

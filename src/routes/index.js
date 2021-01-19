@@ -3,6 +3,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
 import { useAuth } from '../context/auth'
+import { useTheme } from '../context/theme'
 
 import AppRoutes from './app.routes'
 import AuthRoutes from './auth.routes'
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
 })
 
 function Routes() {
+    const { theme } = useTheme()
     const { signed, loading, user } = useAuth()
     const [userDetails, setUserDetails] = useState({})
 
@@ -31,8 +33,8 @@ function Routes() {
 
     if (loading) {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color="#708FC8" />
+            <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+                <ActivityIndicator size="large" color={theme.colors.main} />
             </View>
         )
     }
@@ -41,12 +43,17 @@ function Routes() {
         <>
             {
                 userDetails.admin == true ? (
-                    <DevRoutes />
+                    <>
+                        <DevRoutes />
+                        <StatusBar style='auto' />
+                    </>
                 ) : (
-                    <AppRoutes />
+                    <>
+                        <AppRoutes />
+                        <StatusBar style={theme.colors.statusBar} />
+                    </>
                 )
             }
-            <StatusBar style='auto' />
         </>
     ) : (
             <>

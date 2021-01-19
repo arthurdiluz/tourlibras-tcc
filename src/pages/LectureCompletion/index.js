@@ -6,12 +6,14 @@ import { RectButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import { useAuth } from '../../context/auth'
+import { useTheme } from '../../context/theme';
 
 import styles from './styles'
 import Header from '../../components/Header'
 import Database from '../../services/Database'
 
 function LectureCompletion({ route: { params: { answers, lectureId, levelId }}}) {
+    const { theme } = useTheme()
     const navigation = useNavigation()
     const [correctAnswersCount, setCorrectAnswersCount] = useState(0)
     const { user } = useAuth()
@@ -64,22 +66,49 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
     }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Header
                 headerCenter={(
                     <View style={styles.questionsAnswers}>
                         {answers.map((answer, answerIndex) => {
                             if (answer === true) {
                                 return(
-                                    <View key={answerIndex} style={styles.correctAnswer} />
+                                    <View
+                                        key={answerIndex}
+                                        style={[
+                                            styles.correctAnswer,
+                                            {
+                                                borderColor: theme.colors.answerIndicatorBorder,
+                                                backgroundColor: theme.colors.correctAnswerIndicatorBackground
+                                            }
+                                        ]}
+                                    />
                                 )
                             } else if (answer === false) {
                                 return(
-                                    <View key={answerIndex} style={styles.incorrectAnswer} />
+                                    <View
+                                        key={answerIndex}
+                                        style={[
+                                            styles.incorrectAnswer,
+                                            {
+                                                borderColor: theme.colors.answerIndicatorBorder,
+                                                backgroundColor: theme.colors.incorrectAnswerIndicatorBackground
+                                            }
+                                        ]}
+                                    />
                                 )
                             } else {
                                 return (
-                                    <View key={answerIndex} style={styles.undefinedAnswer} />
+                                    <View
+                                        key={answerIndex}
+                                        style={[
+                                            styles.undefinedAnswer,
+                                            {
+                                                borderColor: theme.colors.answerIndicatorBorder,
+                                                backgroundColor: theme.colors.undefinedAnswerIndicatorBackground
+                                            }
+                                        ]}
+                                    />
                                 )
                             }
                         })}
@@ -88,17 +117,24 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
             />
             <View style={styles.mainContainer}>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                    <View style ={styles.iconContainer}>
-                        <MaterialCommunityIcons name="trophy" size={60} color="yellow" />
+                    <View
+                        style ={[
+                            styles.iconContainer,
+                            {
+                                backgroundColor: theme.colors.lectureCompletionIconBackground
+                            }
+                        ]}
+                    >
+                        <MaterialCommunityIcons name="trophy" size={60} color={theme.colors.lectureCompletionIcon} />
                     </View>
                     <View style={styles.resultContainer}>
-                        <Text style={styles.text}>Você acertou</Text>
-                        <Text style={styles.result}>{`${correctAnswersCount}/${answers.length}`}</Text>
-                        <Text style={styles.text}>questões!</Text>
+                        <Text style={[styles.text, { color: theme.colors.lightText }]}>Você acertou</Text>
+                        <Text style={[styles.result, { color: theme.colors.strongText }]}>{`${correctAnswersCount}/${answers.length}`}</Text>
+                        <Text style={[styles.text, { color: theme.colors.lightText }]}>questões!</Text>
                     </View>
                 </View>
-                <RectButton onPress={handleNavigationToLectures} style={styles.button}>
-                    <Text style={styles.buttonText}>Voltar para as aulas</Text>
+                <RectButton rippleColor={theme.colors.primaryButtonRipple} onPress={handleNavigationToLectures} style={[styles.button, { backgroundColor: theme.colors.primaryButtonBackground }]}>
+                    <Text style={[styles.buttonText, { color: theme.colors.primaryButtonText }]}>Voltar para as aulas</Text>
                 </RectButton>
             </View>
         </View>

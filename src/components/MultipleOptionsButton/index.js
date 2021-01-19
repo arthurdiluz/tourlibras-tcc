@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 
+import { useTheme } from '../../context/theme'
+
 import styles from './styles'
 
 function MultipleOptionsButton({
     options = [],
     callback
 }) {
+    const { theme } = useTheme()
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(0)
 
     useEffect(() => {
@@ -21,15 +24,24 @@ function MultipleOptionsButton({
                     onPress={() => setSelectedOptionIndex(optionId)}
                     style={[
                         styles.centerButtons,
+                        {
+                            borderColor: theme.colors.division
+                        },
                         optionId == 0 && styles.firstButton,
                         optionId == options.length - 1 && styles.lastButton,
-                        selectedOptionIndex == optionId && styles.selectedButton
+                        selectedOptionIndex == optionId && [styles.selectedButton, {
+                            backgroundColor: theme.colors.main,
+                            borderColor: theme.colors.lightText
+                        }]
                     ]}
                 >
                     <Text
                         style={[
                             styles.defaultButtonText,
-                            selectedOptionIndex == optionId && styles.selectedButtonText
+                            {
+                                color: theme.colors.strongText
+                            },
+                            selectedOptionIndex == optionId && [styles.selectedButtonText, { color: theme.colors.white }]
                         ]}
                     >
                         {option}

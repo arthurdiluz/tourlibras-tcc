@@ -4,8 +4,7 @@ import { SECONDARY_DIVISION_COLOR, GREEN_COLOR, RED_COLOR, DIVISION_COLOR, WHITE
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: WHITE_COLOR
+        flex: 1
     },
     
     questionsAnswers: {
@@ -19,8 +18,6 @@ const styles = StyleSheet.create({
         width: 15,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: SECONDARY_DIVISION_COLOR,
-        backgroundColor: GREEN_COLOR,
         marginHorizontal: 2
     },
 
@@ -29,8 +26,6 @@ const styles = StyleSheet.create({
         width: 15,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: SECONDARY_DIVISION_COLOR,
-        backgroundColor: RED_COLOR,
         marginHorizontal: 2
     },
 
@@ -39,8 +34,6 @@ const styles = StyleSheet.create({
         width: 15,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: SECONDARY_DIVISION_COLOR,
-        backgroundColor: DIVISION_COLOR,
         marginHorizontal: 2
     },
     
@@ -51,7 +44,6 @@ const styles = StyleSheet.create({
     },
     
     iconContainer: {
-        backgroundColor: DARK_GRAY_COLOR,
         borderTopLeftRadius: 50,
         borderBottomRightRadius: 50,
         borderTopRightRadius: 10,
@@ -70,7 +62,6 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         fontFamily: 'Poppins_400Regular',
-        color: LIGHT_GRAY_COLOR,
         textAlign: 'center',
         textAlignVertical: 'center'
     },
@@ -78,13 +69,11 @@ const styles = StyleSheet.create({
     result: {
         fontSize: 80,
         fontFamily: 'Poppins_700Bold',
-        color: DARK_GRAY_COLOR,
         textAlign: 'center',
         textAlignVertical: 'center'
     },
 
     button: {
-        backgroundColor: MAIN_COLOR,
         paddingVertical: 20,
         paddingHorizontal: 40,
         marginBottom: 30,
@@ -93,8 +82,7 @@ const styles = StyleSheet.create({
 
     buttonText: {
         fontSize: 18,
-        fontFamily: 'Poppins_600SemiBold',
-        color: WHITE_COLOR
+        fontFamily: 'Poppins_600SemiBold'
     }
 })
 
