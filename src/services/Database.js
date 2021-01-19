@@ -44,13 +44,18 @@ export default class Database {
         Firebase.database().ref().child(`userDetails/${user.uid}/avatar`).set(newPhotoURL)
     }
 
+    static async updateUserAppTheme(user, newValue) {
+        Firebase.database().ref().child(`userDetails/${user.uid}/appTheme`).set(newValue)
+    }
+
     static async createUserDetailsOnDb(user) {
         Firebase.database().ref().child(`userDetails/${user.uid}`).set({
             name: user.displayName || 'Usuário',
             avatar: user.photoURL || '',
             signedUpAt: new Date().toISOString(),
             experience: 0,
-            money: 0
+            money: 0,
+            appTheme: 'light'
         })
     }
 
@@ -164,6 +169,11 @@ export default class Database {
     static async getUserDetailsOnce(userId) {
         const userDetails = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
         return userDetails.val()
+    }
+
+    static async getUserAppTheme(userId) {
+        const appTheme = await Firebase.database().ref(`userDetails/${userId}/appTheme`).once('value', (snapshot) => (snapshot))
+        return appTheme.val()
     }
 
     static async getUserQuestionHistory(userId) {
