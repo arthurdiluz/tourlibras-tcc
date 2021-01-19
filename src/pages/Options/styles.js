@@ -8,7 +8,24 @@ const styles = StyleSheet.create({
     },
 
     optionsContainer: {
-        padding: 20
+        padding: 20,
+        justifyContent: 'center'
+    },
+
+    darkThemeContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 30
+    },
+
+    darkThemeTitle: {
+        fontSize: 21,
+        fontFamily: 'Poppins_700Bold'
+    },
+
+    signOutContainer: {
+        paddingTop: 20,
+        borderTopWidth: 2
     },
 
     signOutButton: {

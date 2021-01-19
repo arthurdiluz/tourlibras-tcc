@@ -46,6 +46,10 @@ export default {
         questionMediaBorder: '#A0A0A0',
         lectureCompletionIconBackground: '#A0A0A0',
         lectureCompletionIcon: '#F7F704',
+        themeSwitchThumbOn: '#e4e3e4',
+        themeSwitchThumbOff: '#f4f3f4',
+        themeSwitchTrackOn: '#00BFFF',
+        themeSwitchTrackOff: '#767577',
 
         white: '#FFF'
     }
