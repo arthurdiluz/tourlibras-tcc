@@ -6,11 +6,11 @@ import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 
 import { useAuth } from '../../context/auth'
-import Header from '../../components/Header'
-import { MAIN_COLOR } from '../../../styles.global'
-import styles from './styles'
-import Database from '../../services/Database'
 import { useTheme } from '../../context/theme'
+import Database from '../../services/Database'
+
+import Header from '../../components/Header'
+import styles from './styles'
 
 function Questions({ route: { params: { level, lectureId, levelId }}}) {
     const navigation = useNavigation()

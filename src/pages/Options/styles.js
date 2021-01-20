@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native'
 
-import { WHITE_COLOR, RED_COLOR } from '../../../styles.global'
-
 const styles = StyleSheet.create({
     container: {
         flex: 1

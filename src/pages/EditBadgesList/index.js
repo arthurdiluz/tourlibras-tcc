@@ -29,10 +29,6 @@ function EditBadgesList() {
         }
     }, [])
 
-    useEffect(() => {
-        console.log(badgesList)
-    }, [badgesList])
-
     function handleNavigationToEditBadge(badgeId) {
         navigation.navigate('EditBadge', {
             badgeId

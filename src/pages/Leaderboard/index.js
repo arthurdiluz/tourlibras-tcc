@@ -6,7 +6,6 @@ import MultipleOptionsButton from '../../components/MultipleOptionsButton'
 
 import styles from './styles'
 import { FontAwesome } from '@expo/vector-icons'
-import { LIGHT_GRAY_COLOR, MAIN_COLOR, RED_COLOR, WHITE_COLOR } from '../../../styles.global'
 
 import Header from '../../components/Header'
 import Database from '../../services/Database'

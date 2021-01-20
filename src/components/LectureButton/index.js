@@ -5,21 +5,14 @@ import { RectButton } from 'react-native-gesture-handler'
 
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons'; 
 import styles from './styles'
-import { DARK_GRAY_COLOR } from '../../../styles.global';
 import { useTheme } from '../../context/theme';
 
 function LectureButton({
     size,
-    mainStrokeColor = '#000099',
-    secondaryStrokeColor = '#CCC',
-    disabledStrokeColor = '#777',
-    completedStrokeColor = '#f7f704',
     strokeWidth = 8,
     progress = 0,
     avatarUrl,
     level = 1,
-    levelBackgroundColor = '#FF0000',
-    levelTextColor = '#FFF',
     onPress,
     unlocked = true,
     completed = false,

@@ -11,11 +11,10 @@ import { FontAwesome, Feather, FontAwesome5 } from '@expo/vector-icons'
 
 import { useLectureRegister } from '../../context/lectureRegister'
 import Database from '../../services/Database'
-import { useAuth } from '../../context/auth'
 
 import getFileExtension from '../../utils/getFileExtension'
-import Header from '../../components/Header'
 
+import Header from '../../components/Header'
 import { MAIN_COLOR, WHITE_COLOR, LIGHT_GRAY_COLOR } from '../../../styles.global'
 import styles from './styles'
 

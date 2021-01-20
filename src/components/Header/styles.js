@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Constants from 'expo-constants'
 
-import { DIVISION_COLOR, MAIN_COLOR } from '../../../styles.global'
-
 const styles = StyleSheet.create({
     container: {
         paddingTop: Constants.statusBarHeight + 5,

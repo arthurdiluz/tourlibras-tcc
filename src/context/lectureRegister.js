@@ -84,23 +84,6 @@ export const LectureRegisterProvider = ({ children }) => {
         setLevels(newLevels)
     }
 
-    // const changeQuestionField = (levelId, questionId, fieldName) => (event) => {
-    //     const newLevels = levels.map((currentLevel, currentLevelId) => {
-    //         if (levelId !== currentLevelId) return currentLevel
-
-    //         const newQuestions = currentLevel.questions.map((question, currentQuestionId) => {
-    //             if (questionId !== currentQuestionId) return question
-    //             const newQuestion = { ...question, [fieldName]: event.nativeEvent.text }
-    //             return (newQuestion)
-    //         })
-
-    //         const newLevel = { ...currentLevel, questions: newQuestions }
-    //         return (newLevel)
-    //     })
-
-    //     setLevels(newLevels)
-    // }
-
     function addNewOption(levelId, questionId) {
         setLevels((levels) => {
             const newLevels = [...levels]
@@ -134,35 +117,6 @@ export const LectureRegisterProvider = ({ children }) => {
             return (newLevels)
         })
     }
-
-    // const changeOptionText = (levelId, questionId, optionId) => (event) => {
-    //     const newLevels = levels.map((currentLevel, currentLevelId) => {
-    //         if (levelId !== currentLevelId) return currentLevel
-
-    //         const newQuestions = currentLevel
-    //             .questions
-    //             .map((currentQuestion, currentQuestionId) => {
-    //                 if (questionId !== currentQuestionId) return currentQuestion
-
-    //                 const newOptions = currentQuestion
-    //                     .options
-    //                     .map((currentOption, currentOptionId) => {
-    //                         if (optionId !== currentOptionId) return currentOption
-
-    //                         const newOption = { ...currentOption, text: event.nativeEvent.text }
-    //                         return (newOption)
-    //                     })
-
-    //                 const newQuestion = { ...currentQuestion, options: newOptions }
-    //                 return (newQuestion)
-    //             })
-
-    //         const newLevel = { ...currentLevel, questions: newQuestions }
-    //         return (newLevel)
-    //     })
-
-    //     setLevels(newLevels)
-    // }
 
     function changeOptionField(levelId, questionId, optionId, fieldName, value) {
         const newLevels = levels.map((currentLevel, currentLevelId) => {

@@ -12,7 +12,6 @@ import Database from '../../services/Database'
 import { useAuth } from '../../context/auth'
 import { useTheme } from '../../context/theme'
 
-import { LIGHT_GRAY_COLOR, MAIN_COLOR, RED_COLOR } from '../../../styles.global'
 import styles from './styles'
 
 function Profile({ route: { params: { userId } } }) {

@@ -23,7 +23,11 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.harukisatoh.tccproject"
+      "package": "com.harukisatoh.tccproject",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon-foreground.png",
+        "backgroundColor": "#00BFFF"
+      }
     }
   }
 }

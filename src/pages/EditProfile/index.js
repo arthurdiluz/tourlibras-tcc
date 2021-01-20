@@ -9,8 +9,7 @@ import { useAuth } from '../../context/auth';
 import { useTheme } from '../../context/theme';
 import Database from '../../services/Database';
 
-import { Feather, FontAwesome } from '@expo/vector-icons'; 
-import { MAIN_COLOR, LIGHT_GRAY_COLOR } from '../../../styles.global';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import styles from './styles'
 
 
@@ -27,10 +26,6 @@ function EditProfile() {
             setAvatar(response.avatar)
         })
     }, [])
-
-    useEffect(() => {
-        console.log(avatar)
-    }, [avatar])
 
     function handleGoBack() {
         navigation.goBack()

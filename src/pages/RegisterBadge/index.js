@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform, SafeAreaView, StatusBar, Keyboard } from 'react-native'
-import { BorderlessButton, RectButton, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform, SafeAreaView, Keyboard } from 'react-native'
+import { BorderlessButton, RectButton, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import CheckBox from '@react-native-community/checkbox';
 import * as ImagePicker from 'expo-image-picker'

@@ -11,7 +11,6 @@ import { useAuth } from '../context/auth'
 import { useTheme } from '../context/theme'
 
 import { SimpleLineIcons, Feather, MaterialIcons, AntDesign } from '@expo/vector-icons'
-import { DIVISION_COLOR, MAIN_COLOR } from '../../styles.global'
 
 const AppTabs = createBottomTabNavigator()
 
