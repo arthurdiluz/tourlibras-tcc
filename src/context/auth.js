@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         await Database.createUserDetailsOnDb(user)
         await Database.createUserProgressOnDb(user)
         await Database.createUserBadgesOnDb(user)
+        await Database.createUserInventoryOnDb(user)
     }
     
     useEffect(() => {

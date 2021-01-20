@@ -94,6 +94,21 @@ export default class Database {
         Firebase.database().ref().child(`userBadges/${user.uid}`).set(userBadges)
     }
 
+    static async createUserInventoryOnDb(user) {
+        const storeSnapshot = await Firebase.database().ref(`store`).once('value', (snapshot) => (snapshot))
+
+        const storeItemsId = Object.keys(storeSnapshot.val())
+        const userInventory = {}
+
+        storeItemsId.forEach((itemId) => {
+            userInventory[itemId] = {
+                purchased: false
+            }
+        })
+
+        Firebase.database().ref().child(`userInventory/${user.uid}`).set(userInventory)
+    }
+
     static async storeUserQuestionHistoryOnDb(user, postObject) {
         Firebase.database().ref().child(`userQuestionHistory/${user.uid}`).push(postObject)
     }
@@ -191,6 +206,10 @@ export default class Database {
         Firebase.database().ref(`userBadges/${userId}`).on('value', (snapshot) => callback(snapshot.val()))
     }
 
+    static async getUserInventory(userId, callback) {
+        Firebase.database().ref(`userInventory/${userId}`).on('value', (snapshot) => callback(snapshot.val()))
+    }
+
     static async getBadgesList() {
         const badgesList = await Firebase.database().ref(`badges`).once('value', (snapshot) => (snapshot))
         return badgesList.val()
@@ -199,6 +218,11 @@ export default class Database {
     static async getLecturesList() {
         const lecturesList = await Firebase.database().ref(`lectures`).once('value', (snapshot) => (snapshot))
         return lecturesList.val()
+    }
+    
+    static async getStoreItemsList() {
+        const storeItemsList = await Firebase.database().ref(`store`).once('value', (snapshot) => (snapshot))
+        return storeItemsList.val()
     }
 
     static async getLecture(lectureId) {
@@ -228,6 +252,25 @@ export default class Database {
         })
 
         return leaderboard
+    }
+
+    static async buyItemFromStore(userId, itemId) {
+        const userMoneySnapshot = await Firebase.database().ref(`userDetails/${userId}/money`).once('value', (snapshot) => (snapshot))
+        const itemPriceSnapshot = await Firebase.database().ref(`store/${itemId}/price`).once('value', (snapshot) => (snapshot))
+    
+        if(userMoneySnapshot.val() >= itemPriceSnapshot.val()) {
+            const multiPathUpdates = {}
+            const remainingUserMoney = Number(userMoneySnapshot.val()) - Number(itemPriceSnapshot.val())
+
+            multiPathUpdates[`userDetails/${userId}/money`] = remainingUserMoney
+            multiPathUpdates[`userInventory/${userId}/${itemId}/purchased`] = true
+
+            Firebase.database().ref().update(multiPathUpdates, (err) => {
+                if(err) {
+                    console.log('Error buying item: ', err)
+                }
+            })
+        }
     }
 
     static async insertLecture(lecture) {

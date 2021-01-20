@@ -4,12 +4,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Profile from '../pages/Profile'
 import Lectures from '../pages/Lectures'
 import Leaderboard from '../pages/Leaderboard'
+import Store from '../pages/Store'
 import Options from '../pages/Options'
 
 import { useAuth } from '../context/auth'
 import { useTheme } from '../context/theme'
 
-import { SimpleLineIcons, Feather, MaterialIcons } from '@expo/vector-icons'
+import { SimpleLineIcons, Feather, MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { DIVISION_COLOR, MAIN_COLOR } from '../../styles.global'
 
 const AppTabs = createBottomTabNavigator()
@@ -32,17 +33,20 @@ function HomeTabs() {
                 }
             }}
         >
-            <AppTabs.Screen name="Profile" component={Profile} initialParams={{ userId: user.uid }} options={{ tabBarIcon: ({ color }) => (
-                <Feather name="user" size={20} color={color} />
+            <AppTabs.Screen name="Profile" component={Profile} initialParams={{ userId: user.uid }} options={{ tabBarIcon: ({ color, focused }) => (
+                <Feather name="user" size={focused ? 25 : 20} color={color} />
             ) }} />
-            <AppTabs.Screen name="Lectures" component={Lectures} options={{ tabBarIcon: ({ color }) => (
-                <Feather name="book-open" size={20} color={color} />
+            <AppTabs.Screen name="Lectures" component={Lectures} options={{ tabBarIcon: ({ color, focused }) => (
+                <Feather name="book-open" size={focused ? 25 : 20} color={color} />
             ) }} />
-            <AppTabs.Screen name="Leaderboard" component={Leaderboard} options={{ tabBarIcon: ({ color }) => (
-                <MaterialIcons name="leaderboard" size={20} color={color} />
+            <AppTabs.Screen name="Leaderboard" component={Leaderboard} options={{ tabBarIcon: ({ color, focused }) => (
+                <MaterialIcons name="leaderboard" size={focused ? 25 : 20} color={color} />
             ) }} />
-            <AppTabs.Screen name="Options" component={Options} options={{ tabBarIcon: ({ color }) => (
-                <SimpleLineIcons name="options" size={20} color={color} />
+            <AppTabs.Screen name="Store" component={Store} options={{ tabBarIcon: ({ color, focused }) => (
+                <AntDesign name="shoppingcart" size={focused ? 25 : 20} color={color} />
+            ) }} />
+            <AppTabs.Screen name="Options" component={Options} options={{ tabBarIcon: ({ color, focused }) => (
+                <SimpleLineIcons name="options" size={focused ? 25 : 20} color={color} />
             ) }} />
         </AppTabs.Navigator>
     )

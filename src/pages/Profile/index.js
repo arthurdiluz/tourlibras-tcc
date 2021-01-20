@@ -123,7 +123,7 @@ function Profile({ route: { params: { userId } } }) {
             <ScrollView>
                 <View style={[styles.profileInfo, { borderColor: theme.colors.division }]}>
                     <View style={styles.basicInfo}>
-                    <Text style={[styles.name, { color: theme.colors.strongText }]}>{userDetails ? userDetails.name : ''}</Text>
+                        <Text style={[styles.name, { color: theme.colors.strongText }]}>{userDetails ? userDetails.name : ''}</Text>
                         <Text style={[styles.date, { color: theme.colors.lightText }]}>{userDetails ? `Entrou em ${formatDate(userDetails.signedUpAt)}` : ''}</Text>
                     </View>
                     <View style={styles.profileImageContainer}>

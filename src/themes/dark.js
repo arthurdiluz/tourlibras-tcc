@@ -50,6 +50,8 @@ export default {
         themeSwitchThumbOff: '#f4f3f4',
         themeSwitchTrackOn: '#00BFFF',
         themeSwitchTrackOff: '#767577',
+        storeBuyButtonBackground: '#00BFFF',
+        storeBuyButttonDisabledBackground: '#AAA',
 
         white: '#FFF'
     }
