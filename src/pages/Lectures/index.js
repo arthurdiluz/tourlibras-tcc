@@ -21,24 +21,24 @@ function Lectures() {
     useEffect(() => {
         Database.getLecturesList().then((response) => {
             setLecturesList(response)
-        })
-        
-        Database.getUserProgress(user.uid, (response) => {
-            const lecturesId = Object.keys(response)
+        }).then(() => {
+            Database.getUserProgress(user.uid, (response) => {
+                const lecturesId = Object.keys(response)
+    
+                setLecturesList(lecturesList => {
+                    const newLecturesList = Object.assign({}, lecturesList)
 
-            setLecturesList(lecturesList => {
-                const newLecturesList = Object.assign({}, lecturesList)
-                    
-                lecturesId.forEach((lectureId) => {
-                    const currentLevel = response[lectureId].currentLevel
-                    newLecturesList[lectureId]['currentLevel'] = currentLevel
-                    newLecturesList[lectureId]['unlocked'] = response[lectureId].unlocked
-                    newLecturesList[lectureId]['progress'] = calculateLectureProgress(currentLevel, 0, lecturesList[lectureId].levels.length, 0, 1)
-                    newLecturesList[lectureId]['completed'] = response[lectureId].completed
+                    lecturesId.forEach((lectureId) => {
+                        const currentLevel = response[lectureId].currentLevel
+                        newLecturesList[lectureId]['currentLevel'] = currentLevel
+                        newLecturesList[lectureId]['unlocked'] = response[lectureId].unlocked
+                        newLecturesList[lectureId]['progress'] = calculateLectureProgress(currentLevel, 0, lecturesList[lectureId].levels.length, 0, 1)
+                        newLecturesList[lectureId]['completed'] = response[lectureId].completed
+                    })
+                    return newLecturesList
                 })
-                return newLecturesList
+                setLoading(false)
             })
-            setLoading(false)
         })
     }, [])
     
