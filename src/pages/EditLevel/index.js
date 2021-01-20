@@ -70,14 +70,23 @@ function EditLevel({ route: { params: { levelId } } }) {
             <ScrollView>
                 <View style={styles.levelContainer}>
                     <Text style={styles.experienceText}>Experiência</Text>
-                        <TextInput
-                            style={styles.experienceInput}
-                            keyboardType="number-pad"
-                            placeholder="Digite a quantidade de XP ao completar"
-                            placeholderTextColor="rgba(0, 0, 0, 0.4)"
-                            onChange={(event) => changeLevelField(levelId, 'experience', event.nativeEvent.text)}
-                            value={levels[levelId].experience.toString()}
-                        />
+                    <TextInput
+                        style={styles.experienceInput}
+                        keyboardType="number-pad"
+                        placeholder="Digite a quantidade de XP ao completar"
+                        placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                        onChange={(event) => changeLevelField(levelId, 'experience', event.nativeEvent.text)}
+                        value={levels[levelId].experience.toString()}
+                    />
+                    <Text style={styles.moneyText}>Dinheiro</Text>
+                    <TextInput
+                        style={styles.moneyInput}
+                        keyboardType="number-pad"
+                        placeholder="Digite a quantidade de dinheiro ao completar"
+                        placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                        onChange={(event) => changeLevelField(levelId, 'money', event.nativeEvent.text)}
+                        value={levels[levelId].money.toString()}
+                    />
                 </View>
                 <View style={styles.questionsContainer}>
                         <Text style={styles.questionsContainerTitle}>Exercícios</Text>

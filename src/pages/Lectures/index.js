@@ -67,7 +67,7 @@ function Lectures() {
                                 <Text style={[styles.emptyLecturesText, { color: theme.colors.lightText }]}>Não há nenhuma aula cadastrada! :(</Text>
                             </View>
                         ) : Object.keys(lecturesList).map((lectureId, lectureIndex) => (
-                            <View key={lectureIndex}>
+                            <View key={lectureIndex} style={styles.lectureGroup}>
                                 <LectureButton
                                     size={100}
                                     avatarUrl={lecturesList[lectureId].icon}

@@ -14,7 +14,6 @@ import styles from './styles'
 function Store() {
     const { theme } = useTheme()
     const { user } = useAuth()
-    const [loading, setLoading] = useState(true)
     const [storeItems, setStoreItems] = useState([])
     const [userMoney, setUserMoney] = useState(0)
     const [userInventory, setUserInventory] = useState({})
@@ -33,10 +32,6 @@ function Store() {
         Database.getUserDetails(user.uid, (userDetails) => {
             setUserMoney(userDetails.money)
         })
-        
-        return () => {
-            setLoading(true)
-        }
     }, [])
 
     function handleItemBuy(itemId) {

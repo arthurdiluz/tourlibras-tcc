@@ -18,13 +18,19 @@ const styles = StyleSheet.create({
     
     lecturesContainer: {
         paddingVertical: 10,
-        paddingHorizontal: 25
+        paddingHorizontal: 30
     },
 
     lectureView: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginVertical: 12
+        marginVertical: 12,
+        flexWrap: 'wrap'
+    },
+
+    lectureGroup: {
+        width: 140,
+        alignItems: 'center'
     },
 
     lectureText: {
@@ -32,7 +38,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_600SemiBold',
         color: DARK_GRAY_COLOR,
         textAlign: 'center',
-        marginTop: 8
+        marginTop: 8,
+        marginBottom: 15
     }
 })
 

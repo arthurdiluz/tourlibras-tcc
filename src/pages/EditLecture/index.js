@@ -20,16 +20,16 @@ import styles from './styles'
 
 function EditLecture({ route: { params: { lectureId }}}) {
     const {
-        levels, addNewLevel, removeLevel, setLevels
+        levels, addNewLevel, removeLevel, setLevels, resetLevels
     } = useLectureRegister()
     const navigation = useNavigation()
     const [media, setMedia] = useState('')
     const [name, setName] = useState('')
     const [badgesList, setBadgesList] = useState([{
-        id: undefined,
+        id: '',
         title: "Nenhuma"
     }])
-    const [selectedBadgeId, setSelectedBadgeId] = useState(undefined)
+    const [selectedBadgeId, setSelectedBadgeId] = useState('')
 
     const componentIsMounted = useRef(true)
     useEffect(() => {
@@ -60,6 +60,7 @@ function EditLecture({ route: { params: { lectureId }}}) {
 
         return () => {
             componentIsMounted.current = false
+            resetLevels()
         }
     }, [])
 

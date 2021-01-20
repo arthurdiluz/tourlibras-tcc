@@ -26,11 +26,12 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
             }
         })
         setCorrectAnswersCount(correctAnswers)
-        handleFirebaseExperienceProgressPost()
-
+        
         const correctAnswerPercentage = correctAnswers / answers.length
-
+        
         if(correctAnswerPercentage >= 0.7) {
+            handleFirebaseExperienceProgressPost()
+            handleFirebaseMoneyProgressPost()
             handleFirebaseUserProgressPost()
 
             handleLectureCompletionBadgeUnlock()
@@ -51,6 +52,10 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
 
     function handleFirebaseExperienceProgressPost() {
         Database.storeExperienceProgressOnDb(user, lectureId, levelId)
+    }
+    
+    function handleFirebaseMoneyProgressPost() {
+        Database.storeMoneyProgressOnDb(user, lectureId, levelId)
     }
 
     function handleFirebaseUserProgressPost() {

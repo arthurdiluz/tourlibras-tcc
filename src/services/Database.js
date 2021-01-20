@@ -122,6 +122,15 @@ export default class Database {
         Firebase.database().ref().child(`userDetails/${user.uid}/experience`).set(newExperience)
     }
 
+    static async storeMoneyProgressOnDb(user, lectureId, levelId) {
+        const currentMoney = await Firebase.database().ref(`userDetails/${user.uid}/money`).once('value', (snapshot) => (snapshot))
+        const gainedMoney = await Firebase.database().ref(`lectures/${lectureId}/levels/${levelId}/money`).once('value', (snapshot) => (snapshot))
+
+        const newMoney = Number(currentMoney.val()) + Number(gainedMoney.val())
+
+        Firebase.database().ref().child(`userDetails/${user.uid}/money`).set(newMoney)
+    }
+
     static async storeUserProgressOnDb(user, lectureId, levelId) {
         const lectures = await Firebase.database().ref(`lectures`).once('value', (snapshot) => (snapshot))
         const currentLectureLevelsCount = lectures.val()[lectureId]['levels'].length

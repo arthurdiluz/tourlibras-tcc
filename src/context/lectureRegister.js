@@ -7,12 +7,21 @@ const LectureRegisterContext = createContext({})
 export const LectureRegisterProvider = ({ children }) => {
     const [levels, setLevels] = useState([{
         experience: 0,
+        money: 0,
         questions: [{ description: '', media: '', options: [{ text: '', media: '', isCorrect: false }] }]
     }])
 
+    function resetLevels() {
+        setLevels([{
+            experience: 0,
+            money: 0,
+            questions: [{ description: '', media: '', options: [{ text: '', media: '', isCorrect: false }] }]
+        }])
+    }
+
     function addNewLevel() {
         setLevels((levels) => {
-            const newLevels = levels.concat([{ experience: 0, questions: [{ description: '', media: '', options: [{ text: '', media: '', isCorrect: false }] }] }])
+            const newLevels = levels.concat([{ experience: 0, money: 0, questions: [{ description: '', media: '', options: [{ text: '', media: '', isCorrect: false }] }] }])
             return newLevels
         })
     }
@@ -199,7 +208,8 @@ export const LectureRegisterProvider = ({ children }) => {
             addNewOption,
             removeOption,
             changeOptionField,
-            setLevels
+            setLevels,
+            resetLevels
         }}
         >
             {children}

@@ -123,6 +123,24 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
 
+    moneyText: {
+        fontSize: 20,
+        fontFamily: 'Poppins_600SemiBold',
+        color: DARK_GRAY_COLOR,
+        marginLeft: 10,
+        marginTop: 10
+    },
+
+    moneyInput: {
+        borderWidth: 2,
+        borderBottomWidth: 4,
+        borderColor: DIVISION_COLOR,
+        borderRadius: 12,
+        paddingVertical: 8,
+        paddingHorizontal: 20,
+        marginTop: 10
+    },
+
     levelButtonsContainer: {
         flexDirection: 'row',
         marginTop: 15

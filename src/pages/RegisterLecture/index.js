@@ -5,6 +5,7 @@ import {
 import { RectButton, ScrollView, BorderlessButton, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker'
 
 import { FontAwesome, Feather, FontAwesome5 } from '@expo/vector-icons'
 
@@ -26,10 +27,10 @@ function RegisterLecture() {
     const [media, setMedia] = useState('')
     const [name, setName] = useState('')
     const [badgesList, setBadgesList] = useState([{
-        id: undefined,
+        id: '',
         title: "Nenhuma"
     }])
-    const [selectedBadgeId, setSelectedBadgeId] = useState(undefined)
+    const [selectedBadgeId, setSelectedBadgeId] = useState('')
 
     const componentIsMounted = useRef(true)
     useEffect(() => {

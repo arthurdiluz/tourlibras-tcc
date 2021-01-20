@@ -16,13 +16,19 @@ const styles = StyleSheet.create({
 
     lecturesContainer: {
         paddingVertical: 10,
-        paddingHorizontal: 25
+        paddingHorizontal: 30
     },
 
     lectureView: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginVertical: 12
+        marginVertical: 12,
+        flexWrap: 'wrap'
+    },
+
+    lectureGroup: {
+        width: 140,
+        alignItems: 'center'
     },
 
     lectureText: {
