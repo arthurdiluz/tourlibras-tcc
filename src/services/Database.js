@@ -186,6 +186,16 @@ export default class Database {
         }
     }
 
+    static async getLectureCompletionEarnedExperience(lectureId, levelId) {
+        const experienceSnapshot = Firebase.database().ref(`lectures/${lectureId}/levels/${levelId}/experience`).once('value', (snapshot) => (snapshot))
+        return (await experienceSnapshot).val()
+    }
+
+    static async getLectureCompletionEarnedMoney(lectureId, levelId) {
+        const moneySnapshot = Firebase.database().ref(`lectures/${lectureId}/levels/${levelId}/money`).once('value', (snapshot) => (snapshot))
+        return (await moneySnapshot).val()
+    }
+
     static async getUserDetails(userId, callback) {
         Firebase.database().ref(`userDetails/${userId}`).on('value', (snapshot) => callback(snapshot.val()))
     }

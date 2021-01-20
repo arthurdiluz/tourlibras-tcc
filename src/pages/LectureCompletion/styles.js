@@ -71,6 +71,27 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center'
     },
 
+    earnedInfoContainer: {
+        alignItems: 'center',
+        marginTop: 20
+    },
+
+    earnedInfoGroup: {
+        flexDirection: 'row'
+    },
+
+    earnedExperience: {
+        fontSize: 18,
+        fontFamily: 'Poppins_600SemiBold',
+        marginRight: 5
+    },
+
+    earnedMoney: {
+        fontSize: 18,
+        fontFamily: 'Poppins_600SemiBold',
+        marginRight: 5
+    },
+
     button: {
         paddingVertical: 20,
         paddingHorizontal: 40,

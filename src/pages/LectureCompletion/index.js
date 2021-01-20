@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler';
 
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { AntDesign, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { useAuth } from '../../context/auth'
 import { useTheme } from '../../context/theme';
@@ -16,8 +16,11 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
     const { theme } = useTheme()
     const navigation = useNavigation()
     const [correctAnswersCount, setCorrectAnswersCount] = useState(0)
+    const [earnedExperience, setEarnedExperience] = useState(undefined)
+    const [earnedMoney, setEarnedMoney] = useState(undefined)
     const { user } = useAuth()
 
+    const componentIsMounted = useRef(true)
     useEffect(() => {
         let correctAnswers = 0
         answers.forEach((value) => {
@@ -25,11 +28,15 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
                 correctAnswers++
             }
         })
-        setCorrectAnswersCount(correctAnswers)
+        
+        if(componentIsMounted.current) {
+            setCorrectAnswersCount(correctAnswers)
+        }
         
         const correctAnswerPercentage = correctAnswers / answers.length
         
         if(correctAnswerPercentage >= 0.7) {
+            getEarnedInfo()
             handleFirebaseExperienceProgressPost()
             handleFirebaseMoneyProgressPost()
             handleFirebaseUserProgressPost()
@@ -37,6 +44,9 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
             handleLectureCompletionBadgeUnlock()
         }
 
+        return () => {
+            componentIsMounted.current = false
+        }
     }, [])
 
     useEffect(() => {
@@ -68,6 +78,19 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
         if(lectureHasBeenFinished) {
             await Database.unlocksLectureBadge(user, lectureId)
         }
+    }
+
+    function getEarnedInfo() {
+        Database.getLectureCompletionEarnedExperience(lectureId, levelId).then((experience) => {
+            if(componentIsMounted.current) {
+                setEarnedExperience(experience)
+            }
+        })
+        Database.getLectureCompletionEarnedMoney(lectureId, levelId).then((money) => {
+            if(componentIsMounted.current) {
+                setEarnedMoney(money)
+            }
+        })
     }
 
     return(
@@ -137,6 +160,20 @@ function LectureCompletion({ route: { params: { answers, lectureId, levelId }}})
                         <Text style={[styles.result, { color: theme.colors.strongText }]}>{`${correctAnswersCount}/${answers.length}`}</Text>
                         <Text style={[styles.text, { color: theme.colors.lightText }]}>questões!</Text>
                     </View>
+                    {
+                        earnedExperience !== undefined && earnedMoney !== undefined && (
+                            <View style={styles.earnedInfoContainer}>
+                                <View style={styles.earnedInfoGroup}>
+                                    <Text style={[styles.earnedExperience, { color: theme.colors.lightText }]}>{`+${earnedExperience}`}</Text>
+                                    <AntDesign name="star" size={25} color={theme.colors.profileExperienceIcon} />
+                                </View>
+                                <View style={styles.earnedInfoGroup}>
+                                    <Text style={[styles.earnedMoney, { color: theme.colors.lightText }]}>{`+${earnedMoney}`}</Text>
+                                    <MaterialIcons name="attach-money" size={25} color={theme.colors.profileMoneyIcon} />
+                                </View>
+                            </View>
+                        )
+                    }
                 </View>
                 <RectButton rippleColor={theme.colors.primaryButtonRipple} onPress={handleNavigationToLectures} style={[styles.button, { backgroundColor: theme.colors.primaryButtonBackground }]}>
                     <Text style={[styles.buttonText, { color: theme.colors.primaryButtonText }]}>Voltar para as aulas</Text>
