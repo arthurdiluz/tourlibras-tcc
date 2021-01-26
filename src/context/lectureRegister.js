@@ -1,5 +1,5 @@
 import React, {
-    createContext, useState, useContext, useEffect
+    createContext, useState, useContext
 } from 'react'
 
 const LectureRegisterContext = createContext({})

@@ -176,6 +176,18 @@ export default class Database {
         }
     }
 
+    static async resetLecture(user, lectureId) {
+        const multiPathUpdates = {}
+        multiPathUpdates[`userProgress/${user.uid}/${lectureId}/completed`] = false
+        multiPathUpdates[`userProgress/${user.uid}/${lectureId}/currentLevel`] = 0
+
+        Firebase.database().ref().update(multiPathUpdates, (err) => {
+            if(err) {
+                console.log('Error reseting lecture: ', err)
+            }
+        })
+    }
+
     static async checkIfUserAlreadyExists(userId) {
         const response = await Firebase.database().ref(`userDetails/${userId}`).once('value', (snapshot) => (snapshot))
 

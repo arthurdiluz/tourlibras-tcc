@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import Modal from 'react-native-modal';
 
 import Database from '../../services/Database'
 import Header from '../../components/Header'
@@ -16,6 +17,8 @@ function Lectures() {
     const { theme } = useTheme()
     const [loading, setLoading] = useState(true)
     const [lecturesList, setLecturesList] = useState({})
+    const [isModalVisible, setModalVisible] = useState(false)
+    const [modalSelectedLecture, setModalSelectedLecture] = useState("")
     const { user } = useAuth()
 
     useEffect(() => {
@@ -54,6 +57,15 @@ function Lectures() {
         return progress
     }
 
+    function toggleModal() {
+        setModalVisible((isModalVisible) => !isModalVisible)
+    }
+
+    function resetLecture() {
+        Database.resetLecture(user, modalSelectedLecture)
+        toggleModal()
+    }
+
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Header
@@ -62,6 +74,34 @@ function Lectures() {
             <ScrollView>
                 <View style={styles.lecturesContainer}>
                     <View style={styles.lectureView}>
+
+                        <View>
+                            <Modal
+                                isVisible={isModalVisible}
+                                onBackdropPress={toggleModal}
+                            >
+                                <View style={[styles.modalContent, { backgroundColor: theme.colors.background, borderColor: theme.colors.division }]}>
+                                    <Text style={[styles.modalTitle, { color: theme.colors.strongText }]}>Deseja reiniciar esta aula?</Text>
+                                    <View style={styles.modalButtonsContainer}>
+                                        <TouchableOpacity
+                                            onPress={resetLecture}
+                                            activeOpacity={0.6}
+                                            style={[styles.modalPrimaryButton, { backgroundColor: theme.colors.main }]}
+                                        >
+                                            <Text style={[styles.modalPrimaryButtonText, { color: theme.colors.white }]}>SIM</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={toggleModal}
+                                            activeOpacity={0.6}
+                                            style={[styles.modalSecondaryButton, { backgroundColor: theme.colors.signOutButtonBackground }]}
+                                        >
+                                            <Text style={[styles.modalSecondaryButtonText, { color: theme.colors.white }]}>NÃO</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </Modal>
+                        </View>
+
                         {loading ? (
                             <View>
                                 <Text style={[styles.emptyLecturesText, { color: theme.colors.lightText }]}>Não há nenhuma aula cadastrada! :(</Text>
@@ -74,6 +114,10 @@ function Lectures() {
                                     progress={lecturesList[lectureId].progress}
                                     level={lecturesList[lectureId].currentLevel + 1}
                                     onPress={() => handleNavigationToQuestions(lectureId, lecturesList[lectureId].currentLevel)}
+                                    onPressWhenCompleted={() => {
+                                        toggleModal()
+                                        setModalSelectedLecture(lectureId)
+                                    }}
                                     unlocked={lecturesList[lectureId].unlocked}
                                     completed={lecturesList[lectureId].completed}
                                 />

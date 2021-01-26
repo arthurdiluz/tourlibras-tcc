@@ -34,6 +34,50 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_600SemiBold',
         textAlign: 'center',
         marginTop: 8
+    },
+
+    modalContent: {
+        alignItems: 'center',
+        padding: 20,
+        borderWidth: 2,
+        borderRadius: 20
+    },
+
+    modalTitle: {
+        fontSize: 20,
+        fontFamily: 'Poppins_700Bold'
+    },
+
+    modalButtonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20
+    },
+
+    modalPrimaryButton: {
+        padding: 10,
+        width: 90,
+        borderRadius: 15,
+        marginRight: 20
+    },
+
+    modalPrimaryButtonText: {
+        fontSize: 18,
+        fontFamily: 'Poppins_600SemiBold',
+        textAlign: 'center'
+    },
+
+    modalSecondaryButton: {
+        padding: 10,
+        width: 90,
+        borderRadius: 15,
+        marginLeft: 20
+    },
+
+    modalSecondaryButtonText: {
+        fontSize: 18,
+        fontFamily: 'Poppins_600SemiBold',
+        textAlign: 'center'
     }
 })
 

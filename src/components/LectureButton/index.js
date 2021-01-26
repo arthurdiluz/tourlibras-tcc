@@ -14,12 +14,12 @@ function LectureButton({
     avatarUrl,
     level = 1,
     onPress,
+    onPressWhenCompleted,
     unlocked = true,
     completed = false,
     hideLevelContainer = false
 }) {
     const { theme } = useTheme()
-    const enabled = unlocked && !completed
 
     if (completed) {
         progress = 1
@@ -59,7 +59,7 @@ function LectureButton({
                 strokeDasharray={`${circunference} ${circunference}`}
                 strokeDashoffset={strokeDashOffset}
             />
-            <RectButton rippleColor={theme.colors.lectureButtonRipple} onPress={onPress} style={styles.avatarContainer} enabled={enabled}>  
+            <RectButton rippleColor={theme.colors.lectureButtonRipple} onPress={completed ? onPressWhenCompleted : onPress} style={styles.avatarContainer} enabled={unlocked}>  
                 {avatarUrl ? (
                     <>
                         <Image
