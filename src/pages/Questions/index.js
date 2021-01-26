@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Image, Text, View, ScrollView } from 'react-native'
 import { BorderlessButton, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { Video } from 'expo-av'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -150,10 +151,21 @@ function Questions({ route: { params: { level, lectureId, levelId }}}) {
             <ScrollView>
                     <View style={styles.questionContainer}>
                         <Text style={[styles.questionDescription, { color: theme.colors.strongText }]}>{level.questions[currentQuestion].description}</Text>
-                        <Image
-                            style={[styles.questionMedia, { borderColor: theme.colors.questionMediaBorder }]}
-                            source={{ uri: level.questions[currentQuestion].media }}
-                        />
+                        {level.questions[currentQuestion].mediaType === 'video' ? (
+                            <Video
+                                source={{ uri: level.questions[currentQuestion].media }}
+                                isMuted={true}
+                                resizeMode="cover"
+                                shouldPlay
+                                isLooping
+                                style={[styles.questionVideo, { borderColor: theme.colors.questionMediaBorder }]}
+                            />
+                        ) : (
+                            <Image
+                                style={[styles.questionImage, { borderColor: theme.colors.questionMediaBorder }]}
+                                source={{ uri: level.questions[currentQuestion].media }}
+                            />
+                        )}
                     </View>
                     <View style={styles.optionsContainer}>
                         {level.questions[currentQuestion].options.map((option, optionIndex) => (

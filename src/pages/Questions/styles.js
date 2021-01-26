@@ -46,8 +46,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 25
     },
 
-    questionMedia: {
+    questionImage: {
         width: 200,
+        height: 200,
+        borderRadius: 25,
+        borderWidth: 2,
+        marginBottom: 10
+    },
+    
+    questionVideo: {
+        width: 300,
         height: 200,
         borderRadius: 25,
         borderWidth: 2,

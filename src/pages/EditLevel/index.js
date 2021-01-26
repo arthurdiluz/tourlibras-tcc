@@ -50,6 +50,7 @@ function EditLevel({ route: { params: { levelId } } }) {
         })
     
         if (!result.cancelled) {
+            changeQuestionField(levelId, questionId, 'mediaType', result.type)
             changeQuestionField(levelId, questionId, fieldName, result.uri)
         }
     }

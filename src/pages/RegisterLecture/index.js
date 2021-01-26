@@ -78,6 +78,15 @@ function RegisterLecture() {
 
         try {
 
+            if (media !== "") {
+                let iconPath = `lectures/${lectureId}/media/icon-picture.jpg`
+
+                Database.uploadImage(media, iconPath, (downloadUrl) => {
+                    Database.updateDbField(`lectures/${lectureId}`, 'icon', downloadUrl)
+                })
+
+            }
+
             levels.forEach((level, levelId) => {
                 level.questions.forEach((question, questionId) => {
     
